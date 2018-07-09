@@ -32,9 +32,16 @@ JOINT <- expand.grid(PARTY, GENDER) %>% setnames(c("party", "gender"))
 # ================================
 # stratify population
 # ================================
-set.seed(12111984)
 pop_size <- corpus[, .(pop_size = length(unique(speakerid))), by = c("gender", "party")]
 pop_size <- pop_size[(gender %in% GENDER) & (party %in% PARTY),]
+set.seed(12111984)
+pop_sample <- list()
+# sample from sub-populations
+for(i in 1:nrow(JOINT)){
+  pop_sample[[i]] <- sample(unique(corpus[party == JOINT$party[i] & gender == JOINT$gender[i], speakerid]), min(pop_size$pop_size), replace = FALSE)
+}
+
+
 
 
 
