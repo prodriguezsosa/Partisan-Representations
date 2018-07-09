@@ -1,0 +1,89 @@
+rm(list = ls())
+library(keras)
+library(reticulate)
+library(purrr)
+library(dplyr)
+library(text2vec)
+library(magrittr)
+#library(udpipe)
+#library(pbapply)
+library(data.table)
+
+# load parsing/POS model
+#el <- udpipe_download_model(language = "english")
+#udmodel_english <- udpipe_load_model(file = "english-ud-2.0-170801.udpipe")
+
+# set paths
+in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/"
+out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/"
+
+# define source
+VOCAB_SIZE <- 47949
+SOURCE <- "R"
+WINDOW_SIZE <- 2
+
+# ================================
+# load data
+# ================================
+#reverse_dictionary <- readRDS(paste0(out_path, SOURCE, "_", WINDOW_SIZE, "_reverse_dictionary.rds"))
+#dictionary <- readRDS(paste0(out_path, SOURCE, "_", WINDOW_SIZE, "_dictionary.rds"))
+embedding_matrix_D1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/1D6_9359_embedding_matrix.rds")
+embedding_matrix_R1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/1R6_9359_embedding_matrix.rds")
+embedding_matrix_D2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/1D12_9359_embedding_matrix.rds")
+embedding_matrix_R2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/1R12_9359_embedding_matrix.rds")
+
+#embedding_matrix <- embedding_matrix[-1,]
+#row.names(embedding_matrix) <- c("UNK", names(dictionary))
+#row.names(embedding_matrix) <- names(dictionary)
+
+find_similar_words <- function(word, embedding_matrix, n = 10) {
+  similarities <- embedding_matrix[word, , drop = FALSE] %>%
+    sim2(embedding_matrix, y = ., method = "cosine")
+  
+  similarities[,1] %>% sort(decreasing = TRUE) %>% head(n)
+}
+
+token <- "abortion"
+find_similar_words(token, embedding_matrix_R1)
+find_similar_words(token, embedding_matrix_R2)
+find_similar_words(token, embedding_matrix_D1)
+find_similar_words(token, embedding_matrix_D2)
+
+
+term1 <- "united"
+term2 <- "states"
+embedding_matrix <- embedding_matrix_R
+composite = embedding_matrix[term1, , drop = FALSE] + embedding_matrix[term2, , drop = FALSE]
+cos_sim = sim2(x = embedding_matrix, y = composite, method = "cosine", norm = "l2")
+head(sort(cos_sim[,1], decreasing = TRUE), 10)
+
+
+# ================================
+# POS tagging
+# ================================
+vocab <- rownames(embedding_matrix)
+vocab_annotated <- pblapply(vocab, function(s) as.data.frame(udpipe_annotate(udmodel_english, x = s, parser = "none")))
+vocab_pos <- data.table(token = lapply(vocab_annotated, function(s) s[c("token")]) %>% unlist(.) %>% unname(.),
+                          pos = lapply(vocab_annotated, function(s) s[c("upos")]) %>% unlist(.) %>% unname(.))
+vocab_adjectives <- vocab_pos[pos == "ADJ", token]
+
+target <- "socialism"
+vocab_sentiment <- c(target, vocab_adjectives)
+sub_embedding_matrix <- embedding_matrix[rownames(embedding_matrix) %in% vocab_sentiment,]
+find_similar_words(target, sub_embedding_matrix)
+
+
+library(Rtsne)
+library(ggplot2)
+library(plotly)
+
+tsne <- Rtsne(embedding_matrix[2:500,], perplexity = 50, pca = FALSE)
+
+tsne_plot <- tsne$Y %>%
+  as.data.frame() %>%
+  mutate(word = row.names(embedding_matrix)[2:500]) %>%
+  ggplot(aes(x = V1, y = V2, label = word)) + 
+  geom_text(size = 3)
+tsne_plot
+
+
