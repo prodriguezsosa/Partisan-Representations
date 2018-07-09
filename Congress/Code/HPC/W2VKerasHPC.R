@@ -1,3 +1,4 @@
+#!/usr/bin/env Rscript
 rm(list = ls())
 library(keras)
 library(reticulate)
@@ -7,8 +8,9 @@ library(data.table)
 #library(pbapply)
 
 # args to process
-#args <- commandArgs(trailingOnly = TRUE)
-#if(length(args)!=2) stop(paste0("Not the right number of arguments!", args))
+args <- commandArgs(trailingOnly = TRUE)
+print(args)
+if(length(args)!=2) stop(paste0("Not the right number of arguments!", args))
 #args <- as.numeric(args)
 
 # set paths
@@ -16,9 +18,10 @@ in_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Inputs/"
 out_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Outputs/"
 
 # define source
-#SOURCE <- as.character(args[1])
-SOURCE <- "M"
-FOLDS <- 10
+SOURCE <- as.character(args[1])
+FOLD <- as.integer(args[2])
+#SOURCE <- "R"
+#FOLD <- 1
 
 # set parameters
 #WINDOW_SIZE <- as.numeric(args[2])  # how many words to consider left and right
@@ -34,15 +37,16 @@ EPOCHS <- 1
 #corpora <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/corpora_folds.rds")
 vocab <- readRDS(paste0(in_path, "vocab.rds"))
 corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
-corpora <- corpus[group == SOURCE,]
+#corpora <- corpora[group == SOURCE,]
 
 # ================================
 # loop over folds
 # ================================
-embeddings_list <- list()
-for(i in 1:FOLDS){
-  corpus <- corpora[fold!= i, corpus]
-  corpus <- corpus[1:10]
+#embeddings_list <- list()
+#for(i in START:END){
+  #corpus <- corpora[fold!= FOLD, corpus]
+  corpus <- corpora[group == SOURCE & fold!= FOLD, corpus]
+  #corpus <- corpus[1:10]
   # ================================
   # create vocab and tokenizer
   # ================================
@@ -125,10 +129,12 @@ for(i in 1:FOLDS){
   row.names(embedding_matrix) <- c("unk", words$word)
   #row.names(embedding_matrix) <- words$word
   
-  embeddings_list[[i]] <- embedding_matrix
-}
+#  embeddings_list[[i]] <- embedding_matrix
+#}
 
 # ================================
 # save embeddings
 # ================================
-saveRDS(embeddings_list, paste0(out_path, SOURCE, "_", EPOCHS, "_", WINDOW_SIZE, "_", VOCAB_SIZE, "_embeddings_list.rds"))
+#saveRDS(embedding_matrix, paste0(out_path, SOURCE, "_", FOLD, "_", WINDOW_SIZE, "_", VOCAB_SIZE, "_embedding_matrix.rds"))
+saveRDS(embedding_matrix, paste0(out_path, SOURCE, FOLD, "_embedding_matrix.rds"))
+  

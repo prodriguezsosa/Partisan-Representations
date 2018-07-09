@@ -3,7 +3,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
-#SBATCH --time=72:00:00
+#SBATCH --time=20:00:00
 #SBATCH --mem=5GB
 #SBATCH --job-name=W2VKeras
 #SBATCH --mail-type=END
@@ -14,5 +14,5 @@ module load python/intel/2.7.12
 module load r/intel/3.4.2
 source /home/plr250/pyenv/py2.7/bin/activate
 
-R --no-save -q -f W2VKerasHPC.R
+R --no-save -q -f W2VKerasHPC.R --args SOURCE FOLD
 
