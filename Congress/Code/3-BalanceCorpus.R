@@ -34,10 +34,10 @@ JOINT <- expand.grid(PARTY, GENDER) %>% setnames(c("party", "gender"))
 # ================================
 pop_size <- corpus[, .(pop_size = length(unique(speakerid))), by = c("gender", "party")]
 pop_size <- pop_size[(gender %in% GENDER) & (party %in% PARTY),]
-set.seed(12111984)
 pop_sample <- list()
 # sample from sub-populations
 for(i in 1:nrow(JOINT)){
+  set.seed(12111984)
   pop_sample[[i]] <- sample(unique(corpus[party == JOINT$party[i] & gender == JOINT$gender[i], speakerid]), min(pop_size$pop_size), replace = FALSE)
 }
 
@@ -46,7 +46,36 @@ for(i in 1:nrow(JOINT)){
 # ================================
 corpora <- list()
 for(i in 1:nrow(JOINT)){
-  corpora[[i]] <- corpus[party == JOINT$party[i] & gender == JOINT$gender[i] & (speakerid %in% pop_sample[[i]])]
+  corpora[[i]] <- corpus[party == JOINT$party[i] & gender == JOINT$gender[i] & (speakerid %in% pop_sample[[i]]), speech]
+}
+
+# ================================
+# check sub-corpora
+# ================================
+# create vocab and tokenizer
+tokenizer <- text_tokenizer(length(vocab))
+tokenizer %>% fit_text_tokenizer(vocab)
+VOCAB_SIZE <- tokenizer$num_words
+
+# subset each corpus to texts with more than on token in vocab
+pb <- progress_bar$new(total = length(corpora))  # progress bar
+for(i in 1:length(corpora)){
+  sub_corpus <- corpora[[i]]
+  corpus_check <- texts_to_sequences(tokenizer, sub_corpus) %>% pblapply(., function(x) length(x) > 1) %>% unlist(.)
+  sub_corpus <- sub_corpus[corpus_check]
+  corpora[[i]] <- sub_corpus
+  rm(sub_corpus)
+  pb$tick()
+}
+
+# ================================
+# balance corpora
+# ================================
+min_speeches <- min(unlist(lapply(corpora, length)))
+# sample from sub-speeches population
+for(i in 1:length(corpora)){
+  set.seed(12111984)
+  corpora[[i]] <- sample(corpora[[i]], min_speeches, replace = FALSE)
 }
 
 # ================================
