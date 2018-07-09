@@ -12,7 +12,7 @@ in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congre
 out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/"
 
 # define source
-SOURCE <- "D"
+GROUP <- "D-M"
 
 # set parameters
 WINDOW_SIZE <- 6  # how many words to consider left and right
@@ -24,7 +24,7 @@ EPOCHS <- 1
 # load data
 # ================================
 corpora_folds <- readRDS(paste0(in_path, "corpora_folds.rds"))
-corpus <- corpus[group == "D-M" & fold != 1, corpus]
+corpus <- corpora_folds[group == GROUP & fold != 1, corpus]
 vocab <- readRDS(paste0(in_path, "vocab.rds"))
 
 # ================================
@@ -117,7 +117,7 @@ find_similar_words <- function(word, embedding_matrix, n = 10) {
   similarities[,1] %>% sort(decreasing = TRUE) %>% head(n)
 }
 
-find_similar_words("usa", embedding_matrix)
+find_similar_words("germany", embedding_matrix)
 
 library(Rtsne)
 library(ggplot2)

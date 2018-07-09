@@ -9,7 +9,7 @@ library(magrittr)
 PARTY <- list("D", "R")
 GENDER <- list("M", "F")
 JOINT <- expand.grid(PARTY, GENDER) %>% setnames(c("party", "gender"))
-VOCAB_SIZE <- 5000
+VOCAB_SIZE <- 10000
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
 out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
 

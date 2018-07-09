@@ -28,56 +28,63 @@ vocab <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/
 # ================================
 PARTY <- list("D", "R")
 GENDER <- list("M", "F")
-JOINT <- expand.grid(PARTY, GENDER) %>% setnames(c("party", "gender"))
+GROUPS <- c(PARTY, GENDER)
 
 # ================================
-# stratify population
-# ================================
-pop_size <- corpus[, .(pop_size = length(unique(speakerid))), by = c("gender", "party")]
-pop_size <- pop_size[(gender %in% GENDER) & (party %in% PARTY),]
-pop_sample <- list()
-# sample from sub-populations
-for(i in 1:nrow(JOINT)){
-  set.seed(12111984)
-  pop_sample[[i]] <- sample(unique(corpus[party == JOINT$party[i] & gender == JOINT$gender[i], speakerid]), min(pop_size$pop_size), replace = FALSE)
-}
-
-# ================================
-# subset corpus by group
-# ================================
-corpora <- list()
-for(i in 1:nrow(JOINT)){
-  corpora[[i]] <- corpus[party == JOINT$party[i] & gender == JOINT$gender[i] & (speakerid %in% pop_sample[[i]]), speech]
-}
-
-# ================================
-# check sub-corpora
+# check corpora length
 # ================================
 # create vocab and tokenizer
 tokenizer <- text_tokenizer(length(vocab))
 tokenizer %>% fit_text_tokenizer(vocab)
 VOCAB_SIZE <- tokenizer$num_words
 
-# subset each corpus to texts with more than on token in vocab
-pb <- progress_bar$new(total = length(corpora))  # progress bar
-for(i in 1:length(corpora)){
-  sub_corpus <- corpora[[i]]
-  corpus_check <- texts_to_sequences(tokenizer, sub_corpus) %>% pblapply(., function(x) length(x) > 1) %>% unlist(.)
-  sub_corpus <- sub_corpus[corpus_check]
-  corpora[[i]] <- sub_corpus
-  rm(sub_corpus)
-  pb$tick()
+# subset each corpus to texts with more than one token in vocab
+corpus_check <- texts_to_sequences(tokenizer, corpus$speech) %>% pblapply(., function(x) length(x) > 1) %>% unlist(.)
+corpus <- corpus[corpus_check]
+
+# ================================
+# stratify population
+# ================================
+pop_size <- corpus[, .(pop_size = length(speech_id)), by = c("gender", "party")]
+pop_size <- pop_size[(gender %in% GENDER) & (party %in% PARTY),]
+min_pop <- list("M" =  min(pop_size[gender == "M", pop_size]),
+                "F" =  min(pop_size[gender == "F", pop_size]),
+                "D" =  min(pop_size[party == "D", pop_size]),
+                "R" =  min(pop_size[party == "R", pop_size])) 
+
+# balance party samples
+pop_party <- list()
+for(i in PARTY){
+  set.seed(12111984)
+  pop_party[[i]] <- c(sample(corpus[party == i & gender == "F", speech_id], min_pop[["F"]], replace = FALSE),
+                       sample(corpus[party == i & gender == "M", speech_id], min_pop[["M"]], replace = FALSE))
+}
+  
+# balance gender samples
+pop_gender <- list()
+for(i in GENDER){
+  set.seed(12111984)
+  pop_gender[[i]] <- c(sample(corpus[party == "D" & gender == i, speech_id], min_pop[["D"]], replace = FALSE),
+                       sample(corpus[party == "R" & gender == i, speech_id], min_pop[["R"]], replace = FALSE))
 }
 
 # ================================
-# balance corpora
+# subset corpora
 # ================================
-min_speeches <- min(unlist(lapply(corpora, length)))
-# sample from sub-speeches population
-for(i in 1:length(corpora)){
-  set.seed(12111984)
-  corpora[[i]] <- sample(corpora[[i]], min_speeches, replace = FALSE)
+corpora <- list()
+
+# by party
+for(i in PARTY){
+  corpora[[i]] <- corpus[party == i & (speech_id %in% pop_party[[i]]), speech]
 }
+
+# by gender
+for(i in GENDER){
+  corpora[[i]] <- corpus[gender == i & (speech_id %in% pop_gender[[i]]), speech]
+}
+
+#table(corpora[["F"]]$party)  # check
+#table(corpora[["R"]]$gender)  # check
 
 # ================================
 # save stratified corpora
