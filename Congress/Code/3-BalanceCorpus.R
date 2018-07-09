@@ -41,8 +41,22 @@ for(i in 1:nrow(JOINT)){
   pop_sample[[i]] <- sample(unique(corpus[party == JOINT$party[i] & gender == JOINT$gender[i], speakerid]), min(pop_size$pop_size), replace = FALSE)
 }
 
+# ================================
+# subset corpus by group
+# ================================
+corpora <- list()
+for(i in 1:nrow(JOINT)){
+  corpora[[i]] <- corpus[party == JOINT$party[i] & gender == JOINT$gender[i] & (speakerid %in% pop_sample[[i]])]
+}
+
+# ================================
+# save stratified corpora
+# ================================
+saveRDS(corpora, paste0(out_path, "corpora.rds"))
 
 
+
+#=============================================STRATIFY BY NUMBER OF TOKENS=========================================
 
 
 # ================================
