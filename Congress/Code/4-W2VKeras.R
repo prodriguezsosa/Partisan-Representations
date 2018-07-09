@@ -5,6 +5,7 @@ library(purrr)
 library(dplyr)
 library(pbapply)
 library(data.table)
+library(text2vec)
 
 # set paths
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
@@ -94,7 +95,7 @@ model %>%
 # save embeddings
 # ================================
 embedding_matrix <- get_weights(model)[[1]]
-saveRDS(embedding_matrix, paste0(out_path, SOURCE, "_embedding_matrix.rds"))
+#saveRDS(embedding_matrix, paste0(out_path, SOURCE, "_embedding_matrix.rds"))
 
 words <- data_frame(
   word = names(tokenizer$word_index), 
@@ -105,11 +106,9 @@ words <- words %>%
   filter(id <= tokenizer$num_words) %>%
   arrange(id)
 
-embedding_matrix <- embedding_matrix[-1,]
-#row.names(embedding_matrix) <- c("UNK", words$word)
-row.names(embedding_matrix) <- words$word
-
-library(text2vec)
+#embedding_matrix <- embedding_matrix[-1,]
+row.names(embedding_matrix) <- c("UNK", words$word)
+#row.names(embedding_matrix) <- words$word
 
 find_similar_words <- function(word, embedding_matrix, n = 10) {
   similarities <- embedding_matrix[word, , drop = FALSE] %>%
