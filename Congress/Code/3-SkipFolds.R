@@ -22,9 +22,7 @@ FOLDS <- 10
 # ================================
 PARTY <- list("D", "R")
 GENDER <- list("M", "F")
-JOINT <- expand.grid(PARTY, GENDER) %>% setnames(c("party", "gender"))
-# label lists
-group_labels <- apply( JOINT , 1 , paste , collapse = "-" )
+GROUPS <- c(PARTY, GENDER)
 
 # ================================
 # define paths
@@ -40,13 +38,13 @@ corpora <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representation
 # split into folds
 # ================================
 corpora_folds <- list()
-for(i in 1:length(corpora)){
+for(i in GROUPS){
   set.seed(12111984)
   corpus <-  corpora[[i]]
   corpus <- sample(corpus)  # randomize order
   text_seq <- seq(1, length(corpus), 1)  # sequence id
   chunks <- split(text_seq, ceiling(seq_along(text_seq)/(floor(length(corpus)/FOLDS))))
-  corpus_folds <- data.table("group" = group_labels[i], "corpus" = corpus, "fold" = NA, stringsAsFactors = FALSE)
+  corpus_folds <- data.table("group" = i, "corpus" = corpus, "fold" = NA, stringsAsFactors = FALSE)
   for(f in 1:length(chunks)){
     corpus_folds$fold[chunks[[f]]] <- f
   }
@@ -57,5 +55,6 @@ for(i in 1:length(corpora)){
 # ================================
 # save corpora with folds
 # ================================
-corpora_folds <- do.call(rbind, corpora_folds)
+corpora_folds <- do.call(rbind, corpora_folds)  # rbind
+table(corpora_folds$group, corpora_folds$fold)  # check
 saveRDS(corpora_folds, paste0(out_path, "corpora_folds.rds"))
