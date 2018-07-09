@@ -57,4 +57,5 @@ for(i in 1:length(corpora)){
 # ================================
 # save corpora with folds
 # ================================
+corpora_folds <- do.call(rbind, corpora_folds)
 saveRDS(corpora_folds, paste0(out_path, "corpora_folds.rds"))

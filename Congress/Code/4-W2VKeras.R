@@ -22,14 +22,13 @@ EPOCHS <- 1
 # ================================
 # load data
 # ================================
-corpus <- readRDS(paste0(in_path, "corpus.rds"))
-corpus <- corpus[party == SOURCE, speech]
-vocab <- readRDS(paste0(in_path, "vocab_list.rds"))
+corpora_folds <- readRDS(paste0(in_path, "corpora_folds.rds"))
+corpus <- corpus[group == "D-M" & fold != 1, corpus]
+vocab <- readRDS(paste0(in_path, "vocab.rds"))
 
 # ================================
 # create vocab and tokenizer
 # ================================
-vocab <- intersect(vocab[["D"]], vocab[["R"]]) # intersection of the top N terms in all sources
 tokenizer <- text_tokenizer(length(vocab))
 tokenizer %>% fit_text_tokenizer(vocab)
 VOCAB_SIZE <- tokenizer$num_words
@@ -44,12 +43,6 @@ names(reverse_dictionary) <- unlist(dictionary)
 # ================================
 # skip-gram generator
 # ================================
-# first check all batches have more than one token in vocab
-# see: https://github.com/rstudio/keras/issues/244
-corpus_check <- texts_to_sequences(tokenizer, corpus) %>% pblapply(., function(x) length(x) > 1) %>% unlist(.)
-corpus <- corpus[corpus_check]
-corpus <- rep(corpus, EPOCHS)
-
 skipgrams_generator <- function(text, tokenizer, window_size, negative_samples) {
   gen <- texts_to_sequences_generator(tokenizer, sample(text))
   function() {
