@@ -1,40 +1,60 @@
 rm(list = ls())
+
+# ================================
+# load libraries
+# ================================
 library(keras)
-library(text2vec)
+library(reticulate)
+library(purrr)
+library(dplyr)
+library(pbapply)
 library(data.table)
-library(magrittr)
 library(progress)
+library(magrittr)
 
+# ================================
 # parameters
-SOURCE <- list("FOX", "MSNBC")
-SKIP_WINDOW <- 6
+# ================================
 FOLDS <- 10
-fold_size <- data.table()
-pb <- progress_bar$new(total = length(SOURCE))
-for(s in SOURCE){
-# file paths
-in_path <- paste0("/Users/pedrorodriguez/Dropbox/Research/Concept Polarization/Full/Outputs/SkipGrams/", s, "/")
-out_path <- paste0("/Users/pedrorodriguez/Dropbox/Research/Concept Polarization/Full/Outputs/SkipFolds/", s, "/")
-dictionary <- readRDS("/Users/pedrorodriguez/Dropbox/Research/Concept Polarization/Full/Outputs/SkipGrams/dictionary.Rds")
 
-# load skip-grams
-skip_grams <- readRDS(paste0(in_path, "skip_grams_", s, ".Rds"))
-skip_grams <- data.table(do.call(rbind, skip_grams)) %>% set_colnames(c("center", "target")) 
-# subset to have only cue as center word
-#if(!(is.null(w))){skip_grams <- skip_grams[center == dictionary[[w]]]}
-#if(!(is.null(w))){skip_grams <- skip_grams[center == dictionary[[w]] | target == dictionary[[w]]]}
-#if(!(is.null(w))){skip_grams <- skip_grams[target == dictionary[[w]]]}
-set.seed(12111984)
-skip_grams <- skip_grams[sample(nrow(skip_grams)),]
-skip_id <- seq(1, nrow(skip_grams), 1)
-chunks <- split(skip_id, ceiling(seq_along(skip_id)/(floor(nrow(skip_grams)/FOLDS))))
-fold_size <- rbind(fold_size, data.table(source = s, fold_size = length(chunks[[1]]), num_folds = length(chunks))) # keep registry of fold size
-skip_grams[,fold:=0]
-for(f in 1:length(chunks)){
-  skip_grams$fold[chunks[[f]]] <- f
-}
-saveRDS(skip_grams, paste0(out_path, "skip_folds_", s, ".Rds"))
-pb$tick()
+# ================================
+# define covariates
+# ================================
+PARTY <- list("D", "R")
+GENDER <- list("M", "F")
+JOINT <- expand.grid(PARTY, GENDER) %>% setnames(c("party", "gender"))
+# label lists
+group_labels <- apply( JOINT , 1 , paste , collapse = "-" )
+
+# ================================
+# define paths
+# ================================
+out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
+
+# ================================
+# load data
+# ================================
+corpora <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/corpora.rds")
+
+# ================================
+# split into folds
+# ================================
+corpora_folds <- list()
+for(i in 1:length(corpora)){
+  set.seed(12111984)
+  corpus <-  corpora[[i]]
+  corpus <- sample(corpus)  # randomize order
+  text_seq <- seq(1, length(corpus), 1)  # sequence id
+  chunks <- split(text_seq, ceiling(seq_along(text_seq)/(floor(length(corpus)/FOLDS))))
+  corpus_folds <- data.table("group" = group_labels[i], "corpus" = corpus, "fold" = NA, stringsAsFactors = FALSE)
+  for(f in 1:length(chunks)){
+    corpus_folds$fold[chunks[[f]]] <- f
+  }
+  corpus_folds <- corpus_folds[fold < 11,]  # remove extra folds
+  corpora_folds[[i]] <- corpus_folds
 }
 
-saveRDS(fold_size, "/Users/pedrorodriguez/Dropbox/Research/Concept Polarization/Full/Outputs/SkipFolds/fold_size.Rds")
+# ================================
+# save corpora with folds
+# ================================
+saveRDS(corpora_folds, paste0(out_path, "corpora_folds.rds"))

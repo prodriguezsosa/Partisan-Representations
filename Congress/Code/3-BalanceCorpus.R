@@ -10,6 +10,7 @@ library(dplyr)
 library(pbapply)
 library(data.table)
 library(progress)
+library(magrittr)
 
 # ================================
 # define paths
