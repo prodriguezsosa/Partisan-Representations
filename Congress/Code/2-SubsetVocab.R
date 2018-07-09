@@ -9,7 +9,7 @@ library(magrittr)
 PARTY <- list("D", "R")
 GENDER <- list("M", "F")
 JOINT <- expand.grid(PARTY, GENDER) %>% setnames(c("party", "gender"))
-VOCAB_SIZE <- 5000
+VOCAB_SIZE <- 10000
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
 out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
 
@@ -48,4 +48,4 @@ names(vocab_list) <- apply( JOINT , 1 , paste , collapse = "-" )
 vocab <- Reduce(intersect, vocab_list)
 
 # save
-saveRDS(vocab_list, paste0(out_path, "vocab.rds"))
+saveRDS(vocab, paste0(out_path, "vocab.rds"))

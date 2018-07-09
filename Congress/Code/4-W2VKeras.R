@@ -4,6 +4,7 @@ library(reticulate)
 library(purrr)
 library(dplyr)
 library(pbapply)
+library(data.table)
 
 # set paths
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
