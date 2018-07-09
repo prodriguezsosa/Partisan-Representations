@@ -9,7 +9,7 @@ library(magrittr)
 PARTY <- list("D", "R")
 GENDER <- list("M", "F")
 JOINT <- expand.grid(PARTY, GENDER) %>% setnames(c("party", "gender"))
-VOCAB_SIZE <- 10000
+VOCAB_SIZE <- 5000
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
 out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
 
@@ -26,8 +26,8 @@ stop_words <- str_replace_all(stop_words, "'", "")
 vocab_list <- list()
 
 pb <- progress_bar$new(total = nrow(JOINT))
-for(i in JOINT){
-  sub_corpus <- corpus[party == i & gender == j,]
+for(i in 1:nrow(JOINT)){
+  sub_corpus <- corpus[party == JOINT$party[i] & gender == JOINT$gender[i],]
   tokens = space_tokenizer(sub_corpus$speech)
   it = itoken(tokens, progressbar = FALSE)
   count = create_vocabulary(it)
@@ -37,8 +37,15 @@ for(i in JOINT){
   count <- count[nchar(count$term, type = "chars") > 2,] # remove <3 letter words
   #count <- count[count$term_count >= 10,] # remove <3 letter words
   count <- count[1:(VOCAB_SIZE),]  # keep most frequent num_words
-  vocab_list[[s]] <- count$term
+  vocab_list[[i]] <- count$term
   pb$tick()
 }
 
-saveRDS(vocab_list, paste0(out_path, "vocab_list.rds"))
+# label lists
+names(vocab_list) <- apply( JOINT , 1 , paste , collapse = "-" )
+
+# intersecting vocab
+vocab <- Reduce(intersect, vocab_list)
+
+# save
+saveRDS(vocab_list, paste0(out_path, "vocab.rds"))
