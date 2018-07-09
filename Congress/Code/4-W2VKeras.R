@@ -12,7 +12,7 @@ in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congre
 out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/"
 
 # define source
-GROUP <- "D-M"
+GROUP <- "M"
 
 # set parameters
 WINDOW_SIZE <- 6  # how many words to consider left and right

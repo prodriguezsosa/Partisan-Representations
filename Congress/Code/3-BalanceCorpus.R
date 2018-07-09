@@ -83,8 +83,8 @@ for(i in GENDER){
   corpora[[i]] <- corpus[gender == i & (speech_id %in% pop_gender[[i]]), speech]
 }
 
-#table(corpora[["F"]]$party)  # check
-#table(corpora[["R"]]$gender)  # check
+#table(corpora[["M"]]$party)  # check
+#table(corpora[["D"]]$gender)  # check
 
 # ================================
 # save stratified corpora

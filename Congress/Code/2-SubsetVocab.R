@@ -8,7 +8,7 @@ library(magrittr)
 
 PARTY <- list("D", "R")
 GENDER <- list("M", "F")
-JOINT <- expand.grid(PARTY, GENDER) %>% setnames(c("party", "gender"))
+GROUPS <- c(PARTY, GENDER)
 VOCAB_SIZE <- 10000
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
 out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
@@ -23,11 +23,17 @@ corpus <- readRDS(paste0(in_path, "corpus.rds"))
 stop_words <- stopwords(kind = "en") 
 stop_words <- str_replace_all(stop_words, "'", "")  
 
+# ================================
+# vocab count for each group
+# ================================
 vocab_list <- list()
-
-pb <- progress_bar$new(total = nrow(JOINT))
-for(i in 1:nrow(JOINT)){
-  sub_corpus <- corpus[party == JOINT$party[i] & gender == JOINT$gender[i],]
+pb <- progress_bar$new(total = length(GROUPS))
+for(i in GROUPS){
+  if(i %in% PARTY){
+    sub_corpus <- corpus[party == i,]
+    }else{
+    sub_corpus <- corpus[gender == i,]
+  }
   tokens = space_tokenizer(sub_corpus$speech)
   it = itoken(tokens, progressbar = FALSE)
   count = create_vocabulary(it)
@@ -41,9 +47,6 @@ for(i in 1:nrow(JOINT)){
   vocab_list[[i]] <- count$term
   pb$tick()
 }
-
-# label lists
-names(vocab_list) <- apply( JOINT , 1 , paste , collapse = "-" )
 
 # intersecting vocab
 vocab <- Reduce(intersect, vocab_list)
