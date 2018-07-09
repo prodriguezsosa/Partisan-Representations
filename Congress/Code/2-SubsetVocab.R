@@ -9,7 +9,7 @@ library(magrittr)
 PARTY <- list("D", "R")
 GENDER <- list("M", "F")
 JOINT <- expand.grid(PARTY, GENDER) %>% setnames(c("party", "gender"))
-VOCAB_SIZE <- 10000
+VOCAB_SIZE <- 5000
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
 out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
 
@@ -34,6 +34,7 @@ for(i in 1:nrow(JOINT)){
   count <- count[order(-count$term_count),] # order by count
   #count <- count[count$term %in% global_vocab,] # drop words not in global vocab
   count <- count[!(count$term %in% stop_words),] # drop stopwords
+  count <- count[!(grepl("[[:digit:]]",count$term)),] # drop numbers
   count <- count[nchar(count$term, type = "chars") > 2,] # remove <3 letter words
   #count <- count[count$term_count >= 10,] # remove <3 letter words
   count <- count[1:(VOCAB_SIZE),]  # keep most frequent num_words

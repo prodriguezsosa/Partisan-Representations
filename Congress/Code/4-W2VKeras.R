@@ -117,7 +117,7 @@ find_similar_words <- function(word, embedding_matrix, n = 10) {
   similarities[,1] %>% sort(decreasing = TRUE) %>% head(n)
 }
 
-find_similar_words("economy", embedding_matrix)
+find_similar_words("usa", embedding_matrix)
 
 library(Rtsne)
 library(ggplot2)
