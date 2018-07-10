@@ -62,6 +62,7 @@ count_D <- list()
 count_R <- list()
 corpus_D <- list()
 corpus_R <- list()
+corpora <- list()
 
 for(i in GENDER){
   # subset corpora to relevant groups and tokenize
@@ -82,75 +83,65 @@ for(i in GENDER){
 }
 
 # check
-#check <- corpus_R[["M"]] %in% vocab
-#length(check[check == TRUE])
+# NOTE: the total number of tokens may be slightly different
+# total number of tokens %in% vocab should be the same for both genders
+#check1 <- corpus_D[["M"]] %in% vocab
+#check2 <- corpus_R[["M"]] %in% vocab
+#length(check1[check1 == TRUE])
+#length(check1[check1 == TRUE])
 
-# ================================
-# check corpora length
-# ================================
-# create vocab and tokenizer
-tokenizer <- text_tokenizer(length(vocab))
-tokenizer %>% fit_text_tokenizer(vocab)
-VOCAB_SIZE <- tokenizer$num_words
-
-# subset each corpus to texts with more than one token in vocab
-corpus_check <- texts_to_sequences(tokenizer, corpus$speech) %>% pblapply(., function(x) length(x) > 1) %>% unlist(.)
-corpus <- corpus[corpus_check]
-
-NumTokensInVocab <- function(text, vocab){
-  vtokens <- unlist(str_split(text, pattern = " "))
-  num_tokens <- vtokens %in% vocab
-  num_tokens <- length(num_tokens[num_tokens == TRUE])
-}
-
-corpora_folds <- corpora_folds[,num_tokens:=ntoken(corpus)]
-temp <- corpora_folds
-temp$num_tokens <- unlist(pblapply(corpora_folds$corpus, function(x) NumTokensInVocab(x, vocab = vocab)))
-
-
-# ================================
-# stratify population
-# ================================
-pop_size <- corpus[, .(pop_size = length(speech_id)), by = c("gender", "party")]
-pop_size <- pop_size[(gender %in% GENDER) & (party %in% PARTY),]
-min_pop <- list("M" =  min(pop_size[gender == "M", pop_size]),
-                "F" =  min(pop_size[gender == "F", pop_size]),
-                "D" =  min(pop_size[party == "D", pop_size]),
-                "R" =  min(pop_size[party == "R", pop_size])) 
-
-# balance party samples
-pop_party <- list()
-for(i in PARTY){
-  set.seed(12111984)
-  pop_party[[i]] <- c(sample(corpus[party == i & gender == "F", speech_id], min_pop[["F"]], replace = FALSE),
-                       sample(corpus[party == i & gender == "M", speech_id], min_pop[["M"]], replace = FALSE))
-}
-  
-# balance gender samples
-pop_gender <- list()
+# join corpora by gender
 for(i in GENDER){
-  set.seed(12111984)
-  pop_gender[[i]] <- c(sample(corpus[party == "D" & gender == i, speech_id], min_pop[["D"]], replace = FALSE),
-                       sample(corpus[party == "R" & gender == i, speech_id], min_pop[["R"]], replace = FALSE))
+  corpora[[i]] <- c(corpus_D[[i]], corpus_R[[i]])
 }
 
+# spring cleaning
+rm(sub_corpus_D, sub_corpus_R, in_vocab_D, in_vocab_R, count_D, count_R, corpus_D, corpus_R)
+
 # ================================
-# subset corpora
+# corpora by party 
+# stratifying by gender & number of tokens in vocab
 # ================================
+sub_corpus_M <- list()
+sub_corpus_F <- list()
+in_vocab_M <- list()
+in_vocab_F <- list()
+count_M <- list()
+count_F <- list()
+corpus_M <- list()
+corpus_F <- list()
 corpora <- list()
 
-# by party
 for(i in PARTY){
-  corpora[[i]] <- corpus[party == i & (speech_id %in% pop_party[[i]]), speech]
+  # subset corpora to relevant groups and tokenize
+  sub_corpus_M[[i]] <- unlist(space_tokenizer(paste(corpus[gender == "M" & party == i, speech], collapse = " ")))
+  sub_corpus_F[[i]] <- unlist(space_tokenizer(paste(corpus[gender == "F" & party == i, speech], collapse = " ")))
+  # check whether word is in voacb
+  in_vocab_M[[i]] <- unlist(pblapply(list(sub_corpus_M[[i]]), function(x) x %in% vocab))
+  in_vocab_F[[i]] <- unlist(pblapply(list(sub_corpus_F[[i]]), function(x) x %in% vocab))
+  # cumulative count of words in vocab
+  count_M[[i]] <- ave(in_vocab_M[[i]] == TRUE, in_vocab_M[[i]], FUN=cumsum)
+  count_F[[i]] <- ave(in_vocab_F[[i]] == TRUE, in_vocab_F[[i]], FUN=cumsum)
 }
 
-# by gender
-for(i in GENDER){
-  corpora[[i]] <- corpus[gender == i & (speech_id %in% pop_gender[[i]]), speech]
+for(i in PARTY){
+  # subset vocab such that there's the same number of republican and democrat words in each group
+  corpus_M[[i]] <- sub_corpus_M[[i]][1:which(count_M[[i]] == min(unlist(lapply(count_M, max))))]
+  corpus_F[[i]] <- sub_corpus_F[[i]][1:which(count_F[[i]] == min(unlist(lapply(count_F, max))))]
 }
 
-#table(corpora[["M"]]$party)  # check
-#table(corpora[["D"]]$gender)  # check
+# check
+# NOTE: the total number of tokens may be slightly different
+# total number of tokens %in% vocab should be the same for both genders
+check1 <- corpus_F[["D"]] %in% vocab
+check2 <- corpus_M[["D"]] %in% vocab
+length(check1[check1 == TRUE])
+length(check1[check1 == TRUE])
+
+# join corpora by gender
+for(i in PARTY){
+  corpora[[i]] <- c(corpus_M[[i]], corpus_F[[i]])
+}
 
 # ================================
 # save stratified corpora
