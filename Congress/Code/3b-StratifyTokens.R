@@ -11,6 +11,13 @@ library(pbapply)
 library(data.table)
 library(progress)
 library(magrittr)
+library(quanteda)
+library(stringr)
+
+# ================================
+# define parameters
+# ================================
+WINDOW_SIZE <- 6
 
 # ================================
 # define paths
@@ -31,6 +38,12 @@ GENDER <- list("M", "F")
 GROUPS <- c(PARTY, GENDER)
 
 # ================================
+# add buffer
+# ================================
+buffer <- paste(rep("unk", WINDOW_SIZE), collapse = " ")
+corpus$speech <- unlist(pblapply(corpus$speech, function(x) paste(buffer, x, buffer, collapse = " ")))
+
+# ================================
 # check corpora length
 # ================================
 # create vocab and tokenizer
@@ -41,6 +54,17 @@ VOCAB_SIZE <- tokenizer$num_words
 # subset each corpus to texts with more than one token in vocab
 corpus_check <- texts_to_sequences(tokenizer, corpus$speech) %>% pblapply(., function(x) length(x) > 1) %>% unlist(.)
 corpus <- corpus[corpus_check]
+
+NumTokensInVocab <- function(text, vocab){
+  vtokens <- unlist(str_split(text, pattern = " "))
+  num_tokens <- vtokens %in% vocab
+  num_tokens <- length(num_tokens[num_tokens == TRUE])
+}
+
+corpora_folds <- corpora_folds[,num_tokens:=ntoken(corpus)]
+temp <- corpora_folds
+temp$num_tokens <- unlist(pblapply(corpora_folds$corpus, function(x) NumTokensInVocab(x, vocab = vocab)))
+
 
 # ================================
 # stratify population
