@@ -10,7 +10,7 @@ library(data.table)
 # args to process
 args <- commandArgs(trailingOnly = TRUE)
 print(args)
-if(length(args)!=2) stop(paste0("Not the right number of arguments!", args))
+if(length(args)!=3) stop(paste0("Not the right number of arguments!", args))
 #args <- as.numeric(args)
 
 # set paths
@@ -28,7 +28,7 @@ FOLD <- as.integer(args[2])
 WINDOW_SIZE <- 6  # how many words to consider left and right
 NEGATIVE_SAMPLES <- 1  # number of negative examples to sample for each word
 EMBEDDING_SIZE <- 300  # dimension of the embedding vector
-EPOCHS <- 1
+EPOCHS <- as.integer(args[3])
 
 # ================================
 # load data
@@ -69,7 +69,7 @@ corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
   corpus_check <- texts_to_sequences(tokenizer, corpus) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
   corpus <- corpus[corpus_check]
   corpus <- rep(sample(corpus), EPOCHS)
-  corpus <- corpus[1:10]
+  #corpus <- corpus[1:10]
   
   # ================================
   # skip-gram generator
@@ -146,6 +146,5 @@ corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
 # ================================
 # save embeddings
 # ================================
-#saveRDS(embedding_matrix, paste0(out_path, SOURCE, "_", FOLD, "_", WINDOW_SIZE, "_", VOCAB_SIZE, "_embedding_matrix.rds"))
-saveRDS(embedding_matrix, paste0(out_path, SOURCE, FOLD, "_", EPOCHS, "_embedding_matrix.rds"))
+saveRDS(embedding_matrix, paste0(out_path, SOURCE, FOLD, "_E", EPOCHS, "_embedding_matrix.rds"))
   
