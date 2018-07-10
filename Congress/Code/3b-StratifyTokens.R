@@ -13,6 +13,7 @@ library(progress)
 library(magrittr)
 library(quanteda)
 library(stringr)
+library(text2vec)
 
 # ================================
 # define parameters
@@ -42,6 +43,39 @@ GROUPS <- c(PARTY, GENDER)
 # ================================
 buffer <- paste(rep("unk", WINDOW_SIZE), collapse = " ")
 corpus$speech <- unlist(pblapply(corpus$speech, function(x) paste(buffer, x, buffer, collapse = " ")))
+
+# ================================
+# randomize speeches
+# ================================
+set.seed(12111984)
+corpus$speech <- sample(corpus$speech)
+
+# ================================
+# corpora by gender stratifying by party & number of tokens
+# ================================
+sub_corpus_D <- list()
+sub_corpus_R <- list()
+in_vocab_D <- list()
+in_vocab_R <- list()
+count_D <- list()
+count_R <- list()
+
+for(i in GENDER){
+  # subset corpora to relevant groups and tokenize
+  sub_corpus_D[[i]] <- space_tokenizer(paste(corpus[gender == i & party == "D", speech], collapse = " "))
+  sub_corpus_R[[i]] <- space_tokenizer(paste(corpus[gender == i & party == "R", speech], collapse = " "))
+  # check whether word is in voacb
+  in_vocab_D[[i]] <- unlist(pblapply(sub_corpus_D[[i]], function(x) x %in% vocab))
+  in_vocab_R[[i]] <- unlist(pblapply(sub_corpus_R[[i]], function(x) x %in% vocab))
+  # cumulative count of words in vocab
+  count_D[[i]] <- ave(in_vocab_D[[i]] == TRUE, in_vocab_D[[i]], FUN=cumsum)
+  count_R[[i]] <- ave(in_vocab_R[[i]] == TRUE, in_vocab_R[[i]], FUN=cumsum)
+  # subset vocab such that there's the same number of republican and democrat words in each group
+  sub_corpus_D[[i]] <- sub_corpus_D[[i]][1:which(count_D[[i]] == min(unlist(lapply(count_D, max))))]
+  sub_corpus_R[[i]] <- sub_corpus_R[[i]][1:which(count_R[[i]] == min(unlist(lapply(count_R, max))))]
+}
+
+check <- sub_corpus_D[["M"]] %in% vocab
 
 # ================================
 # check corpora length
