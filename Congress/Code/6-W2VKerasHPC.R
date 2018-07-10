@@ -46,6 +46,7 @@ corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
 #for(i in START:END){
   #corpus <- corpora[fold!= FOLD, corpus]
   corpus <- corpora[group == SOURCE & fold!= FOLD, corpus]
+  rm(corpora)
   #corpus <- corpus[1:10]
   # ================================
   # create vocab and tokenizer
@@ -60,6 +61,15 @@ corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
   # reverse dictionary
   reverse_dictionary <- as.list(names(dictionary))
   names(reverse_dictionary) <- unlist(dictionary)
+  
+  # ================================
+  # check item length
+  # ================================
+  # first check all batches have more than one token in vocab
+  corpus_check <- texts_to_sequences(tokenizer, corpus) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
+  corpus <- corpus[corpus_check]
+  corpus <- rep(sample(corpus), EPOCHS)
+  corpus <- corpus[1:10]
   
   # ================================
   # skip-gram generator
@@ -109,7 +119,7 @@ corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
   model %>%
     fit_generator(
       skipgrams_generator(corpus, tokenizer = tokenizer, window_size = WINDOW_SIZE, negative_samples = NEGATIVE_SAMPLES),
-      steps_per_epoch = length(corpus)-1, epochs = 1
+      steps_per_epoch = length(corpus), epochs = 1
     )
   
   # ================================
@@ -137,5 +147,5 @@ corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
 # save embeddings
 # ================================
 #saveRDS(embedding_matrix, paste0(out_path, SOURCE, "_", FOLD, "_", WINDOW_SIZE, "_", VOCAB_SIZE, "_embedding_matrix.rds"))
-saveRDS(embedding_matrix, paste0(out_path, SOURCE, FOLD, "_embedding_matrix.rds"))
+saveRDS(embedding_matrix, paste0(out_path, SOURCE, FOLD, "_", EPOCHS, "_embedding_matrix.rds"))
   
