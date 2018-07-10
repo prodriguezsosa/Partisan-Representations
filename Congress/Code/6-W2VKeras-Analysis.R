@@ -32,7 +32,7 @@ embedding_matrix_R1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Re
 embedding_matrix_D2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/1D12_9359_embedding_matrix.rds")
 embedding_matrix_R2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/1R12_9359_embedding_matrix.rds")
 
-embedding_matrix_D1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/D1_embedding_matrix.rds")
+#embedding_matrix_D1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/D1_embedding_matrix.rds")
 embedding_matrix_R1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/R1_embedding_matrix.rds")
 embedding_matrix_D2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/D2_embedding_matrix.rds")
 embedding_matrix_R2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/R2_embedding_matrix.rds")
@@ -48,17 +48,12 @@ find_similar_words <- function(word, embedding_matrix, n = 10) {
   similarities[,1] %>% sort(decreasing = TRUE) %>% head(n)
 }
 
-token <- "economy"
+token <- "america"
 find_similar_words(token, embedding_matrix_R1)
 find_similar_words(token, embedding_matrix_R2)
-find_similar_words(token, embedding_matrix_D1)
+#find_similar_words(token, embedding_matrix_D1)
 find_similar_words(token, embedding_matrix_D2)
 
-find_similar_words(token, embedding_matrix_F1)
-find_similar_words(token, embedding_matrix_F2)
-
-find_similar_words(token, embedding_matrix_M1)
-find_similar_words(token, embedding_matrix_M2)
 
 
 term1 <- "united"
