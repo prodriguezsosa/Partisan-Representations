@@ -1,37 +1,50 @@
 rm(list = ls())
 library(stringr)
 
-# set paths
-in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/News/Inputs/RDS/"
-out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/News/Inputs/"
+# ================================
+# parameters
+# ================================
+FOLDS <- 10
+CHUNK_SIZE <- 250
 
-# list of files
-corpus_list <- list()
-SOURCE <- c("FOX", "MSNBC")
-for(s in SOURCE){
-#s <- "FOX"
-sub_corpora <- as.list(list.files(paste0(in_path, s)))
-corpus <- as.character()
+# ================================
+# define covariates
+# ================================
+PARTY <- list("D", "R")
+GENDER <- list("M", "F")
+GROUPS <- c(PARTY, GENDER)
 
-# create one big text
-for(i in 1:length(sub_corpora)){
-  sub_corpus <- readRDS(paste0(in_path, s, "/", sub_corpora[[i]])) # load sub-corpus
-  corpus <- paste(corpus, sub_corpus, sep = " ") # paste
-}
+# ================================
+# define paths
+# ================================
+out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/"
 
-# corpus chunking
-N <- 50 # chunk size
-corpus <- unlist(str_split(corpus, " ")) # tokenize
-corpus <- corpus[!is.na(corpus)]
-corpus <- corpus[corpus!="NA"] # remove empty cells
-corpus <- corpus[corpus!=""] # remove empty cells
-corpus <- split(corpus, ceiling(seq_along(corpus)/N)) # split into chunks of size N
-corpus <- lapply(corpus, function(x) paste(x, collapse = " ")) # collapse words within chunks
-corpus <- unname(unlist(corpus))
-corpus <- iconv(corpus, to = "UTF-8")
-set.seed(12111984)
-corpus <- sample(corpus)  # randomize order
-corpus_list[[s]] <- corpus 
+# ================================
+# load data
+# ================================
+corpora <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/corpora.rds")
+
+# ================================
+# chunk by group
+# ================================
+corpora_chunks <- list()
+
+for(i in GROUPS){
+  corpus <- corpora[[i]]
+  # create one big text
+  corpus <- paste(corpus, collapse = " ")
+  # corpus chunking
+  corpus <- unlist(str_split(corpus, " ")) # tokenize
+  corpus <- corpus[!is.na(corpus)]
+  corpus <- corpus[corpus!="NA"] # remove empty cells
+  corpus <- corpus[corpus!=""] # remove empty cells
+  corpus <- split(corpus, ceiling(seq_along(corpus)/CHUNK_SIZE)) # split into chunks of size N
+  corpus <- lapply(corpus, function(x) paste(x, collapse = " ")) # collapse words within chunks
+  corpus <- unname(unlist(corpus))
+  corpus <- iconv(corpus, to = "UTF-8")
+  set.seed(12111984)
+  corpus <- sample(corpus)  # randomize order
+  corpus_list[[s]] <- corpus 
 }
 
 
