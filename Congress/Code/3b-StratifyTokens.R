@@ -110,7 +110,6 @@ count_M <- list()
 count_F <- list()
 corpus_M <- list()
 corpus_F <- list()
-corpora <- list()
 
 for(i in PARTY){
   # subset corpora to relevant groups and tokenize
@@ -133,10 +132,10 @@ for(i in PARTY){
 # check
 # NOTE: the total number of tokens may be slightly different
 # total number of tokens %in% vocab should be the same for both genders
-check1 <- corpus_F[["D"]] %in% vocab
-check2 <- corpus_M[["D"]] %in% vocab
-length(check1[check1 == TRUE])
-length(check1[check1 == TRUE])
+#check1 <- corpus_F[["D"]] %in% vocab
+#check2 <- corpus_M[["D"]] %in% vocab
+#length(check1[check1 == TRUE])
+#length(check1[check1 == TRUE])
 
 # join corpora by gender
 for(i in PARTY){
