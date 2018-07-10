@@ -46,6 +46,7 @@ corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
 #for(i in START:END){
   #corpus <- corpora[fold!= FOLD, corpus]
   corpus <- corpora[group == SOURCE & fold!= FOLD, corpus]
+  #corpus <- corpora[group == SOURCE, corpus]
   rm(corpora)
   #corpus <- corpus[1:10]
   # ================================
@@ -147,4 +148,5 @@ corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
 # save embeddings
 # ================================
 saveRDS(embedding_matrix, paste0(out_path, SOURCE, FOLD, "_E", EPOCHS, "_embedding_matrix.rds"))
+#saveRDS(embedding_matrix, paste0(out_path, SOURCE, "_E", EPOCHS, "_embedding_matrix.rds"))
   
