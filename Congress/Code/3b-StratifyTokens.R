@@ -73,13 +73,17 @@ for(i in GENDER){
   # cumulative count of words in vocab
   count_D[[i]] <- ave(in_vocab_D[[i]] == TRUE, in_vocab_D[[i]], FUN=cumsum)
   count_R[[i]] <- ave(in_vocab_R[[i]] == TRUE, in_vocab_R[[i]], FUN=cumsum)
+}
+
+for(i in GENDER){
   # subset vocab such that there's the same number of republican and democrat words in each group
   corpus_D[[i]] <- sub_corpus_D[[i]][1:which(count_D[[i]] == min(unlist(lapply(count_D, max))))]
   corpus_R[[i]] <- sub_corpus_R[[i]][1:which(count_R[[i]] == min(unlist(lapply(count_R, max))))]
 }
 
-check <- sub_corpus_D[["F"]] %in% vocab
-length(check[check == TRUE])
+# check
+#check <- corpus_R[["M"]] %in% vocab
+#length(check[check == TRUE])
 
 # ================================
 # check corpora length

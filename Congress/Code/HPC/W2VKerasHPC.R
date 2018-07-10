@@ -85,6 +85,7 @@ corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
   embedding <- layer_embedding(
     input_dim = tokenizer$num_words + 1, 
     output_dim = EMBEDDING_SIZE, 
+    embeddings_initializer = initializer_random_uniform(minval = -0.05, maxval = 0.05, seed = 11121984),
     input_length = 1, 
     name = "embedding"
   )
