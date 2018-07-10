@@ -51,7 +51,12 @@ set.seed(12111984)
 corpus$speech <- sample(corpus$speech)
 
 # ================================
-# corpora by gender 
+# stratify
+# ================================
+corpora <- list()
+
+# ================================
+# for gender corpora
 # stratifying by party & number of tokens in vocab
 # ================================
 sub_corpus_D <- list()
@@ -62,7 +67,6 @@ count_D <- list()
 count_R <- list()
 corpus_D <- list()
 corpus_R <- list()
-corpora <- list()
 
 for(i in GENDER){
   # subset corpora to relevant groups and tokenize
@@ -99,7 +103,7 @@ for(i in GENDER){
 rm(sub_corpus_D, sub_corpus_R, in_vocab_D, in_vocab_R, count_D, count_R, corpus_D, corpus_R)
 
 # ================================
-# corpora by party 
+# for party corpora
 # stratifying by gender & number of tokens in vocab
 # ================================
 sub_corpus_M <- list()
@@ -141,6 +145,9 @@ for(i in PARTY){
 for(i in PARTY){
   corpora[[i]] <- c(corpus_M[[i]], corpus_F[[i]])
 }
+
+# spring cleaning
+rm(sub_corpus_M, sub_corpus_F, in_vocab_M, in_vocab_F, count_M, count_F, corpus_M, corpus_F)
 
 # ================================
 # save stratified corpora
