@@ -51,7 +51,8 @@ set.seed(12111984)
 corpus$speech <- sample(corpus$speech)
 
 # ================================
-# corpora by gender stratifying by party & number of tokens
+# corpora by gender 
+# stratifying by party & number of tokens in vocab
 # ================================
 sub_corpus_D <- list()
 sub_corpus_R <- list()
@@ -62,11 +63,11 @@ count_R <- list()
 
 for(i in GENDER){
   # subset corpora to relevant groups and tokenize
-  sub_corpus_D[[i]] <- space_tokenizer(paste(corpus[gender == i & party == "D", speech], collapse = " "))
-  sub_corpus_R[[i]] <- space_tokenizer(paste(corpus[gender == i & party == "R", speech], collapse = " "))
+  sub_corpus_D[[i]] <- unlist(space_tokenizer(paste(corpus[gender == i & party == "D", speech], collapse = " ")))
+  sub_corpus_R[[i]] <- unlist(space_tokenizer(paste(corpus[gender == i & party == "R", speech], collapse = " ")))
   # check whether word is in voacb
-  in_vocab_D[[i]] <- unlist(pblapply(sub_corpus_D[[i]], function(x) x %in% vocab))
-  in_vocab_R[[i]] <- unlist(pblapply(sub_corpus_R[[i]], function(x) x %in% vocab))
+  in_vocab_D[[i]] <- pblapply(sub_corpus_D[[i]], function(x) x %in% vocab)
+  in_vocab_R[[i]] <- pblapply(sub_corpus_R[[i]], function(x) x %in% vocab)
   # cumulative count of words in vocab
   count_D[[i]] <- ave(in_vocab_D[[i]] == TRUE, in_vocab_D[[i]], FUN=cumsum)
   count_R[[i]] <- ave(in_vocab_R[[i]] == TRUE, in_vocab_R[[i]], FUN=cumsum)
@@ -75,7 +76,7 @@ for(i in GENDER){
   sub_corpus_R[[i]] <- sub_corpus_R[[i]][1:which(count_R[[i]] == min(unlist(lapply(count_R, max))))]
 }
 
-check <- sub_corpus_D[["M"]] %in% vocab
+check <- sub_corpus_D[["M"]][1:100] %in% vocab
 
 # ================================
 # check corpora length
