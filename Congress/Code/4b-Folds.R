@@ -32,14 +32,14 @@ out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congr
 # ================================
 # load data
 # ================================
-corpora <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/corpora.rds")
+corpora_chunks <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/corpora_chunks.rds")
 
 # ================================
 # split into folds
 # ================================
 corpora_folds <- list()
 for(i in GROUPS){
-  corpus <- corpora[[i]]
+  corpus <- corpora_chunks[[i]]
   text_seq <- seq(1, length(corpus), 1)  # sequence id
   chunks <- split(text_seq, ceiling(seq_along(text_seq)/(floor(length(corpus)/FOLDS))))
   corpus_folds <- data.table("group" = i, "corpus" = corpus, "fold" = NA, stringsAsFactors = FALSE)
@@ -49,7 +49,10 @@ for(i in GROUPS){
   corpus_folds <- corpus_folds[fold < 11,]  # remove extra folds
   corpora_folds[[i]] <- corpus_folds
 }
-rm(corpora)
+
+# spring cleaning
+rm(corpus_folds, corpora_chunks)
+
 # ================================
 # save corpora with folds
 # ================================
