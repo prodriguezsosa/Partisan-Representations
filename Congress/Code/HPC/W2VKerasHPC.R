@@ -70,6 +70,7 @@ corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
   corpus_check <- texts_to_sequences(tokenizer, corpus) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
   corpus <- corpus[corpus_check]
   corpus <- rep(sample(corpus), EPOCHS)
+  corpus <- sample(corpus)  # double shuffling
   #corpus <- corpus[1:10]
   
   # ================================

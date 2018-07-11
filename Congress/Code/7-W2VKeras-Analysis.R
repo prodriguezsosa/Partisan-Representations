@@ -56,7 +56,7 @@ find_similar_words <- function(word, embedding_matrix, n = 10) {
   similarities[,1] %>% sort(decreasing = TRUE) %>% head(n)
 }
 
-token <- "abortion"
+token <- "welfare"
 find_similar_words(token, embedding_matrix_M1)
 find_similar_words(token, embedding_matrix_F1)
 #find_similar_words(token, embedding_matrix_D1)
