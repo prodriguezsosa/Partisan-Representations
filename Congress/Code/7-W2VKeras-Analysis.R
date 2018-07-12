@@ -1,53 +1,67 @@
 rm(list = ls())
+
+# ================================
+# load libraries & functions
+# ================================
 library(keras)
 library(reticulate)
 library(purrr)
 library(dplyr)
 library(text2vec)
 library(magrittr)
-#library(udpipe)
-#library(pbapply)
 library(data.table)
+library(LaplacesDemon)
 
-# load parsing/POS model
-#el <- udpipe_download_model(language = "english")
-#udmodel_english <- udpipe_load_model(file = "english-ud-2.0-170801.udpipe")
+# function to compute transition matrix
+source("/Users/pedrorodriguez/Dropbox/Research/WordEmbeddings/US/General/ImportedEmbeddings/WordScoring/Code/transition_matrix.R")
 
+# ================================
 # set paths
+# ================================
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/"
-out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/"
-
-# define source
-VOCAB_SIZE <- 47949
-SOURCE <- "R"
-WINDOW_SIZE <- 2
+out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Post-Estimation/Transitions/"
 
 # ================================
-# load data
+# define parameters
 # ================================
-#reverse_dictionary <- readRDS(paste0(out_path, SOURCE, "_", WINDOW_SIZE, "_reverse_dictionary.rds"))
-#dictionary <- readRDS(paste0(out_path, SOURCE, "_", WINDOW_SIZE, "_dictionary.rds"))
-embedding_matrix_D1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/1D6_9359_embedding_matrix.rds")
-embedding_matrix_R1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/1R6_9359_embedding_matrix.rds")
-embedding_matrix_D2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/1D12_9359_embedding_matrix.rds")
-embedding_matrix_R2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/1R12_9359_embedding_matrix.rds")
+FOLDS <- 10
 
-#embedding_matrix_D1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/D1_embedding_matrix.rds")
-embedding_matrix_R1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Party/R1_E2_embedding_matrix.rds")
-embedding_matrix_R2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Party/R2_E2_embedding_matrix.rds")
-embedding_matrix_D1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Party/D1_E2_embedding_matrix.rds")
-embedding_matrix_D2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Party/D2_E2_embedding_matrix.rds")
+# ================================
+# load data & average over embeddings
+# ================================
+embedding_matrix_R <- readRDS(paste0(in_path, "R", 1, "_E2_embedding_matrix.rds"))
+embedding_matrix_D <- readRDS(paste0(in_path, "D", 1, "_E2_embedding_matrix.rds"))
+embedding_matrix_F <- readRDS(paste0(in_path, "F", 1, "_E3_embedding_matrix.rds"))
+embedding_matrix_M <- readRDS(paste0(in_path, "M", 1, "_E3_embedding_matrix.rds"))
 
-embedding_matrix_M3 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Gender/M3_E3_embedding_matrix.rds")
-embedding_matrix_F3 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Gender/F3_E3_embedding_matrix.rds")
-embedding_matrix_M4 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Gender/M4_E3_embedding_matrix.rds")
-embedding_matrix_F4 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Gender/F4_E3_embedding_matrix.rds")
+for(i in 1:FOLDS){
+  embedding_matrix_R <- embedding_matrix_M1 + readRDS(paste0(in_path, "R", i, "_E2_embedding_matrix.rds"))
+  embedding_matrix_D <- embedding_matrix_M1 + readRDS(paste0(in_path, "D", i, "_E2_embedding_matrix.rds"))
+  embedding_matrix_F <- embedding_matrix_M1 + readRDS(paste0(in_path, "F", i, "_E3_embedding_matrix.rds"))
+  embedding_matrix_M <- embedding_matrix_M1 + readRDS(paste0(in_path, "M", i, "_E3_embedding_matrix.rds"))
+}
 
+embeddings_list <- list(embedding_matrix_R, embedding_matrix_D, embedding_matrix_F, embedding_matrix_M)
 
-#embedding_matrix <- embedding_matrix[-1,]
-#row.names(embedding_matrix) <- c("UNK", names(dictionary))
-#row.names(embedding_matrix) <- names(dictionary)
+# spring cleaning
+rm(embedding_matrix_R, embedding_matrix_D, embedding_matrix_F, embedding_matrix_M)
+# ================================
+# compute transition matrices
+# ================================
+transitions_matrices <- lapply(embeddings_list, function(i) transition_matrix(i, method = 'cosine', diagonal = 0))
 
+# ================================
+# compute KL-Divergence
+# ================================
+kl_divergence <- data.table(vocab = rownames(transitions_matrices[[1]]))
+kl_divergence <- kl_divergence[, DR_divergence := unlist(lapply(kl_divergence$vocab, function(v) KLD(transitions_matrices[[1]][v,], transitions_matrices[[2]][v,])[["mean.sum.KLD"]]))]
+kl_divergence <- kl_divergence[, FM_divergence := unlist(lapply(kl_divergence$vocab, function(v) KLD(transitions_matrices[[3]][v,], transitions_matrices[[4]][v,])[["mean.sum.KLD"]]))]
+# test means difference
+t.test(kl_divergence$DR_divergence, kl_divergence$FM_divergence)
+
+# ================================
+# explore nearest neighbors
+# ================================
 find_similar_words <- function(word, embedding_matrix, n = 10) {
   similarities <- embedding_matrix[word, , drop = FALSE] %>%
     sim2(embedding_matrix, y = ., method = "cosine")
@@ -55,51 +69,10 @@ find_similar_words <- function(word, embedding_matrix, n = 10) {
   similarities[,1] %>% sort(decreasing = TRUE) %>% head(n)
 }
 
-token <- "welfare"
-find_similar_words(token, embedding_matrix_R1)
-find_similar_words(token, embedding_matrix_R2)
-find_similar_words(token, embedding_matrix_D1)
-find_similar_words(token, embedding_matrix_D2)
-
-#find_similar_words(token, embedding_matrix_D1)
-find_similar_words(token, embedding_matrix_D2)
+token <- "healthcare"
+find_similar_words(token, embedding_matrix_R)
+find_similar_words(token, embedding_matrix_D)
 
 
-
-term1 <- "united"
-term2 <- "states"
-embedding_matrix <- embedding_matrix_R
-composite = embedding_matrix[term1, , drop = FALSE] + embedding_matrix[term2, , drop = FALSE]
-cos_sim = sim2(x = embedding_matrix, y = composite, method = "cosine", norm = "l2")
-head(sort(cos_sim[,1], decreasing = TRUE), 10)
-
-
-# ================================
-# POS tagging
-# ================================
-vocab <- rownames(embedding_matrix)
-vocab_annotated <- pblapply(vocab, function(s) as.data.frame(udpipe_annotate(udmodel_english, x = s, parser = "none")))
-vocab_pos <- data.table(token = lapply(vocab_annotated, function(s) s[c("token")]) %>% unlist(.) %>% unname(.),
-                          pos = lapply(vocab_annotated, function(s) s[c("upos")]) %>% unlist(.) %>% unname(.))
-vocab_adjectives <- vocab_pos[pos == "ADJ", token]
-
-target <- "socialism"
-vocab_sentiment <- c(target, vocab_adjectives)
-sub_embedding_matrix <- embedding_matrix[rownames(embedding_matrix) %in% vocab_sentiment,]
-find_similar_words(target, sub_embedding_matrix)
-
-
-library(Rtsne)
-library(ggplot2)
-library(plotly)
-
-tsne <- Rtsne(embedding_matrix[2:500,], perplexity = 50, pca = FALSE)
-
-tsne_plot <- tsne$Y %>%
-  as.data.frame() %>%
-  mutate(word = row.names(embedding_matrix)[2:500]) %>%
-  ggplot(aes(x = V1, y = V2, label = word)) + 
-  geom_text(size = 3)
-tsne_plot
 
 
