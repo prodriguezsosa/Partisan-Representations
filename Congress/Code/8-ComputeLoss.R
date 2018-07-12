@@ -10,23 +10,23 @@ library(data.table)
 # args to process
 args <- commandArgs(trailingOnly = TRUE)
 print(args)
-if(length(args)!=3) stop(paste0("Not the right number of arguments!", args))
+if(length(args)!=2) stop(paste0("Not the right number of arguments!", args))
 #args <- as.numeric(args)
 
 # set paths
-in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Gender/"
-out_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Outputs/"
+in_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Outputs/"
+out_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Post-Estimation/Outputs/"
 
 # define source
-#SOURCE <- as.character(args[1])
-#FOLD <- as.integer(args[2])
-MODEL <- "F"
-TEST <- "M"
+#MODEL <- "F"
+#TEST <- "M"
+MODEL <- as.character(args[1])
+TEST <- as.integer(args[2])
+NUM_FOLDS <- 10
 
 # set parameters
-#WINDOW_SIZE <- as.numeric(args[2])  # how many words to consider left and right
 WINDOW_SIZE <- 6  # how many words to consider left and right
-NEGATIVE_SAMPLES <- 1  # number of negative examples to sample for each word
+NEGATIVE_SAMPLES <- 0  # number of negative examples to sample for each word
 EMBEDDING_SIZE <- 300  # dimension of the embedding vector
 
 # ================================
@@ -38,20 +38,15 @@ vocab <- readRDS(paste0(in_path, "vocab.rds"))
 corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
 
 loss_history <- list()
-folds <- seq(1:10)
-for(i in folds){
-start_time <- Sys.time()
-pre_trained_embeddings <- readRDS(paste0(in_path, paste0(MODEL, i, "_E3_embedding_matrix.rds")))
-
-# ================================
-# loop over folds
-# ================================
-
-test_folds <- folds[folds!=i]
-
-for(j in test_folds){
+for(i in 1:1){
   
-  corpus <- corpora[group == TEST & fold == j, corpus]
+  if(MODEL %in% c("F", "M")){pre_trained_embeddings <- readRDS(paste0(in_path, paste0(MODEL, i, "_E3_embedding_matrix.rds")))}
+  if(MODEL %in% c("R", "D")){pre_trained_embeddings <- readRDS(paste0(in_path, paste0(MODEL, i, "_E2_embedding_matrix.rds")))}
+  
+  # ================================
+  # loop over folds
+  # ================================
+  corpus <- corpora[group == TEST & fold == i, corpus]
   
   # ================================
   # create vocab and tokenizer
@@ -66,7 +61,6 @@ for(j in test_folds){
   # first check all batches have more than one token in vocab
   corpus_check <- texts_to_sequences(tokenizer, corpus) %>% lapply(., function(x) length(x) > 1) %>% unlist(.)
   corpus <- corpus[corpus_check]
-  corpus <- rep(sample(corpus), EPOCHS)
   corpus <- sample(corpus)  # double shuffling
   
   # ================================
@@ -124,10 +118,11 @@ for(j in test_folds){
   # ================================
   # extract loss
   # ================================
-  loss_history[[i]] <- unname(unlist(model$history$history))
-  names(loss_history[[i]]) <- paste0(MODEL, TEST, i)
-}
-Sys.time() - start_time
+  loss_history[[paste0(MODEL, TEST, i)]] <- unname(unlist(model$history$history))
 }
 
+# ================================
+# save loss history
+# ================================
+saveRDS(loss_history, paste0(out_path, MODEL, TEST, "_loss_history.rds"))
 
