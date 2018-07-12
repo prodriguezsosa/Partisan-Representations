@@ -112,7 +112,7 @@ for(i in 1:NUM_FOLDS){
   model %>%
     fit_generator(
       skipgrams_generator(corpus, tokenizer = tokenizer, window_size = WINDOW_SIZE, negative_samples = NEGATIVE_SAMPLES),
-      steps_per_epoch = 1, epochs = length(corpus), verbose = TRUE
+      steps_per_epoch = 1, epochs = length(corpus), verbose = FALSE
     )
   
   # ================================
