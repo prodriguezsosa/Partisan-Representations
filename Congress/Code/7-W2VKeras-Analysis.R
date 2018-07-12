@@ -35,9 +35,8 @@ embedding_matrix_R2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Re
 #embedding_matrix_D1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/D1_embedding_matrix.rds")
 embedding_matrix_R1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Party/R1_E2_embedding_matrix.rds")
 embedding_matrix_R2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Party/R2_E2_embedding_matrix.rds")
-embedding_matrix_D <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/D_E1_embedding_matrix.rds")
-embedding_matrix_R <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/R_E1_embedding_matrix.rds")
-
+embedding_matrix_D1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Party/D1_E2_embedding_matrix.rds")
+embedding_matrix_D2 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Party/D2_E2_embedding_matrix.rds")
 
 embedding_matrix_M3 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Gender/M3_E3_embedding_matrix.rds")
 embedding_matrix_F3 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Gender/F3_E3_embedding_matrix.rds")
@@ -59,8 +58,8 @@ find_similar_words <- function(word, embedding_matrix, n = 10) {
 token <- "welfare"
 find_similar_words(token, embedding_matrix_R1)
 find_similar_words(token, embedding_matrix_R2)
-find_similar_words(token, embedding_matrix_M4)
-find_similar_words(token, embedding_matrix_F4)
+find_similar_words(token, embedding_matrix_D1)
+find_similar_words(token, embedding_matrix_D2)
 
 #find_similar_words(token, embedding_matrix_D1)
 find_similar_words(token, embedding_matrix_D2)

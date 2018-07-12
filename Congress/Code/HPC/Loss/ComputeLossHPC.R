@@ -22,7 +22,7 @@ out_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Post-Est
 #MODEL <- "F"
 #TEST <- "M"
 MODEL <- as.character(args[1])
-TEST <- as.integer(args[2])
+TEST <- as.character(args[2])
 NUM_FOLDS <- 10
 
 # set parameters
@@ -39,8 +39,7 @@ vocab <- readRDS("/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Inp
 corpora <- readRDS("/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Inputs/corpora_folds.rds")
 
 loss_history <- list()
-for(i in 1:1){
-  
+for(i in 1:NUM_FOLDS){
   if(MODEL %in% c("F", "M")){pre_trained_embeddings <- readRDS(paste0(in_path, paste0(MODEL, i, "_E3_embedding_matrix.rds")))}
   if(MODEL %in% c("R", "D")){pre_trained_embeddings <- readRDS(paste0(in_path, paste0(MODEL, i, "_E2_embedding_matrix.rds")))}
   
@@ -113,7 +112,7 @@ for(i in 1:1){
   model %>%
     fit_generator(
       skipgrams_generator(corpus, tokenizer = tokenizer, window_size = WINDOW_SIZE, negative_samples = NEGATIVE_SAMPLES),
-      steps_per_epoch = 1, epochs = length(corpus), verbose = FALSE
+      steps_per_epoch = 1, epochs = length(corpus), verbose = TRUE
     )
   
   # ================================
