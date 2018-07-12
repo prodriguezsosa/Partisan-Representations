@@ -14,8 +14,9 @@ if(length(args)!=2) stop(paste0("Not the right number of arguments!", args))
 #args <- as.numeric(args)
 
 # set paths
+#in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Gender/"
 in_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Outputs/"
-out_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Post-Estimation/Outputs/"
+out_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Post-Estimation/Loss/Outputs/"
 
 # define source
 #MODEL <- "F"
