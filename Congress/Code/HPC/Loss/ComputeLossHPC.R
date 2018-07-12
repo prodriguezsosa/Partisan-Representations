@@ -35,7 +35,7 @@ EMBEDDING_SIZE <- 300  # dimension of the embedding vector
 #vocab <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/vocab.rds")
 #corpora <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Inputs/corpora_folds.rds")
 vocab <- readRDS("/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Inputs/vocab.rds")
-corpora <- readRDS(paste0(in_path, "corpora_folds.rds"))
+corpora <- readRDS("/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Inputs/corpora_folds.rds")
 
 loss_history <- list()
 for(i in 1:1){
