@@ -19,8 +19,8 @@ in_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Outputs/"
 out_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Post-Estimation/Loss/Outputs/"
 
 # define source
-#MODEL <- "F"
-#TEST <- "M"
+#MODEL <- "R"
+#TEST <- "D"
 MODEL <- as.character(args[1])
 TEST <- as.character(args[2])
 NUM_FOLDS <- 10
