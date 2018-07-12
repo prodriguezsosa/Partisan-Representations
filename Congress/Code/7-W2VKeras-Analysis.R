@@ -39,10 +39,10 @@ embedding_matrix_D <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Rep
 embedding_matrix_R <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/R_E1_embedding_matrix.rds")
 
 
-embedding_matrix_M1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/M1_E2_embedding_matrix.rds")
-embedding_matrix_F1 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/F1_E2_embedding_matrix.rds")
-embedding_matrix_M <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/M_E1_embedding_matrix.rds")
-embedding_matrix_F <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/F_E1_embedding_matrix.rds")
+embedding_matrix_M3 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Gender/M3_E3_embedding_matrix.rds")
+embedding_matrix_F3 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Gender/F3_E3_embedding_matrix.rds")
+embedding_matrix_M4 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Gender/M4_E3_embedding_matrix.rds")
+embedding_matrix_F4 <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/Folds/Gender/F4_E3_embedding_matrix.rds")
 
 
 #embedding_matrix <- embedding_matrix[-1,]
@@ -56,9 +56,12 @@ find_similar_words <- function(word, embedding_matrix, n = 10) {
   similarities[,1] %>% sort(decreasing = TRUE) %>% head(n)
 }
 
-token <- "inequality"
-find_similar_words(token, embedding_matrix_M1)
-find_similar_words(token, embedding_matrix_F1)
+token <- "immigrants"
+find_similar_words(token, embedding_matrix_M3)
+find_similar_words(token, embedding_matrix_F3)
+find_similar_words(token, embedding_matrix_M4)
+find_similar_words(token, embedding_matrix_F4)
+
 #find_similar_words(token, embedding_matrix_D1)
 find_similar_words(token, embedding_matrix_D2)
 
