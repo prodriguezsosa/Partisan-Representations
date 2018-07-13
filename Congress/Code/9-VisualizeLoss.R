@@ -94,15 +94,15 @@ bm_mean_loss_diff <- do.call(rbind, list(ttest.data("Female", 1, 2), ttest.data(
 # ================================
 
 # order levels
-bm_mean_loss_diff <- transform(bm_mean_loss_diff, test = factor(test, levels=list("Female", "Male", "Republican", "Democrat")))
+bm_mean_loss_diff <- transform(bm_mean_loss_diff, test = factor(test, levels=list("Republican", "Male", "Democrat", "Female")))
 # plot (code borrowed from https://gist.github.com/dsparks/4332698)
 ggplot(bm_mean_loss_diff, aes(colour = test)) +
   geom_linerange(aes(x = "", ymin = ci.lower, ymax = ci.upper), lwd = 1, position = position_dodge(width = 1/2)) +
   geom_pointrange(aes(x = "", y = mean, ymin = ci.lower, ymax = ci.upper), lwd = 1/2, position = position_dodge(width = 1/2), shape = 21, fill = "WHITE") +
   geom_hline(yintercept = 0, colour = gray(1/2), lty = 2) +
   coord_flip() + theme_bw() +
-  xlab("") + ylab("Within Loss - Across Loss") +
-  theme(legend.title=element_blank()) + theme(axis.ticks.y=element_blank()) +
-  ggtitle("Within Model vs. Across Model Loss Difference")
+  xlab("") + ylab("Mean Loss Difference") +
+  theme(legend.title=element_blank(), axis.ticks.y=element_blank(), text = element_text(size=15), plot.title = element_text(hjust = 0.5), legend.position = "bottom", legend.text = element_text(size=20)) +
+  ggtitle("Within Model vs. Across Model")
 
 
