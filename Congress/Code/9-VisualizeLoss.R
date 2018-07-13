@@ -6,6 +6,7 @@ rm(list = ls())
 library(ggplot2)
 library(data.table)
 library(magrittr)
+library(stringr)
 
 # ================================
 # define paths
@@ -65,14 +66,26 @@ best_models_loss <- lapply(best_models, function(i) do.call(c, loss_list)[i]) %>
 # ================================
 # mean tests
 # ================================
+in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Post-Estimation/BestModel/"
+
+# ================================
+# load data
+# ================================
+bm_loss_files <- list.files(in_path)
+bm_loss_list <- lapply(loss_files, function(i) readRDS(paste0(in_path, i)))
+names(bm_loss_list) <- lapply(bm_loss_files, function(i) unlist(str_split(i, "_"))[1])
+
+bm_loss <- list("FF" = best_models_loss[["FF1"]], "MF" = bm_loss_list[["MF1"]], "MM" = best_models_loss[["MM2"]], "FM" = bm_loss_list[["FM2"]])
+  
+
 # ttest function
 ttest.data <- function(test_label, model_index, test_index){
-  test.result <- t.test(best_models_loss[[model_index]], best_models_loss[[test_index]])
+  test.result <- t.test(bm_loss[[model_index]], bm_loss[[test_index]])
   test.data <- data.table(test = test_label, mean = (test.result$estimate[1] - test.result$estimate[2]), ci.upper = test.result$conf.int[1], ci.lower = test.result$conf.int[2], pvalue = test.result$p.value)
   return(test.data)
 }
 
-mean_loss_diff <- do.call(rbind, list(ttest.data("Female", 1, 4), ttest.data("Male", 2, 3), ttest.data("Republican", 5, 8), ttest.data("Democrat", 6, 7)))
+bm_mean_loss_diff <- do.call(rbind, list(ttest.data("Female", 1, 2), ttest.data("Male", 3, 4)))
 
 # ================================
 # mean tests plot
