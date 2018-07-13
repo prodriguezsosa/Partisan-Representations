@@ -112,7 +112,7 @@ summary(model)
 model %>%
   fit_generator(
     skipgrams_generator(corpus, tokenizer = tokenizer, window_size = WINDOW_SIZE, negative_samples = NEGATIVE_SAMPLES),
-    steps_per_epoch = 1, epochs = 1, verbose = FALSE
+    steps_per_epoch = 1, epochs = length(corpus), verbose = FALSE
   )
 
 # ================================
