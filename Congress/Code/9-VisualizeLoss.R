@@ -72,10 +72,12 @@ in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congre
 # load data
 # ================================
 bm_loss_files <- list.files(in_path)
-bm_loss_list <- lapply(loss_files, function(i) readRDS(paste0(in_path, i)))
+bm_loss_list <- lapply(bm_loss_files, function(i) readRDS(paste0(in_path, i)))
+
 names(bm_loss_list) <- lapply(bm_loss_files, function(i) unlist(str_split(i, "_"))[1])
 
-bm_loss <- list("FF" = best_models_loss[["FF1"]], "MF" = bm_loss_list[["MF1"]], "MM" = best_models_loss[["MM2"]], "FM" = bm_loss_list[["FM2"]])
+bm_loss <- list("FF" = best_models_loss[["FF1"]], "MF" = bm_loss_list[["MF1"]], "MM" = best_models_loss[["MM2"]], "FM" = bm_loss_list[["FM2"]],
+                "RR" = best_models_loss[["RR4"]], "DR" = bm_loss_list[["DR4"]], "DD" = best_models_loss[["DD7"]], "RD" = bm_loss_list[["RD7"]])
   
 
 # ttest function
@@ -85,16 +87,16 @@ ttest.data <- function(test_label, model_index, test_index){
   return(test.data)
 }
 
-bm_mean_loss_diff <- do.call(rbind, list(ttest.data("Female", 1, 2), ttest.data("Male", 3, 4)))
+bm_mean_loss_diff <- do.call(rbind, list(ttest.data("Female", 1, 2), ttest.data("Male", 3, 4), ttest.data("Republican", 5, 6), ttest.data("Democrat", 7, 8)))
 
 # ================================
 # mean tests plot
 # ================================
 
 # order levels
-mean_loss_diff <- transform(mean_loss_diff, test = factor(test, levels=list("Female", "Male", "Democrat", "Republican")))
+bm_mean_loss_diff <- transform(bm_mean_loss_diff, test = factor(test, levels=list("Female", "Male", "Republican", "Democrat")))
 # plot (code borrowed from https://gist.github.com/dsparks/4332698)
-ggplot(mean_loss_diff, aes(colour = test)) +
+ggplot(bm_mean_loss_diff, aes(colour = test)) +
   geom_linerange(aes(x = "", ymin = ci.lower, ymax = ci.upper), lwd = 1, position = position_dodge(width = 1/2)) +
   geom_pointrange(aes(x = "", y = mean, ymin = ci.lower, ymax = ci.upper), lwd = 1/2, position = position_dodge(width = 1/2), shape = 21, fill = "WHITE") +
   geom_hline(yintercept = 0, colour = gray(1/2), lty = 2) +
