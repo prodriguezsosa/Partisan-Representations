@@ -137,19 +137,23 @@ OverlapFM <- ContextOverlap(seeds = rownames(embeddings_list[["F"]]), embed1 = "
 # ================================
 # explore results
 # ================================
-# setdiff
+#seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
+seed <- "guns"
+# setdiff tokens
+lapply(list("R", "D"), function(x) setdiffRD[[x]][[seed]])
+lapply(list("F", "M"), function(x) setdiffFM[[x]][[seed]])
 
-setdiffFM[[1]][["welfare"]]
-setdiffFM[[1]][["welfare"]]
+# overlap tokens
+OverlapRD[[seed]]
+OverlapFM[[seed]]
 
+# overlap statistic
+OverlapStatRD[token == seed, overlap]
+OverlapStatFM[token == seed, overlap]
 
-# overlap
-seed <- "conservative"
-overlapRD[token == seed,]
-overlapFM[token == seed,]
 # explore differences
-overlap <- cbind(overlapRD, overlapFM[,2]) %>% set_colnames(c("token", "RD", "FM"))
-overlap <- overlap[, covariate_diff := RD - FM]
+#overlap <- cbind(overlapRD, overlapFM[,2]) %>% set_colnames(c("token", "RD", "FM"))
+#overlap <- overlap[, covariate_diff := RD - FM]
 
 
 
