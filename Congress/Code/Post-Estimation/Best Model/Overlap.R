@@ -121,20 +121,19 @@ ContextDiff <- function(seeds, dist_matrix1, dist_matrix2, N = NULL, thresholds 
 }
 
 # apply function
-setdiffRD <- ContextDiff(seeds = rownames(embeddings_list[["R"]]), dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], 
-                         thresholds = c(dist_thresholds[["R"]], dist_thresholds[["D"]]))
+#setdiffFM <- ContextDiff(seeds = rownames(embeddings_list[["F"]]), dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], 
+#                         thresholds = c(dist_thresholds[["F"]], dist_thresholds[["M"]]))
+setdiffRD <- ContextDiff(seeds = rownames(embeddings_list[["R"]]), dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10)
 names(setdiffRD) <- c('R', 'D')
 
-
-setdiffFM <- ContextDiff(seeds = rownames(embeddings_list[["F"]]), dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], 
-                         thresholds = c(dist_thresholds[["F"]], dist_thresholds[["M"]]))
-names(setdiffRD) <- c('F', 'M')
+setdiffFM <- ContextDiff(seeds = rownames(embeddings_list[["F"]]), dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10)
+names(setdiffFM) <- c('F', 'M')
 
 # overlap function
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
-ContextOverlapStat <- function(seeds, dist_matrix1, dist_matrix2, N){
-  context1 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix1, num_neighbors = N, threshold = threshold)))
-  context2 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix2, num_neighbors = N, threshold = threshold)))
+ContextOverlapStat <- function(seeds, dist_matrix1, dist_matrix2, N = NULL, thresholds = NULL){
+  context1 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix1, num_neighbors = N, thresholds = threshold)))
+  context2 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix2, num_neighbors = N, thresholds = threshold)))
   overlap <- pblapply(seq(1:length(seeds)), function(x) length(intersect(context1[[x]], context2[[x]]))/N)
   return(data.table(token = unlist(seeds), overlap = unlist(overlap)))
 }
@@ -142,12 +141,14 @@ ContextOverlapStat <- function(seeds, dist_matrix1, dist_matrix2, N){
 # apply function
 OverlapStatRD <- ContextOverlapStat(seeds = rownames(embeddings_list[["R"]]), dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], 10)
 OverlapStatFM <- ContextOverlapStat(seeds = rownames(embeddings_list[["F"]]), dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], 10)
+names(OverlapStatRD) <- c('R', 'D')
+names(OverlapStatFM) <- c('F', 'M')
 
 # overlap function
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
-ContextOverlap <- function(seeds, dist_matrix1, dist_matrix2, N){
-  context1 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix1, num_neighbors = N, threshold = threshold)))
-  context2 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix2, num_neighbors = N, threshold = threshold)))
+ContextOverlap <- function(seeds, dist_matrix1, dist_matrix2, N = NULL, thresholds = NULL){
+  context1 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix1, num_neighbors = N, thresholds = threshold)))
+  context2 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix2, num_neighbors = N, thresholds = threshold)))
   overlap <- pblapply(seq(1:length(seeds)), function(x) intersect(context1[[x]], context2[[x]]))
   names(overlap) <- seeds
   return(overlap)
@@ -156,12 +157,14 @@ ContextOverlap <- function(seeds, dist_matrix1, dist_matrix2, N){
 # apply function
 OverlapRD <- ContextOverlap(seeds = rownames(embeddings_list[["R"]]), dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], 10)
 OverlapFM <- ContextOverlap(seeds = rownames(embeddings_list[["F"]]), dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], 10)
+names(OverlapRD) <- c('R', 'D')
+names(OverlapFM) <- c('F', 'M')
 
 # ================================
 # explore results
 # ================================
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
-seed <- "venezuela"
+seed <- "immigrants"
 # setdiff tokens
 lapply(list("R", "D"), function(x) setdiffRD[[x]][[seed]])
 lapply(list("F", "M"), function(x) setdiffFM[[x]][[seed]])
