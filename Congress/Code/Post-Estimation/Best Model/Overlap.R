@@ -99,9 +99,21 @@ ContextOverlap <- function(seeds, embed1, embed2, N){
   return(data.table(token = unlist(seeds), overlap = unlist(overlap)))
 }
 
-
+# apply function
 overlapRD <- ContextOverlap(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 6)
 overlapFM <- ContextOverlap(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 6)
+
+# ================================
+# differences between both covariates
+# ================================
+# explore results
+seed <- "conservative"
+overlapRD[token == seed,]
+overlapFM[token == seed,]
+# explore differences
+overlap <- cbind(overlapRD, overlapFM[,2]) %>% set_colnames(c("token", "RD", "FM"))
+overlap <- overlap[, covariate_diff := RD - FM]
+
 
 
 
