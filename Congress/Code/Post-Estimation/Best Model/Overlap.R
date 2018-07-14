@@ -102,8 +102,8 @@ ContextDiff <- function(seeds, embed1, embed2, N){
 }
 
 # apply function
-setdiffRD <- ContextDiff(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 6)
-setdiffFM <- ContextDiff(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 6)
+setdiffRD <- ContextDiff(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 10)
+setdiffFM <- ContextDiff(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 10)
 
 # overlap function
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
@@ -115,8 +115,8 @@ ContextOverlapStat <- function(seeds, embed1, embed2, N){
 }
 
 # apply function
-OverlapStatRD <- ContextOverlapStat(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 6)
-OverlapStatFM <- ContextOverlapStat(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 6)
+OverlapStatRD <- ContextOverlapStat(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 10)
+OverlapStatFM <- ContextOverlapStat(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 10)
 
 # overlap function
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
@@ -129,8 +129,8 @@ ContextOverlap <- function(seeds, embed1, embed2, N){
 }
 
 # apply function
-OverlapRD <- ContextOverlap(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 6)
-OverlapFM <- ContextOverlap(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 6)
+OverlapRD <- ContextOverlap(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 10)
+OverlapFM <- ContextOverlap(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 10)
 
 # ================================
 # differences between both covariates
