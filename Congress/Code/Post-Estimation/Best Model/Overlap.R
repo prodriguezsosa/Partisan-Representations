@@ -90,18 +90,47 @@ closest_neighbors <- function(seed, embed_matrix, num_neighbors){
   w[1:num_neighbors,]
 }
 
+# setdiff function
+#seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
+ContextDiff <- function(seeds, embed1, embed2, N){
+  context1 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed1]][w,], embeddings_list[[embed1]], N)))
+  context2 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed2]][w,], embeddings_list[[embed2]], N)))
+  setdiff1 <- pblapply(seq(1:length(seeds)), function(x) setdiff(context1[[x]], context2[[x]]))
+  setdiff2 <- pblapply(seq(1:length(seeds)), function(x) setdiff(context2[[x]], context1[[x]]))
+  names(setdiff1) <- names(setdiff2) <- seeds
+  return(list(setdiff1, setdiff2))
+}
+
+# apply function
+setdiffRD <- ContextDiff(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 6)
+setdiffFM <- ContextDiff(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 6)
+
+# overlap function
+#seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
+ContextOverlapStat <- function(seeds, embed1, embed2, N){
+  context1 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed1]][w,], embeddings_list[[embed1]], N)))
+  context2 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed2]][w,], embeddings_list[[embed2]], N)))
+  overlap <- pblapply(seq(1:length(seeds)), function(x) length(intersect(context1[[x]], context2[[x]]))/N)
+  return(data.table(token = unlist(seeds), overlap = unlist(overlap)))
+}
+
+# apply function
+OverlapStatRD <- ContextOverlapStat(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 6)
+OverlapStatFM <- ContextOverlapStat(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 6)
+
 # overlap function
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
 ContextOverlap <- function(seeds, embed1, embed2, N){
   context1 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed1]][w,], embeddings_list[[embed1]], N)))
   context2 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed2]][w,], embeddings_list[[embed2]], N)))
-  overlap <- pblapply(seq(1:length(seeds)), function(x) length(intersect(context1[[x]], context2[[x]]))/(2*N))
-  return(data.table(token = unlist(seeds), overlap = unlist(overlap)))
+  overlap <- pblapply(seq(1:length(seeds)), function(x) intersect(context1[[x]], context2[[x]]))
+  names(overlap) <- seeds
+  return(overlap)
 }
 
 # apply function
-overlapRD <- ContextOverlap(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 6)
-overlapFM <- ContextOverlap(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 6)
+OverlapRD <- ContextOverlap(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 6)
+OverlapFM <- ContextOverlap(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 6)
 
 # ================================
 # differences between both covariates
