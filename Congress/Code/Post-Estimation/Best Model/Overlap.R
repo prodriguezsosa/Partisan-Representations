@@ -98,7 +98,9 @@ ContextDiff <- function(seeds, embed1, embed2, N){
   setdiff1 <- pblapply(seq(1:length(seeds)), function(x) setdiff(context1[[x]], context2[[x]]))
   setdiff2 <- pblapply(seq(1:length(seeds)), function(x) setdiff(context2[[x]], context1[[x]]))
   names(setdiff1) <- names(setdiff2) <- seeds
-  return(list(setdiff1, setdiff2))
+  setdiff_list <- list(setdiff1, setdiff2) 
+  names(setdiff_list) <- c(embed1, embed2)
+  return(setdiff_list)
 }
 
 # apply function
@@ -133,9 +135,15 @@ OverlapRD <- ContextOverlap(seeds = rownames(embeddings_list[["R"]]), embed1 = "
 OverlapFM <- ContextOverlap(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 10)
 
 # ================================
-# differences between both covariates
-# ================================
 # explore results
+# ================================
+# setdiff
+
+setdiffFM[[1]][["welfare"]]
+setdiffFM[[1]][["welfare"]]
+
+
+# overlap
 seed <- "conservative"
 overlapRD[token == seed,]
 overlapFM[token == seed,]
