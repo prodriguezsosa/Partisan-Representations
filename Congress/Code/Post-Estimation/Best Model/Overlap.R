@@ -56,25 +56,42 @@ best_models_loss <- lapply(list("RR", "DD", "MM", "FF"), function(i) best_models
 rm(loss_folds, loss_list, best_model_name, files, i, in_path, mean_loss_folds, model_label)
 
 # ================================
-#
-# STEP - 2 
-# COMPUTE OVERLAP
-#
-# ================================
-
-# ================================
 # set paths
 # ================================
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/"
 
 # ================================
-# load embeddings
+# load embeddings of best models
 # ================================
 embeddings_list <- list()
 embeddings_list[["R"]] <- readRDS(paste0(in_path, "R", gsub("[[:alpha:]]", "", best_models_labels[grepl("RR", best_models_labels)][[1]]), "_E2_embedding_matrix.rds"))
 embeddings_list[["D"]] <- readRDS(paste0(in_path, "D", gsub("[[:alpha:]]", "", best_models_labels[grepl("DD", best_models_labels)][[1]]), "_E2_embedding_matrix.rds"))
 embeddings_list[["F"]] <- readRDS(paste0(in_path, "F", gsub("[[:alpha:]]", "", best_models_labels[grepl("FF", best_models_labels)][[1]]), "_E3_embedding_matrix.rds"))
 embeddings_list[["M"]] <- readRDS(paste0(in_path, "M", gsub("[[:alpha:]]", "", best_models_labels[grepl("MM", best_models_labels)][[1]]), "_E3_embedding_matrix.rds"))
+
+# ================================
+#
+# STEP - 2
+# DEFINE DISTANCE THRESHOLDS
+#
+# ================================
+source("/Users/pedrorodriguez/Dropbox/Research/WordEmbeddings/US/General/ImportedEmbeddings/WordScoring/Code/distance_matrix.R") # distance-matrix function
+distanceThreshold <- function(embeddings_list, group, method = 'cosine', percentile = 0.01){
+  dist_matrix <- distance_matrix(embeddings_list[[group]], method = method, diagonal = NA) #  method options: "euclidean", "cosine"
+  threshold <- unname(quantile(dist_matrix[lower.tri(dist_matrix, diag = FALSE)], percentile))
+  return(threshold)
+}
+
+dist_thresholds <- pblapply(c("R", "D", "F", "M"), function(x) distanceThreshold(embeddings_list, group = x, method = 'cosine', percentile = 0.01))
+
+
+
+# ================================
+#
+# STEP - 3
+# COMPUTE OVERLAP & SETDIFF
+#
+# ================================
 
 # ================================
 # nearest neighbors
@@ -138,7 +155,7 @@ OverlapFM <- ContextOverlap(seeds = rownames(embeddings_list[["F"]]), embed1 = "
 # explore results
 # ================================
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
-seed <- "guns"
+seed <- "venezuela"
 # setdiff tokens
 lapply(list("R", "D"), function(x) setdiffRD[[x]][[seed]])
 lapply(list("F", "M"), function(x) setdiffFM[[x]][[seed]])
