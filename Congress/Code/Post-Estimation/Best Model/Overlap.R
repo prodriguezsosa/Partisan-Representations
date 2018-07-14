@@ -75,16 +75,20 @@ embeddings_list[["M"]] <- readRDS(paste0(in_path, "M", gsub("[[:alpha:]]", "", b
 # DEFINE DISTANCE THRESHOLDS
 #
 # ================================
-source("/Users/pedrorodriguez/Dropbox/Research/WordEmbeddings/US/General/ImportedEmbeddings/WordScoring/Code/distance_matrix.R") # distance-matrix function
-distanceThreshold <- function(embeddings_list, group, method = 'cosine', percentile = 0.01){
-  dist_matrix <- distance_matrix(embeddings_list[[group]], method = method, diagonal = NA) #  method options: "euclidean", "cosine"
-  threshold <- unname(quantile(dist_matrix[lower.tri(dist_matrix, diag = FALSE)], percentile))
+source("/Users/pedrorodriguez/Drobox/GitHub/Partisan-Representations/Congress/Code/Post-Estimation/Best Model/distance_matrix.R") # distance-matrix function
+
+# distance matrices
+distance_matrices <- pblapply(c("R", "D", "F", "M"), function(x) distance_matrix(embeddings_list[[x]], method = 'cosine', diagonal = NA)) 
+names(distance_matrices) <- c("R", "D", "F", "M")
+
+# compute distance threshold
+distanceThreshold <- function(distance_matrix, group, percentile = 0.01){
+  threshold <- unname(quantile(distance_matrix[lower.tri(distance_matrix, diag = FALSE)], percentile))
   return(threshold)
 }
 
-dist_thresholds <- pblapply(c("R", "D", "F", "M"), function(x) distanceThreshold(embeddings_list, group = x, method = 'cosine', percentile = 0.01))
-
-
+dist_thresholds <- pblapply(c("R", "D", "F", "M"), function(x) distanceThreshold(distance_matrices[[x]], group = x, percentile = 0.01)) 
+names(dist_thresholds) <- c("R", "D", "F", "M")
 
 # ================================
 #
@@ -97,21 +101,18 @@ dist_thresholds <- pblapply(c("R", "D", "F", "M"), function(x) distanceThreshold
 # nearest neighbors
 # ================================
 # cosine distance function
-closest_neighbors <- function(seed, embed_matrix, num_neighbors){
-  seed <- Matrix(seed, nrow = 1, ncol = length(seed))
-  mat_magnitudes <- rowSums(embed_matrix^2)
-  vec_magnitudes <- rowSums(seed^2)
-  sim <- (t(tcrossprod(seed, embed_matrix)/(sqrt(tcrossprod(vec_magnitudes, mat_magnitudes)))))
-  sim2 <- matrix(sim, dimnames = list(rownames(sim)))
-  w <- sim2[order(-sim2), , drop = FALSE]
-  w[1:num_neighbors,]
+closest_neighbors <- function(seed, distance_matrix, num_neighbors = NULL, threshold = NULL){
+  w <- distance_matrix[seed,]
+  w <- w[order(w)]
+  if(!is.null(threshold)){return(w[w <= threshold])}
+  if(!is.null(num_neighbors)){return(w[1:num_neighbors])}
 }
 
 # setdiff function
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
-ContextDiff <- function(seeds, embed1, embed2, N){
-  context1 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed1]][w,], embeddings_list[[embed1]], N)))
-  context2 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed2]][w,], embeddings_list[[embed2]], N)))
+ContextDiff <- function(seeds, dist_matrix1, dist_matrix2, N = NULL, threshold = NULL){
+  context1 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix1, num_neighbors = N, threshold = threshold)))
+  context2 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix2, num_neighbors = N, threshold = threshold)))
   setdiff1 <- pblapply(seq(1:length(seeds)), function(x) setdiff(context1[[x]], context2[[x]]))
   setdiff2 <- pblapply(seq(1:length(seeds)), function(x) setdiff(context2[[x]], context1[[x]]))
   names(setdiff1) <- names(setdiff2) <- seeds
@@ -121,35 +122,35 @@ ContextDiff <- function(seeds, embed1, embed2, N){
 }
 
 # apply function
-setdiffRD <- ContextDiff(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 10)
-setdiffFM <- ContextDiff(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 10)
+setdiffRD <- ContextDiff(seeds = rownames(embeddings_list[["R"]]), dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], 10)
+setdiffFM <- ContextDiff(seeds = rownames(embeddings_list[["F"]]), dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], 10)
 
 # overlap function
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
-ContextOverlapStat <- function(seeds, embed1, embed2, N){
-  context1 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed1]][w,], embeddings_list[[embed1]], N)))
-  context2 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed2]][w,], embeddings_list[[embed2]], N)))
+ContextOverlapStat <- function(seeds, dist_matrix1, dist_matrix2, N){
+  context1 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix1, num_neighbors = N, threshold = threshold)))
+  context2 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix2, num_neighbors = N, threshold = threshold)))
   overlap <- pblapply(seq(1:length(seeds)), function(x) length(intersect(context1[[x]], context2[[x]]))/N)
   return(data.table(token = unlist(seeds), overlap = unlist(overlap)))
 }
 
 # apply function
-OverlapStatRD <- ContextOverlapStat(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 10)
-OverlapStatFM <- ContextOverlapStat(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 10)
+OverlapStatRD <- ContextOverlapStat(seeds = rownames(embeddings_list[["R"]]), dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], 10)
+OverlapStatFM <- ContextOverlapStat(seeds = rownames(embeddings_list[["F"]]), dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], 10)
 
 # overlap function
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
-ContextOverlap <- function(seeds, embed1, embed2, N){
-  context1 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed1]][w,], embeddings_list[[embed1]], N)))
-  context2 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed2]][w,], embeddings_list[[embed2]], N)))
+ContextOverlap <- function(seeds, dist_matrix1, dist_matrix2, N){
+  context1 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix1, num_neighbors = N, threshold = threshold)))
+  context2 <- pblapply(seeds, function(w) names(closest_neighbors(seed, dist_matrix2, num_neighbors = N, threshold = threshold)))
   overlap <- pblapply(seq(1:length(seeds)), function(x) intersect(context1[[x]], context2[[x]]))
   names(overlap) <- seeds
   return(overlap)
 }
 
 # apply function
-OverlapRD <- ContextOverlap(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 10)
-OverlapFM <- ContextOverlap(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 10)
+OverlapRD <- ContextOverlap(seeds = rownames(embeddings_list[["R"]]), dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], 10)
+OverlapFM <- ContextOverlap(seeds = rownames(embeddings_list[["F"]]), dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], 10)
 
 # ================================
 # explore results
