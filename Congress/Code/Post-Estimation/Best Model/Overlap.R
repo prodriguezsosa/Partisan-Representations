@@ -12,6 +12,8 @@ library(magrittr)
 library(data.table)
 library(LaplacesDemon)
 library(stringr)
+library(Matrix)
+library(pbapply)
 
 # ================================
 #
@@ -56,18 +58,14 @@ rm(loss_folds, loss_list, best_model_name, files, i, in_path, mean_loss_folds, m
 # ================================
 #
 # STEP - 2 
-# COMPUTE KL-DIVERGENCE
+# COMPUTE OVERLAP
 #
 # ================================
-
-# function to compute transition matrix
-source("/Users/pedrorodriguez/Dropbox/Research/WordEmbeddings/US/General/ImportedEmbeddings/WordScoring/Code/transition_matrix.R")
 
 # ================================
 # set paths
 # ================================
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/"
-out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Post-Estimation/Transitions/"
 
 # ================================
 # load embeddings
@@ -79,19 +77,31 @@ embeddings_list[["F"]] <- readRDS(paste0(in_path, "F", gsub("[[:alpha:]]", "", b
 embeddings_list[["M"]] <- readRDS(paste0(in_path, "M", gsub("[[:alpha:]]", "", best_models_labels[grepl("MM", best_models_labels)][[1]]), "_E3_embedding_matrix.rds"))
 
 # ================================
-# compute transition matrices
+# nearest neighbors
 # ================================
-transitions_matrices <- lapply(embeddings_list, function(i) transition_matrix(i, method = 'cosine', diagonal = 0))
+# cosine distance function
+closest_neighbors <- function(seed, embed_matrix, num_neighbors){
+  seed <- Matrix(seed, nrow = 1, ncol = length(seed))
+  mat_magnitudes <- rowSums(embed_matrix^2)
+  vec_magnitudes <- rowSums(seed^2)
+  sim <- (t(tcrossprod(seed, embed_matrix)/(sqrt(tcrossprod(vec_magnitudes, mat_magnitudes)))))
+  sim2 <- matrix(sim, dimnames = list(rownames(sim)))
+  w <- sim2[order(-sim2), , drop = FALSE]
+  w[1:num_neighbors,]
+}
 
-# ================================
-# compute KL-Divergence
-# ================================
-kl_divergence <- data.table(vocab = rownames(transitions_matrices[[1]]))
-kl_divergence <- kl_divergence[, RD_divergence := unlist(lapply(kl_divergence$vocab, function(v) KLD(transitions_matrices[["R"]][v,], transitions_matrices[["D"]][v,])[["mean.sum.KLD"]]))]
-kl_divergence <- kl_divergence[, FM_divergence := unlist(lapply(kl_divergence$vocab, function(v) KLD(transitions_matrices[["F"]][v,], transitions_matrices[["M"]][v,])[["mean.sum.KLD"]]))]
-# test means difference
-t.test(kl_divergence$RD_divergence, kl_divergence$FM_divergence)
+# overlap function
+#seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
+ContextOverlap <- function(seeds, embed1, embed2, N){
+  context1 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed1]][w,], embeddings_list[[embed1]], N)))
+  context2 <- pblapply(seeds, function(w) names(closest_neighbors(embeddings_list[[embed2]][w,], embeddings_list[[embed2]], N)))
+  overlap <- pblapply(seq(1:length(seeds)), function(x) length(intersect(context1[[x]], context2[[x]]))/(2*N))
+  return(data.table(token = unlist(seeds), overlap = unlist(overlap)))
+}
 
+
+overlapRD <- ContextOverlap(seeds = rownames(embeddings_list[["R"]]), embed1 = "R", embed2 = "D", 6)
+overlapFM <- ContextOverlap(seeds = rownames(embeddings_list[["F"]]), embed1 = "F", embed2 = "M", 6)
 
 
 

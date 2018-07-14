@@ -19,12 +19,11 @@ in_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Outputs/"
 out_path <- "/scratch/plr250/WordEmbeddings/PartisanEmbeddings/Congress/Post-Estimation/LossFoldSpecific/Outputs/"
 
 # define source
-#MODEL <- "R"
-#TEST <- "D"
-MODEL <- as.character(args[1])
-TEST <- as.character(args[2])
-FOLD_MODEL <- as.integer(args[3])
-FOLD_TEST <- as.integer(args[4])
+# see: arguments for this file come from Mean-Loss.R
+MODEL <- as.character(args[1]) # group embeddings to be evaluated
+TEST <- as.character(args[2])  # group corpus to be used for evaluation
+FOLD_MODEL <- as.integer(args[3]) # best performing model of group whose model is to be evaluated
+FOLD_TEST <- as.integer(args[4])  # fold of group corpus to be used for evaluation (= index of best performing model for this group)
 
 # set parameters
 WINDOW_SIZE <- 6  # how many words to consider left and right

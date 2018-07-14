@@ -1,17 +1,14 @@
 rm(list = ls())
 
 # ================================
-# load libraries
+# load libraries & functions
 # ================================
-library(keras)
-library(reticulate)
-library(purrr)
-library(dplyr)
 library(text2vec)
 library(magrittr)
 library(data.table)
-library(LaplacesDemon)
 library(stringr)
+library(Matrix)
+library(tidyverse)
 
 # ================================
 #
@@ -35,7 +32,6 @@ loss_list <- lapply(files, function(i) readRDS(paste0(in_path, i)))
 # choose best model for each group
 # ================================
 best_models_labels <- list()  # empty list
-best_models_loss <- list()  # empty list
 # for each MODEL-TEST select model with lowest mean loss
 for(i in 1:length(loss_list)){
   loss_folds <- loss_list[[i]]
@@ -43,31 +39,23 @@ for(i in 1:length(loss_list)){
   best_model_name <- names(which(mean_loss_folds == min(mean_loss_folds)))
   best_models_labels[i] <- best_model_name
   model_label <- gsub('[0-9]+', '', best_model_name)
-  best_models_loss[model_label] <- do.call(c, loss_list)[best_model_name]
-  
 }
-
-# keep only within models
-best_models_loss <- lapply(list("RR", "DD", "MM", "FF"), function(i) best_models_loss[i]) %>% do.call(c,.)
 
 # spring cleaning 
 rm(loss_folds, loss_list, best_model_name, files, i, in_path, mean_loss_folds, model_label)
 
 # ================================
 #
-# STEP - 2 
-# COMPUTE KL-DIVERGENCE
+# STEP - 2
+# NEAREST NEIGHBORS FOR KEY WORDS
 #
 # ================================
-
-# function to compute transition matrix
-source("/Users/pedrorodriguez/Dropbox/Research/WordEmbeddings/US/General/ImportedEmbeddings/WordScoring/Code/transition_matrix.R")
 
 # ================================
 # set paths
 # ================================
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/"
-out_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Post-Estimation/Transitions/"
+out_path <- "/Users/pedrorodriguez/Drobox/GitHub/Partisan-Representations/Congress/Code/Post-Estimation/Human Validation/data/"
 
 # ================================
 # load embeddings
@@ -79,19 +67,34 @@ embeddings_list[["F"]] <- readRDS(paste0(in_path, "F", gsub("[[:alpha:]]", "", b
 embeddings_list[["M"]] <- readRDS(paste0(in_path, "M", gsub("[[:alpha:]]", "", best_models_labels[grepl("MM", best_models_labels)][[1]]), "_E3_embedding_matrix.rds"))
 
 # ================================
-# compute transition matrices
+# nearest neighbors
 # ================================
-transitions_matrices <- lapply(embeddings_list, function(i) transition_matrix(i, method = 'cosine', diagonal = 0))
+# cosine distance function
+closest_neighbors <- function(seed, embed_matrix, num_neighbors){
+  seed <- Matrix(seed, nrow = 1, ncol = length(seed))
+  mat_magnitudes <- rowSums(embed_matrix^2)
+  vec_magnitudes <- rowSums(seed^2)
+  sim <- (t(tcrossprod(seed, embed_matrix)/(sqrt(tcrossprod(vec_magnitudes, mat_magnitudes)))))
+  sim2 <- matrix(sim, dimnames = list(rownames(sim)))
+  w <- sim2[order(-sim2), , drop = FALSE]
+  w[1:num_neighbors,]
+}
 
-# ================================
-# compute KL-Divergence
-# ================================
-kl_divergence <- data.table(vocab = rownames(transitions_matrices[[1]]))
-kl_divergence <- kl_divergence[, RD_divergence := unlist(lapply(kl_divergence$vocab, function(v) KLD(transitions_matrices[["R"]][v,], transitions_matrices[["D"]][v,])[["mean.sum.KLD"]]))]
-kl_divergence <- kl_divergence[, FM_divergence := unlist(lapply(kl_divergence$vocab, function(v) KLD(transitions_matrices[["F"]][v,], transitions_matrices[["M"]][v,])[["mean.sum.KLD"]]))]
-# test means difference
-t.test(kl_divergence$RD_divergence, kl_divergence$FM_divergence)
+# top words mentioned
+seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
 
+# loop over groups
+nearest_neighbors <- list()
+for(i in c("R", "D", "M", "F")){
+  cos_sim_seeds <- lapply(seeds, function(w) closest_neighbors(embeddings_list[[i]][w,], embeddings_list[[i]], 10))
+  names(cos_sim_seeds) <- seeds
+  results <- as.tibble(lapply(cos_sim_seeds, names))
+  results <- melt(results, measure.vars = colnames(results))
+  colnames(results) <- c("seed", i)
+  nearest_neighbors[[i]] <- results
+}
 
+# rbind data
+nearest_neighbors <- do.call(cbind, nearest_neighbors) %>% .[,c(1,2,4,6,8)] %>% set_colnames(c("seed", "R", "D", "F", "M"))
 
 
