@@ -1,16 +1,3 @@
-# ------------------------------
-#  SEMANTICA
-#  Authors: Pedro L Rodriguez
-#  Last modified: 06-06-2018
-#
-#   CODE SECTIONS
-#
-#   SECTION A: PRELIMS
-#   SECTION B: USER INTERFACE
-#   SECTION C: SERVER
-#
-# ------------------
-
 # --------------------------------
 #
 #
@@ -236,7 +223,7 @@ server <- function(input, output, session) {
           p(span(strong("Purpose:"), style="color:#2780e3"),"evaluate context words."),
           p(span(strong("Confidentiality:"), style="color:#2780e3"), "responses are anonymous, we have no way of linking the data to individual identities."),
           p(span(strong("Length:"), style="color:#2780e3"), "task takes on average less than 5 minutes to complete."),
-          p(span(strong("Compensation:"), style="color:#2780e3"), "$0.60"),
+          p(span(strong("Compensation:"), style="color:#2780e3"), "$0.50"),
           br(),
           p("If you consent to participate in this study, please enter your MTurk ID and press ''Start''.")),
           # main panel contents

@@ -237,7 +237,7 @@ topics <- list("healthcare" = "healthcare",
                "immigration" = c("immigrant", "immigration", "immigrants"))
 
 # top N
-TopicDiffsList <- lapply(topics, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10, label1 = "R", label2 = "D"))
+TopicDiffsList <- lapply(topics, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 6, label1 = "R", label2 = "D"))
 TopicOverlapList <- lapply(topics, function(x) TopicOverlap(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10))
 TopipOverlapStatList <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10)) %>% unlist
 
