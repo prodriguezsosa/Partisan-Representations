@@ -38,6 +38,13 @@ screening_data <- readRDS("data/screening_data.rds")
 trial_data <- readRDS("data/trial_data.rds")
 source("LexicalDecisionTask.R")
 
+# data in easier format
+source1 <- "republican"
+source2 <- "democrat"
+source1_topN <- data.frame(topN[source1][2:nrow(topN),], stringsAsFactors = FALSE)
+source2_topN <- data.frame(topN[source2][2:nrow(topN),], stringsAsFactors = FALSE)
+colnames(source1_topN) <- colnames(source2_topN) <- tolower(topN[source1][1,])
+
 # set timer precision
 options(digits.secs = 6)
 
@@ -68,47 +75,47 @@ Shiny.onInputChange("lastkeypresscode", [e.which, Math.random()]);
 # --------------------------
 
 N <- 1  # number of candidates to sample for each cue
-#human_candidate1 <- apply(human_top5, 2, function(x) sample(x, N, replace = TRUE))  # sample from human embeddings (leaner BUT does not avoid matches between both sources)
-#machine_candidate1 <- apply(glove_top5, 2, function(x) sample(x, N, replace = TRUE))  # sample from machine embeddings (leaner BUT does not avoid matches between both sources)
+#source1_candidate <- apply(source1_topN, 2, function(x) sample(x, N, replace = TRUE))  # sample from human embeddings (leaner BUT does not avoid matches between both sources)
+#source2_candidate <- apply(source2_topN, 2, function(x) sample(x, N, replace = TRUE))  # sample from machine embeddings (leaner BUT does not avoid matches between both sources)
 
 # for each cue sample 10 from each source making sure sources do not match on candidate context word
-human_candidate <- c()
-machine_candidate <- c()
-for(w in 1:ncol(human_top5)){
-  samp_human <- samp_machine <- "start"
-  while(any(samp_human == samp_machine)){
+source1_candidate <- c()
+source2_candidate <- c()
+for(w in 1:ncol(source1_topN)){
+  samp_source1 <- samp_source2 <- "start"
+  while(any(samp_source1 == samp_source2)){
     # sample human
     if(N > 1){
-    samp_human <- rep_len(human_top5[,w], length.out = N) # by using rep, we avoid too many repeats
-    samp_human <- samp_human[sample(seq(1,length(samp_human),1), replace = FALSE)]
+    samp_source1 <- rep_len(source1_topN[,w], length.out = N) # by using rep, we avoid too many repeats
+    samp_source1 <- samp_source1[sample(seq(1,length(samp_source1),1), replace = FALSE)]
     # sample machine
-    samp_machine <- rep_len(glove_top5[,w], length.out = N)
-    samp_machine <- samp_machine[sample(seq(1,length(samp_machine),1), replace = FALSE)]
+    samp_source2 <- rep_len(source2_topN[,w], length.out = N)
+    samp_source2 <- samp_source2[sample(seq(1,length(samp_source2),1), replace = FALSE)]
     }else{
-      samp_human <- sample(human_top5[,w], 1)
-      samp_machine <- sample(glove_top5[,w], 1)
+      samp_source1 <- sample(source1_topN[,w], 1)
+      samp_source2 <- sample(source2_topN[,w], 1)
     }
   }
-  human_candidate <- data.frame(cbind(human_candidate, samp_human))
-  machine_candidate <- data.frame(cbind(machine_candidate, samp_machine)) 
+  source1_candidate <- data.frame(cbind(source1_candidate, samp_source1))
+  source2_candidate <- data.frame(cbind(source2_candidate, samp_source2)) 
 }
 
-human_candidate <- data.frame(lapply(human_candidate, as.character), stringsAsFactors=FALSE) # convert to character
-machine_candidate <- data.frame(lapply(machine_candidate, as.character), stringsAsFactors=FALSE) # convert to character
-colnames(human_candidate) <- colnames(human_top5)
-colnames(machine_candidate) <- colnames(human_top5)
+source1_candidate <- data.frame(lapply(source1_candidate, as.character), stringsAsFactors=FALSE) # convert to character
+source2_candidate <- data.frame(lapply(source2_candidate, as.character), stringsAsFactors=FALSE) # convert to character
+colnames(source1_candidate) <- colnames(source1_topN)
+colnames(source2_candidate) <- colnames(source1_topN)
 # randomize cue order
-cues <- sample(colnames(human_top5), replace = FALSE)
-human_candidate <- human_candidate[,cues]
-machine_candidate <- machine_candidate[,cues]
+cues <- sample(colnames(source1_topN), replace = FALSE)
+source1_candidate <- source1_candidate[,cues]
+source2_candidate <- source2_candidate[,cues]
 # sample 10 comparisons for each cue, randomizing left/right order
 ldt_data <- data.table()
 for(j in 1:length(cues)){
   for(i in 1:N){
     source_order <- sample(c("H","M"), 2, replace = FALSE)
     if(N>1){
-    candidates <- if(source_order[1] == "H"){c(unname(human_candidate[i,j]), unname(machine_candidate[i,j]))}else{c(unname(machine_candidate[i,j]),unname(human_candidate[i,j]))}
-    }else{candidates <- if(source_order[1] == "H"){unname(unlist(c(human_candidate[j], machine_candidate[j])))}else{unname(unlist(c(machine_candidate[j],unname(human_candidate[j]))))}}
+    candidates <- if(source_order[1] == "H"){c(unname(source1_candidate[i,j]), unname(source2_candidate[i,j]))}else{c(unname(source2_candidate[i,j]),unname(source1_candidate[i,j]))}
+    }else{candidates <- if(source_order[1] == "H"){unname(unlist(c(source1_candidate[j], source2_candidate[j])))}else{unname(unlist(c(source2_candidate[j],unname(source1_candidate[j]))))}}
     ldt_data <- rbind(ldt_data, data.table("workerid" = as.character(NA), cue = cues[j], "left.source" = source_order[1], "right.source" = source_order[2], "left.word" = candidates[1], "right.word" = candidates[2],
                                            "screener" = FALSE, "left.correct" = as.character(NA), "right.correct" = as.character(NA)))
   }

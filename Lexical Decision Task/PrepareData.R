@@ -5,11 +5,11 @@ out_file <- "/Users/pedrorodriguez/Drobox/GitHub/Partisan-Representations/Lexica
 # top-5
 N <- 5
 token <- "healthcare"
-republicans <- data.frame("republicans" = TopicDiffsList[[token]][["R"]][1:N], stringsAsFactors = FALSE)
-democrats <- data.frame("democrats" = TopicDiffsList[[token]][["D"]][1:N], stringsAsFactors = FALSE)
-females <- data.frame("female" = TopicDiffsListFM[[token]][["F"]][1:N], stringsAsFactors = FALSE)
-males <- data.frame("male" = TopicDiffsListFM[[token]][["M"]][1:N], stringsAsFactors = FALSE)
-topN <- data.table(republicans, democrats, females, males)
+republicans <- data.frame("republican" = c(token, TopicDiffsList[[token]][["R"]][1:N]), stringsAsFactors = FALSE)
+democrats <- data.frame("democrat" = c(token, TopicDiffsList[[token]][["D"]][1:N]), stringsAsFactors = FALSE)
+females <- data.frame("female" = c(token, TopicDiffsListFM[[token]][["F"]][1:N]), stringsAsFactors = FALSE)
+males <- data.frame("male" = c(token, TopicDiffsListFM[[token]][["M"]][1:N]), stringsAsFactors = FALSE)
+topN <- data.frame(republicans, democrats, females, males, stringsAsFactors = FALSE)
 print(topN)
 topN[topN == "vas"] <- "veterans affairs"
 
