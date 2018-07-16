@@ -4,11 +4,11 @@ out_file <- "/Users/pedrorodriguez/Drobox/GitHub/Partisan-Representations/Lexica
 
 # top-5
 N <- 3
-token <- "freedom"
-republicans <- data.frame("republicans" = TopicDiffsList[[token]][["R"]][1:4], stringsAsFactors = FALSE)
-democrats <- data.frame("democrats" = TopicDiffsList[[token]][["D"]][1:4], stringsAsFactors = FALSE)
-females <- data.frame("female" = TopicDiffsListFM[[token]][["F"]][1:4], stringsAsFactors = FALSE)
-males <- data.frame("male" = TopicDiffsListFM[[token]][["M"]][1:4], stringsAsFactors = FALSE)
+token <- "healthcare"
+republicans <- data.frame("republicans" = TopicDiffsList[[token]][["R"]][1:N], stringsAsFactors = FALSE)
+democrats <- data.frame("democrats" = TopicDiffsList[[token]][["D"]][1:N], stringsAsFactors = FALSE)
+females <- data.frame("female" = TopicDiffsListFM[[token]][["F"]][1:N], stringsAsFactors = FALSE)
+males <- data.frame("male" = TopicDiffsListFM[[token]][["M"]][1:N], stringsAsFactors = FALSE)
 topN <- data.table(republicans, democrats, females, males)
 print(topN)
 
