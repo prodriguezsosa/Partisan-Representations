@@ -157,7 +157,7 @@ OverlapFM <- ContextOverlap(seeds = vocab, dist_matrix1 = distance_matrices[["F"
 # explore results
 # ================================
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
-seed <- "welfare"
+seed <- "freedom"
 # setdiff tokens
 lapply(list("R", "D"), function(x) setdiffRD[[x]][[seed]])
 lapply(list("F", "M"), function(x) setdiffFM[[x]][[seed]])
@@ -205,7 +205,9 @@ TopicOverlapStat <- function(topic, dist_matrix1, dist_matrix2, N = NULL, thresh
   return(overlap)
 }
 
-topic <- list("immigration", "immigrants", "immigrant")
+#topic <- list("immigration", "immigrants", "immigrant")
+#topic <- list("abortion", "abortions")
+#topic <- list("welfare")
 # Republicans - Democrats
 TopicDiff(topic, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10, label1 = "R", label2 = "D")
 TopicOverlap(topic, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10)

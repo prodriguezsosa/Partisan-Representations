@@ -55,7 +55,7 @@ embeddings_list <- list("R" = embedding_matrix_R, "D" = embedding_matrix_D, "F" 
 # ================================
 
 # function to compute transition matrix
-source("/Users/pedrorodriguez/Dropbox/Research/WordEmbeddings/US/General/ImportedEmbeddings/WordScoring/Code/transition_matrix.R")
+source("/Users/pedrorodriguez/Drobox/GitHub/Partisan-Representations/Congress/Code/Post-Estimation/Best Model/transition_matrix.R")
 
 # ================================
 # compute transition matrices

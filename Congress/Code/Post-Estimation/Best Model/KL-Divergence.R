@@ -61,7 +61,7 @@ rm(loss_folds, loss_list, best_model_name, files, i, in_path, mean_loss_folds, m
 # ================================
 
 # function to compute transition matrix
-source("/Users/pedrorodriguez/Dropbox/Research/WordEmbeddings/US/General/ImportedEmbeddings/WordScoring/Code/transition_matrix.R")
+source("/Users/pedrorodriguez/Drobox/GitHub/Partisan-Representations/Congress/Code/Post-Estimation/Best Model/transition_matrix.R")
 
 # ================================
 # set paths
