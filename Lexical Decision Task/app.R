@@ -33,8 +33,7 @@ library(data.table)
 # --------------------------
 # SECTION A2: load data and functions----
 # --------------------------
-human_top5 <- readRDS("data/human_top5.rds")
-glove_top5 <- readRDS("data/glove_top5.rds")
+topN <- readRDS("data/topN.rds")
 screening_data <- readRDS("data/screening_data.rds")
 trial_data <- readRDS("data/trial_data.rds")
 source("LexicalDecisionTask.R")
