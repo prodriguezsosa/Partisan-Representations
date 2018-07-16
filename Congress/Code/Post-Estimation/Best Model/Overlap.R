@@ -131,7 +131,7 @@ setdiffFM <- ContextDiff(seeds = vocab, dist_matrix1 = distance_matrices[["F"]],
 ContextOverlapStat <- function(seeds, dist_matrix1, dist_matrix2, N = NULL, threshold1 = NULL, threshold2 = NULL){
   context1 <- pblapply(seeds, function(w) names(closest_neighbors(w, dist_matrix1, num_neighbors = N, threshold = threshold1)))
   context2 <- pblapply(seeds, function(w) names(closest_neighbors(w, dist_matrix2, num_neighbors = N, threshold = threshold2)))
-  overlap <- pblapply(seq(1:length(seeds)), function(x) length(intersect(context1[[x]], context2[[x]]))/N)
+  overlap <- pblapply(seq(1:length(seeds)), function(x) length(intersect(context1[[x]], context2[[x]]))/length(union(context1, context2)))
   return(data.table(token = unlist(seeds), overlap = unlist(overlap)))
 }
 
@@ -198,15 +198,12 @@ TopicOverlap <- function(topic, dist_matrix1, dist_matrix2, N = NULL, threshold1
 
 # topic overlap stat
 TopicOverlapStat <- function(topic, dist_matrix1, dist_matrix2, N = NULL, threshold1 = NULL, threshold2 = NULL){
-  context1 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix1, num_neighbors = N, threshold = threshold1))) %>% unlist()
-  context2 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix2, num_neighbors = N, threshold = threshold2))) %>% unlist()
-  overlap <- length(intersect(context1, context2))/(10*length(topic))
+  context1 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix1, num_neighbors = N, threshold = threshold1))) %>% unlist() %>% unique
+  context2 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix2, num_neighbors = N, threshold = threshold2))) %>% unlist() %>% unique
+  overlap <- length(intersect(context1, context2))/length(union(context1, context2))
   return(overlap)
 }
 
-#topic <- list("immigration", "immigrants", "immigrant")
-#topic <- list("abortion", "abortions")
-#topic <- list("welfare")
 # Republicans - Democrats
 TopicDiff(topic, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10, label1 = "R", label2 = "D")
 TopicOverlap(topic, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10)
@@ -219,27 +216,45 @@ TopicOverlapStat(topic, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = 
 # ================================
 #
 # STEP - 5
-# HEATMAP
+# IoU
 # TOPICS
 #
 # ================================
 token_counts <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Post-Estimation/TopTokens/token_counts.rds")
-seeds <- token_counts$token[token_counts$token %in% vocab][1:10]
-seeds[seeds == "right"] <- "justice"
+topics <- token_counts$token[token_counts$token %in% vocab][1:10]
+topics[topics == "right"] <- "justice"
 
-seeds <- list("healthcare" = "healthcare",
-              "liberal" = c("liberal", "liberals"),
-              "freedom" = c("freedom", "freedoms"),
-              "justice" = "justice",
-              "conservative" = c("conservative", "conservatives"),
-              "welfare" = "welfare",
-              "equality" = "equality",
-              "abortion" = c("abortion", "abortions"),
-              "taxes" = c("tax", "taxation", "taxes"),
-              "immigration" = c("immigrant", "immigration", "immigrants"))
+topics <- list("healthcare" = "healthcare",
+               "liberal" = c("liberal", "liberals"),
+               "freedom" = c("freedom", "freedoms"),
+               "justice" = "justice",
+               "conservative" = c("conservative", "conservatives"),
+               "welfare" = "welfare",
+               "equality" = "equality",
+               "abortion" = c("abortion", "abortions"),
+               "taxes" = c("tax", "taxation", "taxes"),
+               "immigration" = c("immigrant", "immigration", "immigrants"))
 
-TopicDiffsList <- lapply(seeds, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10, label1 = "R", label2 = "D"))
+TopicDiffsList <- lapply(topics, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10, label1 = "R", label2 = "D"))
+TopicOverlapList <- lapply(topics, function(x) TopicOverlap(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10))
+TopipOverlapStatList <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10)) %>% unlist
 
-              
+# bat chart
+RDIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10)) %>% unlist
+FMIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10)) %>% unlist
+plot.data <- data.table(group = c(rep("R-D", length(RDIoU)), rep("F-M", length(RDIoU))), topic = names(topics), iou = unlist(lapply(list(RDIoU, FMIoU), unlist)))
+
+
+ggplot(plot.data, aes(x = topic, y = iou, fill = group)) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  #geom_text(aes(label = iou), vjust = 1.6, color = "white", position = position_dodge(0.9), size = 3.5) +
+  scale_fill_brewer(palette="Paired") +
+  xlab("") + ylab("IoU") +
+  #theme_minimal() +
+  theme(legend.title=element_blank(), axis.ticks.y=element_blank(), axis.text.x = element_text(size=15, angle = 90),
+        axis.title.x = element_text(margin = margin(t = 20, r = 0, b = 0, l = 0)),
+        plot.title = element_text(margin = margin(t = 10, r = 0, b = 20, l = 0), hjust = 0.5),
+        text = element_text(size=15), legend.position = "bottom", legend.text = element_text(size=20)) +
+  ggtitle("Intersect over Union")
 
 
