@@ -45,7 +45,7 @@ options(digits.secs = 6)
 # SECTION A3: data saving    -----
 # --------------------------
 saveDataLocation <- "dropbox"  # either dropbox, email, or local
-outputDir <- "GitHub/EmbeddingsProject/RShiny/Lexical Decision Task/Output"  # directory to save data
+outputDir <- "GitHub/Partisan-Representations/Lexical Decision Task/Output/Congress"  # directory to save data
 
 # Dropbox
 droptoken <- readRDS("droptoken.rds")   # reads in authentication for dropbox (must be store in same folder as this code)
