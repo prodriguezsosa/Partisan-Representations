@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A1H162QMRV01SA","freedom","H","M","america","democracy",FALSE,TRUE
+"2","A1H162QMRV01SA","germany","M","H","europe","nazi",TRUE,FALSE
+"3","A1H162QMRV01SA","happiness","M","H","prosperity","love",FALSE,TRUE
+"4","A1H162QMRV01SA","vote","H","M","politics","votes",TRUE,FALSE
+"5","A1H162QMRV01SA","animals","H","M","zoo","mammals",FALSE,TRUE
+"6","A1H162QMRV01SA","guns","H","M","rifle","handguns",TRUE,FALSE
+"7","A1H162QMRV01SA","welfare","M","H","medicaid","poor",FALSE,TRUE
+"8","A1H162QMRV01SA","corruption","M","H","graft","bribery",FALSE,TRUE

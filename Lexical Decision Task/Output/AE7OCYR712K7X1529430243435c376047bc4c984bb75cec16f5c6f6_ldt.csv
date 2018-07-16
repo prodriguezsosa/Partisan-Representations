@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","AE7OCYR712K7X","germany","M","H","election","ballot",TRUE,FALSE
+"2","AE7OCYR712K7X","vote","M","H","election","election",TRUE,FALSE
+"3","AE7OCYR712K7X","guns","M","H","election","election",TRUE,FALSE
+"4","AE7OCYR712K7X","welfare","M","H","german","beer",TRUE,FALSE
+"5","AE7OCYR712K7X","animals","M","H","mammals","dog",TRUE,FALSE
+"6","AE7OCYR712K7X","happiness","H","M","love","joy",FALSE,TRUE
+"7","AE7OCYR712K7X","freedom","H","M","shoot","handguns",FALSE,TRUE
+"8","AE7OCYR712K7X","corruption","H","M","crime","corrupt",TRUE,FALSE

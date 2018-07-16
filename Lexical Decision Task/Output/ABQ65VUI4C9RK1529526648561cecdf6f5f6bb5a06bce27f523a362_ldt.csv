@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","ABQ65VUI4C9RK","germany","H","M","hitler","austria",TRUE,FALSE
+"2","ABQ65VUI4C9RK","freedom","H","M","america","liberty",FALSE,TRUE
+"3","ABQ65VUI4C9RK","happiness","M","H","contentment","smile",TRUE,FALSE
+"4","ABQ65VUI4C9RK","corruption","H","M","money","bribery",FALSE,TRUE
+"5","ABQ65VUI4C9RK","guns","M","H","gun","rifle",TRUE,FALSE
+"6","ABQ65VUI4C9RK","welfare","M","H","medicaid","help",FALSE,TRUE
+"7","ABQ65VUI4C9RK","vote","M","H","elections","election",FALSE,TRUE
+"8","ABQ65VUI4C9RK","animals","M","H","animal","cat",TRUE,FALSE

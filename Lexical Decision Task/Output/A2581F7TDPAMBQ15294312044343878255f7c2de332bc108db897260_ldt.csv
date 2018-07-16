@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2581F7TDPAMBQ","happiness","H","M","joy","joy",TRUE,FALSE
+"2","A2581F7TDPAMBQ","welfare","H","M","hitler","munich",FALSE,TRUE
+"3","A2581F7TDPAMBQ","freedom","M","H","pistols","rifle",TRUE,FALSE
+"4","A2581F7TDPAMBQ","guns","M","H","graft","politics",FALSE,TRUE
+"5","A2581F7TDPAMBQ","germany","H","M","election","votes",TRUE,FALSE
+"6","A2581F7TDPAMBQ","animals","M","H","contentment","love",FALSE,TRUE
+"7","A2581F7TDPAMBQ","vote","H","M","bribery","bribery",FALSE,TRUE
+"8","A2581F7TDPAMBQ","corruption","H","M","pets","birds",TRUE,FALSE

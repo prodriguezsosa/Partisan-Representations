@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A26XN1TM6CV01T","germany","H","M","nazi","munich",FALSE,TRUE
+"2","A26XN1TM6CV01T","guns","M","H","rifles","rifle",TRUE,FALSE
+"3","A26XN1TM6CV01T","happiness","M","H","joy","fun",TRUE,FALSE
+"4","A26XN1TM6CV01T","animals","H","M","dog","mammals",TRUE,FALSE
+"5","A26XN1TM6CV01T","welfare","M","H","liberties","democracy",FALSE,TRUE
+"6","A26XN1TM6CV01T","vote","M","H","votes","candidate",FALSE,TRUE
+"7","A26XN1TM6CV01T","freedom","H","M","democracy","democracy",FALSE,TRUE
+"8","A26XN1TM6CV01T","corruption","M","H","graft","bribery",FALSE,TRUE

@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A3I1W58P6SIV26","germany","M","H","berlin","hitler",TRUE,FALSE
+"2","A3I1W58P6SIV26","guns","H","M","rifle","handguns",TRUE,FALSE
+"3","A3I1W58P6SIV26","animals","M","H","birds","zoo",TRUE,FALSE
+"4","A3I1W58P6SIV26","corruption","M","H","allegations","crime",TRUE,FALSE
+"5","A3I1W58P6SIV26","welfare","H","M","america","freedoms",TRUE,FALSE
+"6","A3I1W58P6SIV26","freedom","M","H","democracy","democracy",TRUE,FALSE
+"7","A3I1W58P6SIV26","happiness","M","H","joy","fun",TRUE,FALSE
+"8","A3I1W58P6SIV26","vote","M","H","election","ballot",TRUE,FALSE

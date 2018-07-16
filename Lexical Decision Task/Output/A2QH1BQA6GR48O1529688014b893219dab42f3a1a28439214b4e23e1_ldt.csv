@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2QH1BQA6GR48O","welfare","M","H","reform","check",FALSE,TRUE
+"2","A2QH1BQA6GR48O","animals","H","M","cat","animal",TRUE,FALSE
+"3","A2QH1BQA6GR48O","vote","M","H","votes","candidate",FALSE,TRUE
+"4","A2QH1BQA6GR48O","corruption","H","M","crime","bribery",TRUE,FALSE
+"5","A2QH1BQA6GR48O","guns","H","M","shooting","ammunition",FALSE,TRUE
+"6","A2QH1BQA6GR48O","germany","H","M","nazi","berlin",FALSE,TRUE
+"7","A2QH1BQA6GR48O","happiness","H","M","love","enjoyment",FALSE,TRUE
+"8","A2QH1BQA6GR48O","freedom","M","H","liberties","rights",FALSE,TRUE

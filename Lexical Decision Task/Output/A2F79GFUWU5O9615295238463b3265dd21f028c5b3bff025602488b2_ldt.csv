@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2F79GFUWU5O96","welfare","H","M","money","medicaid",FALSE,TRUE
+"2","A2F79GFUWU5O96","guns","H","M","shoot","rifles",FALSE,TRUE
+"3","A2F79GFUWU5O96","animals","H","M","dog","birds",TRUE,FALSE
+"4","A2F79GFUWU5O96","corruption","H","M","money","allegations",FALSE,TRUE
+"5","A2F79GFUWU5O96","happiness","H","M","fun","satisfaction",FALSE,TRUE
+"6","A2F79GFUWU5O96","vote","H","M","politics","votes",TRUE,FALSE
+"7","A2F79GFUWU5O96","germany","M","H","munich","europe",FALSE,TRUE
+"8","A2F79GFUWU5O96","freedom","H","M","rights","liberties",TRUE,FALSE

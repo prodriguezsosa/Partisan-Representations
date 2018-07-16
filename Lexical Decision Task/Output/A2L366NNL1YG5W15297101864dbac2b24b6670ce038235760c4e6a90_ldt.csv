@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2L366NNL1YG5W","vote","H","M","candidate","votes",FALSE,TRUE
+"2","A2L366NNL1YG5W","animals","M","H","birds","cat",TRUE,FALSE
+"3","A2L366NNL1YG5W","happiness","M","H","enjoyment","joy",FALSE,TRUE
+"4","A2L366NNL1YG5W","welfare","H","M","democracy","rights",FALSE,TRUE
+"5","A2L366NNL1YG5W","corruption","H","M","crime","bribery",FALSE,TRUE
+"6","A2L366NNL1YG5W","germany","M","H","munich","beer",TRUE,FALSE
+"7","A2L366NNL1YG5W","guns","H","M","shoot","ammunition",FALSE,TRUE
+"8","A2L366NNL1YG5W","freedom","H","M","rights","rights",FALSE,TRUE

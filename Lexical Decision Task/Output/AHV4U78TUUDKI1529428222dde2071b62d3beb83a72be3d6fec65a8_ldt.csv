@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","AHV4U78TUUDKI","freedom","M","H","rights","liberty",FALSE,TRUE
+"2","AHV4U78TUUDKI","animals","H","M","pets","cows",TRUE,FALSE
+"3","AHV4U78TUUDKI","germany","M","H","austria","country",TRUE,FALSE
+"4","AHV4U78TUUDKI","welfare","H","M","help","social",TRUE,FALSE
+"5","AHV4U78TUUDKI","vote","H","M","candidate","election",FALSE,TRUE
+"6","AHV4U78TUUDKI","happiness","M","H","joy","laughter",TRUE,FALSE
+"7","AHV4U78TUUDKI","guns","M","H","handguns","shoot",FALSE,TRUE
+"8","AHV4U78TUUDKI","corruption","H","M","money","bribery",FALSE,TRUE

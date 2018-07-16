@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A3SHZQLYH7L1V4","germany","M","H","berlin","beer",TRUE,FALSE
+"2","A3SHZQLYH7L1V4","vote","M","H","votes","election",TRUE,FALSE
+"3","A3SHZQLYH7L1V4","animals","M","H","humans","zoo",TRUE,FALSE
+"4","A3SHZQLYH7L1V4","freedom","H","M","rights","rights",FALSE,TRUE
+"5","A3SHZQLYH7L1V4","guns","H","M","shoot","gun",FALSE,TRUE
+"6","A3SHZQLYH7L1V4","welfare","M","H","liberties","democracy",TRUE,FALSE
+"7","A3SHZQLYH7L1V4","corruption","M","H","corrupt","politics",TRUE,FALSE
+"8","A3SHZQLYH7L1V4","happiness","H","M","joy","contentment",TRUE,FALSE

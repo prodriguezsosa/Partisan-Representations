@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","AIR4UQNPIMFCJ","germany","H","M","beer","german",FALSE,TRUE
+"2","AIR4UQNPIMFCJ","corruption","M","H","scandals","politics",TRUE,FALSE
+"3","AIR4UQNPIMFCJ","vote","H","M","candidate","elections",TRUE,FALSE
+"4","AIR4UQNPIMFCJ","guns","M","H","rifles","rifle",TRUE,FALSE
+"5","AIR4UQNPIMFCJ","welfare","H","M","money","reform",FALSE,TRUE
+"6","AIR4UQNPIMFCJ","animals","M","H","birds","dogs",FALSE,TRUE
+"7","AIR4UQNPIMFCJ","freedom","H","M","speech","liberties",FALSE,TRUE
+"8","AIR4UQNPIMFCJ","happiness","H","M","smile","contentment",FALSE,TRUE

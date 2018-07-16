@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A38DXFI1TZA295","corruption","M","H","scandals","money",TRUE,FALSE
+"2","A38DXFI1TZA295","welfare","M","H","freedoms","democracy",FALSE,TRUE
+"3","A38DXFI1TZA295","vote","H","M","election","election",TRUE,FALSE
+"4","A38DXFI1TZA295","germany","H","M","bullets","handguns",TRUE,FALSE
+"5","A38DXFI1TZA295","animals","H","M","zoo","humans",TRUE,FALSE
+"6","A38DXFI1TZA295","happiness","H","M","smile","contentment",TRUE,FALSE
+"7","A38DXFI1TZA295","freedom","H","M","nazi","munich",FALSE,TRUE
+"8","A38DXFI1TZA295","guns","H","M","politics","voted",TRUE,FALSE

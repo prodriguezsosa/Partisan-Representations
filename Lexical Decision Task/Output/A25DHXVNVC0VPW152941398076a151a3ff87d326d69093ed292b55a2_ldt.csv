@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A25DHXVNVC0VPW","welfare","H","M","poor","reform",TRUE,FALSE
+"2","A25DHXVNVC0VPW","animals","M","H","cows","dogs",FALSE,TRUE
+"3","A25DHXVNVC0VPW","corruption","H","M","politics","scandals",FALSE,TRUE
+"4","A25DHXVNVC0VPW","freedom","H","M","rights","democracy",FALSE,TRUE
+"5","A25DHXVNVC0VPW","happiness","H","M","love","contentment",FALSE,TRUE
+"6","A25DHXVNVC0VPW","germany","M","H","munich","beer",TRUE,FALSE
+"7","A25DHXVNVC0VPW","vote","H","M","election","voted",TRUE,FALSE
+"8","A25DHXVNVC0VPW","guns","H","M","rifle","gun",TRUE,FALSE

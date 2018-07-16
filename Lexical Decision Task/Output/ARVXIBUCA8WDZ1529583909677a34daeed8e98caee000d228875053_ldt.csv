@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","ARVXIBUCA8WDZ","vote","H","M","president","elections",FALSE,TRUE
+"2","ARVXIBUCA8WDZ","welfare","M","H","education","assistance",FALSE,TRUE
+"3","ARVXIBUCA8WDZ","germany","M","H","munich","beer",TRUE,FALSE
+"4","ARVXIBUCA8WDZ","freedom","H","M","democracy","rights",FALSE,TRUE
+"5","ARVXIBUCA8WDZ","happiness","H","M","fun","prosperity",TRUE,FALSE
+"6","ARVXIBUCA8WDZ","corruption","M","H","corrupt","crime",TRUE,FALSE
+"7","ARVXIBUCA8WDZ","animals","H","M","cat","mammals",FALSE,TRUE
+"8","ARVXIBUCA8WDZ","guns","M","H","gun","shooting",FALSE,TRUE

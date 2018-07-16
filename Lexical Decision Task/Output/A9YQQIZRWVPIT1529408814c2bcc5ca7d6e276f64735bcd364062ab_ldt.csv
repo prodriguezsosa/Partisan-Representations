@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A9YQQIZRWVPIT","corruption","H","M","government","graft",TRUE,FALSE
+"2","A9YQQIZRWVPIT","welfare","H","M","help","social",FALSE,TRUE
+"3","A9YQQIZRWVPIT","happiness","H","M","joy","satisfaction",TRUE,FALSE
+"4","A9YQQIZRWVPIT","germany","M","H","munich","hitler",TRUE,FALSE
+"5","A9YQQIZRWVPIT","vote","H","M","election","votes",TRUE,FALSE
+"6","A9YQQIZRWVPIT","animals","M","H","birds","pets",FALSE,TRUE
+"7","A9YQQIZRWVPIT","guns","M","H","rifles","shoot",TRUE,FALSE
+"8","A9YQQIZRWVPIT","freedom","M","H","liberty","rights",TRUE,FALSE

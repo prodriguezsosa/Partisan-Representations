@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A18JA2145UWXG","corruption","H","M","crime","scandals",FALSE,TRUE
+"2","A18JA2145UWXG","vote","H","M","election","votes",TRUE,FALSE
+"3","A18JA2145UWXG","welfare","M","H","reform","poor",FALSE,TRUE
+"4","A18JA2145UWXG","animals","M","H","birds","pets",TRUE,FALSE
+"5","A18JA2145UWXG","germany","M","H","german","nazi",TRUE,FALSE
+"6","A18JA2145UWXG","freedom","M","H","rights","liberty",FALSE,TRUE
+"7","A18JA2145UWXG","happiness","H","M","laughter","prosperity",TRUE,FALSE
+"8","A18JA2145UWXG","guns","H","M","shooting","pistols",TRUE,FALSE

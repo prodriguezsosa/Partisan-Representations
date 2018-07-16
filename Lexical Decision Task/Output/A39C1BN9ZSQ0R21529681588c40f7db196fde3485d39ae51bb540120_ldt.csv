@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A39C1BN9ZSQ0R2","vote","M","H","voted","president",FALSE,TRUE
+"2","A39C1BN9ZSQ0R2","animals","M","H","birds","pets",FALSE,TRUE
+"3","A39C1BN9ZSQ0R2","happiness","H","M","smile","contentment",FALSE,TRUE
+"4","A39C1BN9ZSQ0R2","germany","M","H","europe","europe",TRUE,FALSE
+"5","A39C1BN9ZSQ0R2","welfare","M","H","rights","democracy",TRUE,FALSE
+"6","A39C1BN9ZSQ0R2","freedom","M","H","german","hitler",TRUE,FALSE
+"7","A39C1BN9ZSQ0R2","corruption","M","H","graft","government",FALSE,TRUE
+"8","A39C1BN9ZSQ0R2","guns","H","M","shoot","pistols",FALSE,TRUE

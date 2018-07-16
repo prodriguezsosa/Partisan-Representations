@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A3HTLXAPOBCVVO","vote","H","M","ballot","voting",TRUE,FALSE
+"2","A3HTLXAPOBCVVO","animals","H","M","dog","mammals",FALSE,TRUE
+"3","A3HTLXAPOBCVVO","guns","M","H","rifles","violence",TRUE,FALSE
+"4","A3HTLXAPOBCVVO","happiness","H","M","smile","prosperity",FALSE,TRUE
+"5","A3HTLXAPOBCVVO","welfare","M","H","democracy","democracy",FALSE,TRUE
+"6","A3HTLXAPOBCVVO","germany","M","H","berlin","country",TRUE,FALSE
+"7","A3HTLXAPOBCVVO","freedom","M","H","liberty","liberty",FALSE,TRUE
+"8","A3HTLXAPOBCVVO","corruption","M","H","corrupt","crime",FALSE,TRUE

@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","AROOCBM042SJD","freedom","H","M","democracy","liberties",TRUE,FALSE
+"2","AROOCBM042SJD","germany","M","H","berlin","hitler",TRUE,FALSE
+"3","AROOCBM042SJD","animals","M","H","birds","zoo",TRUE,FALSE
+"4","AROOCBM042SJD","welfare","M","H","health","poor",TRUE,FALSE
+"5","AROOCBM042SJD","guns","M","H","handguns","violence",FALSE,TRUE
+"6","AROOCBM042SJD","happiness","H","M","smile","enjoyment",TRUE,FALSE
+"7","AROOCBM042SJD","corruption","H","M","bribery","graft",TRUE,FALSE
+"8","AROOCBM042SJD","vote","M","H","elections","president",TRUE,FALSE

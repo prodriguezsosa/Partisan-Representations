@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A3KNO82DZ519HG","guns","H","M","shoot","ammunition",TRUE,FALSE
+"2","A3KNO82DZ519HG","corruption","M","H","scandals","crime",TRUE,FALSE
+"3","A3KNO82DZ519HG","animals","M","H","birds","dog",FALSE,TRUE
+"4","A3KNO82DZ519HG","vote","H","M","president","votes",FALSE,TRUE
+"5","A3KNO82DZ519HG","freedom","M","H","liberty","america",TRUE,FALSE
+"6","A3KNO82DZ519HG","welfare","H","M","check","social",FALSE,TRUE
+"7","A3KNO82DZ519HG","happiness","H","M","smile","contentment",FALSE,TRUE
+"8","A3KNO82DZ519HG","germany","M","H","munich","country",FALSE,TRUE

@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A7204W9E8IR1R","animals","H","M","dogs","animal",TRUE,FALSE
+"2","A7204W9E8IR1R","happiness","H","M","love","contentment",TRUE,FALSE
+"3","A7204W9E8IR1R","germany","M","H","europe","europe",FALSE,TRUE
+"4","A7204W9E8IR1R","welfare","M","H","liberties","america",FALSE,TRUE
+"5","A7204W9E8IR1R","corruption","H","M","politics","graft",TRUE,FALSE
+"6","A7204W9E8IR1R","freedom","H","M","europe","berlin",TRUE,FALSE
+"7","A7204W9E8IR1R","vote","M","H","elections","election",FALSE,TRUE
+"8","A7204W9E8IR1R","guns","H","M","shoot","pistols",TRUE,FALSE

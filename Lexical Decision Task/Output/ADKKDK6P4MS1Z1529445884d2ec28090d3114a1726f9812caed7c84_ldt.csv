@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","ADKKDK6P4MS1Z","happiness","H","M","joy","prosperity",TRUE,FALSE
+"2","ADKKDK6P4MS1Z","corruption","H","M","politics","graft",TRUE,FALSE
+"3","ADKKDK6P4MS1Z","germany","M","H","austria","nazi",FALSE,TRUE
+"4","ADKKDK6P4MS1Z","welfare","H","M","assistance","medicaid",FALSE,TRUE
+"5","ADKKDK6P4MS1Z","vote","H","M","president","elections",FALSE,TRUE
+"6","ADKKDK6P4MS1Z","guns","M","H","ammunition","violence",TRUE,FALSE
+"7","ADKKDK6P4MS1Z","animals","M","H","mammals","dog",FALSE,TRUE
+"8","ADKKDK6P4MS1Z","freedom","M","H","liberties","rights",FALSE,TRUE

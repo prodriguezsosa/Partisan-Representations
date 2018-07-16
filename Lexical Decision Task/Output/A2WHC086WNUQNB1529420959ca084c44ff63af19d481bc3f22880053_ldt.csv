@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2WHC086WNUQNB","happiness","H","M","love","joy",FALSE,TRUE
+"2","A2WHC086WNUQNB","freedom","H","M","beer","austria",TRUE,FALSE
+"3","A2WHC086WNUQNB","animals","M","H","birds","cat",FALSE,TRUE
+"4","A2WHC086WNUQNB","vote","M","H","election","election",FALSE,TRUE
+"5","A2WHC086WNUQNB","guns","H","M","ballot","votes",FALSE,TRUE
+"6","A2WHC086WNUQNB","welfare","H","M","america","democracy",TRUE,FALSE
+"7","A2WHC086WNUQNB","corruption","H","M","politics","scandals",FALSE,TRUE
+"8","A2WHC086WNUQNB","germany","H","M","rifle","pistols",TRUE,FALSE

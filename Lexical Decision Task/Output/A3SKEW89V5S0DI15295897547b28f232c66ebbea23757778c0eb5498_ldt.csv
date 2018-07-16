@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A3SKEW89V5S0DI","guns","H","M","election","voted",FALSE,TRUE
+"2","A3SKEW89V5S0DI","freedom","M","H","german","beer",TRUE,FALSE
+"3","A3SKEW89V5S0DI","germany","H","M","bullets","ammunition",FALSE,TRUE
+"4","A3SKEW89V5S0DI","corruption","M","H","bribery","bribery",FALSE,TRUE
+"5","A3SKEW89V5S0DI","animals","H","M","zoo","birds",TRUE,FALSE
+"6","A3SKEW89V5S0DI","vote","M","H","bribery","government",FALSE,TRUE
+"7","A3SKEW89V5S0DI","happiness","H","M","fun","enjoyment",FALSE,TRUE
+"8","A3SKEW89V5S0DI","welfare","M","H","democracy","rights",FALSE,TRUE

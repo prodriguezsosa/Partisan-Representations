@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2HGRSPR50ENHL","animals","M","H","humans","pets",FALSE,TRUE
+"2","A2HGRSPR50ENHL","germany","M","H","berlin","beer",FALSE,TRUE
+"3","A2HGRSPR50ENHL","welfare","H","M","poor","education",TRUE,FALSE
+"4","A2HGRSPR50ENHL","happiness","H","M","fun","enjoyment",FALSE,TRUE
+"5","A2HGRSPR50ENHL","vote","M","H","voting","president",TRUE,FALSE
+"6","A2HGRSPR50ENHL","freedom","M","H","democracy","rights",TRUE,FALSE
+"7","A2HGRSPR50ENHL","guns","M","H","gun","bullets",FALSE,TRUE
+"8","A2HGRSPR50ENHL","corruption","M","H","bribery","money",TRUE,FALSE

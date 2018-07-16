@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A16HSMUJ7C7QA7","guns","M","H","rifles","shooting",TRUE,FALSE
+"2","A16HSMUJ7C7QA7","germany","M","H","austria","europe",TRUE,FALSE
+"3","A16HSMUJ7C7QA7","happiness","M","H","contentment","love",TRUE,FALSE
+"4","A16HSMUJ7C7QA7","corruption","M","H","scandals","crime",TRUE,FALSE
+"5","A16HSMUJ7C7QA7","vote","H","M","ballot","election",FALSE,TRUE
+"6","A16HSMUJ7C7QA7","freedom","M","H","democracy","speech",TRUE,FALSE
+"7","A16HSMUJ7C7QA7","welfare","M","H","education","money",FALSE,TRUE
+"8","A16HSMUJ7C7QA7","animals","M","H","cows","dogs",TRUE,FALSE

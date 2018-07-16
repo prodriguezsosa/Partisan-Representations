@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A11S8IAAVDXCUS","welfare","H","M","money","health",TRUE,FALSE
+"2","A11S8IAAVDXCUS","animals","M","H","birds","cat",TRUE,FALSE
+"3","A11S8IAAVDXCUS","happiness","M","H","prosperity","love",FALSE,TRUE
+"4","A11S8IAAVDXCUS","freedom","M","H","liberties","rights",TRUE,FALSE
+"5","A11S8IAAVDXCUS","corruption","M","H","bribery","politics",TRUE,FALSE
+"6","A11S8IAAVDXCUS","vote","H","M","president","voting",FALSE,TRUE
+"7","A11S8IAAVDXCUS","germany","M","H","austria","hitler",FALSE,TRUE
+"8","A11S8IAAVDXCUS","guns","H","M","shooting","gun",FALSE,TRUE

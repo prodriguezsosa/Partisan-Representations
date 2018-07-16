@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","ACJK1CSODSI6N","freedom","H","M","speech","freedoms",TRUE,FALSE
+"2","ACJK1CSODSI6N","germany","M","H","german","europe",FALSE,TRUE
+"3","ACJK1CSODSI6N","corruption","H","M","crime","graft",TRUE,FALSE
+"4","ACJK1CSODSI6N","welfare","M","H","medicaid","assistance",FALSE,TRUE
+"5","ACJK1CSODSI6N","guns","H","M","shoot","rifles",TRUE,FALSE
+"6","ACJK1CSODSI6N","vote","M","H","voting","politics",FALSE,TRUE
+"7","ACJK1CSODSI6N","animals","H","M","pets","animal",FALSE,TRUE
+"8","ACJK1CSODSI6N","happiness","H","M","joy","prosperity",TRUE,FALSE

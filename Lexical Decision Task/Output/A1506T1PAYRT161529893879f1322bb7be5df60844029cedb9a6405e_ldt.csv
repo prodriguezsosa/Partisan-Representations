@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A1506T1PAYRT16","freedom","H","M","rights","liberty",TRUE,FALSE
+"2","A1506T1PAYRT16","welfare","H","M","poor","education",TRUE,FALSE
+"3","A1506T1PAYRT16","vote","M","H","voted","president",TRUE,FALSE
+"4","A1506T1PAYRT16","guns","H","M","shoot","pistols",TRUE,FALSE
+"5","A1506T1PAYRT16","corruption","M","H","scandals","politics",TRUE,FALSE
+"6","A1506T1PAYRT16","happiness","M","H","contentment","love",TRUE,FALSE
+"7","A1506T1PAYRT16","germany","M","H","german","country",FALSE,TRUE
+"8","A1506T1PAYRT16","animals","M","H","animal","pets",FALSE,TRUE

@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A37PO5YNKE5D97","vote","H","M","ballot","voted",TRUE,FALSE
+"2","A37PO5YNKE5D97","animals","H","M","dog","animal",TRUE,FALSE
+"3","A37PO5YNKE5D97","freedom","M","H","rights","america",TRUE,FALSE
+"4","A37PO5YNKE5D97","germany","M","H","europe","country",FALSE,TRUE
+"5","A37PO5YNKE5D97","guns","H","M","shooting","pistols",TRUE,FALSE
+"6","A37PO5YNKE5D97","corruption","H","M","money","allegations",FALSE,TRUE
+"7","A37PO5YNKE5D97","happiness","H","M","smile","prosperity",TRUE,FALSE
+"8","A37PO5YNKE5D97","welfare","H","M","assistance","reform",TRUE,FALSE

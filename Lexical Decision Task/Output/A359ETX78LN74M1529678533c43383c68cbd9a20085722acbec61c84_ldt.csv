@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A359ETX78LN74M","vote","M","H","election","candidate",TRUE,FALSE
+"2","A359ETX78LN74M","germany","M","H","german","nazi",TRUE,FALSE
+"3","A359ETX78LN74M","freedom","H","M","rights","freedoms",TRUE,FALSE
+"4","A359ETX78LN74M","corruption","H","M","politics","allegations",TRUE,FALSE
+"5","A359ETX78LN74M","guns","M","H","handguns","violence",FALSE,TRUE
+"6","A359ETX78LN74M","welfare","H","M","poor","education",TRUE,FALSE
+"7","A359ETX78LN74M","happiness","H","M","joy","enjoyment",TRUE,FALSE
+"8","A359ETX78LN74M","animals","M","H","cows","zoo",FALSE,TRUE

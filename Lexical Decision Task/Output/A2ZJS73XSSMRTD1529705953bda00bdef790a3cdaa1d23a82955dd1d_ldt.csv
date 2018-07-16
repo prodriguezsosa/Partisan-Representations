@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2ZJS73XSSMRTD","animals","H","M","pets","mammals",TRUE,FALSE
+"2","A2ZJS73XSSMRTD","germany","M","H","austria","beer",TRUE,FALSE
+"3","A2ZJS73XSSMRTD","welfare","M","H","social","check",TRUE,FALSE
+"4","A2ZJS73XSSMRTD","freedom","H","M","speech","democracy",FALSE,TRUE
+"5","A2ZJS73XSSMRTD","happiness","M","H","enjoyment","love",TRUE,FALSE
+"6","A2ZJS73XSSMRTD","vote","M","H","voting","ballot",FALSE,TRUE
+"7","A2ZJS73XSSMRTD","corruption","M","H","corrupt","bribery",FALSE,TRUE
+"8","A2ZJS73XSSMRTD","guns","H","M","shoot","pistols",FALSE,TRUE

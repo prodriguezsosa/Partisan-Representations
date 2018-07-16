@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A154X03NKVZZL1","welfare","H","M","democracy","freedoms",TRUE,FALSE
+"2","A154X03NKVZZL1","freedom","M","H","austria","country",FALSE,TRUE
+"3","A154X03NKVZZL1","guns","M","H","voted","president",TRUE,FALSE
+"4","A154X03NKVZZL1","vote","H","M","election","election",TRUE,FALSE
+"5","A154X03NKVZZL1","corruption","H","M","bribery","scandals",FALSE,TRUE
+"6","A154X03NKVZZL1","germany","H","M","rifle","handguns",TRUE,FALSE
+"7","A154X03NKVZZL1","animals","H","M","dogs","animal",FALSE,TRUE
+"8","A154X03NKVZZL1","happiness","M","H","enjoyment","joy",FALSE,TRUE

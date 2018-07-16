@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A258MR1IS96JEP","animals","H","M","zoo","mammals",FALSE,TRUE
+"2","A258MR1IS96JEP","vote","M","H","voted","ballot",FALSE,TRUE
+"3","A258MR1IS96JEP","germany","M","H","german","hitler",TRUE,FALSE
+"4","A258MR1IS96JEP","happiness","M","H","prosperity","love",TRUE,FALSE
+"5","A258MR1IS96JEP","freedom","H","M","democracy","democracy",TRUE,FALSE
+"6","A258MR1IS96JEP","corruption","H","M","government","graft",TRUE,FALSE
+"7","A258MR1IS96JEP","welfare","M","H","liberties","democracy",TRUE,FALSE
+"8","A258MR1IS96JEP","guns","M","H","rifles","bullets",TRUE,FALSE

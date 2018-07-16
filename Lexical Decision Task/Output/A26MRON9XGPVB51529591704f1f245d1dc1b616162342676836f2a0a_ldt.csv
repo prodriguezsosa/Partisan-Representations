@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A26MRON9XGPVB5","animals","M","H","birds","zoo",TRUE,FALSE
+"2","A26MRON9XGPVB5","corruption","H","M","government","corrupt",TRUE,FALSE
+"3","A26MRON9XGPVB5","welfare","M","H","liberties","speech",TRUE,FALSE
+"4","A26MRON9XGPVB5","freedom","H","M","country","europe",TRUE,FALSE
+"5","A26MRON9XGPVB5","vote","H","M","politics","votes",TRUE,FALSE
+"6","A26MRON9XGPVB5","germany","M","H","europe","europe",TRUE,FALSE
+"7","A26MRON9XGPVB5","happiness","M","H","prosperity","joy",FALSE,TRUE
+"8","A26MRON9XGPVB5","guns","M","H","pistols","rifle",FALSE,TRUE

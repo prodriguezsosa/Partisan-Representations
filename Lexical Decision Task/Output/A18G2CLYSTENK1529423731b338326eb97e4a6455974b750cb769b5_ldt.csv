@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A18G2CLYSTENK","happiness","H","M","love","enjoyment",FALSE,TRUE
+"2","A18G2CLYSTENK","corruption","M","H","allegations","politics",FALSE,TRUE
+"3","A18G2CLYSTENK","guns","M","H","ammunition","shooting",FALSE,TRUE
+"4","A18G2CLYSTENK","freedom","M","H","freedoms","liberty",TRUE,FALSE
+"5","A18G2CLYSTENK","vote","H","M","candidate","elections",FALSE,TRUE
+"6","A18G2CLYSTENK","animals","H","M","dogs","cows",TRUE,FALSE
+"7","A18G2CLYSTENK","germany","H","M","beer","munich",FALSE,TRUE
+"8","A18G2CLYSTENK","welfare","H","M","check","social",TRUE,FALSE

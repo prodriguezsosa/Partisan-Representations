@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A125FN8IYVB93O","welfare","M","H","freedoms","liberty",TRUE,FALSE
+"2","A125FN8IYVB93O","guns","H","M","election","voting",FALSE,TRUE
+"3","A125FN8IYVB93O","animals","H","M","cat","mammals",FALSE,TRUE
+"4","A125FN8IYVB93O","germany","M","H","pistols","rifle",FALSE,TRUE
+"5","A125FN8IYVB93O","happiness","M","H","prosperity","laughter",FALSE,TRUE
+"6","A125FN8IYVB93O","corruption","H","M","crime","allegations",TRUE,FALSE
+"7","A125FN8IYVB93O","vote","H","M","election","election",TRUE,FALSE
+"8","A125FN8IYVB93O","freedom","M","H","german","hitler",TRUE,FALSE

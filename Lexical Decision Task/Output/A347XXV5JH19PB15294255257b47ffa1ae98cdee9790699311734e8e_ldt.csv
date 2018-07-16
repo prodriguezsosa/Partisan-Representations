@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A347XXV5JH19PB","germany","H","M","europe","german",FALSE,TRUE
+"2","A347XXV5JH19PB","animals","M","H","cows","cat",TRUE,FALSE
+"3","A347XXV5JH19PB","welfare","H","M","assistance","education",TRUE,FALSE
+"4","A347XXV5JH19PB","corruption","M","H","scandals","politics",TRUE,FALSE
+"5","A347XXV5JH19PB","freedom","H","M","liberty","freedoms",FALSE,TRUE
+"6","A347XXV5JH19PB","vote","M","H","votes","candidate",TRUE,FALSE
+"7","A347XXV5JH19PB","guns","M","H","handguns","violence",TRUE,FALSE
+"8","A347XXV5JH19PB","happiness","M","H","satisfaction","joy",FALSE,TRUE

@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2ETSATXP9MTZ6","animals","H","M","cat","mammals",FALSE,TRUE
+"2","A2ETSATXP9MTZ6","freedom","H","M","speech","rights",FALSE,TRUE
+"3","A2ETSATXP9MTZ6","welfare","M","H","education","help",FALSE,TRUE
+"4","A2ETSATXP9MTZ6","happiness","M","H","joy","smile",TRUE,FALSE
+"5","A2ETSATXP9MTZ6","vote","M","H","votes","election",FALSE,TRUE
+"6","A2ETSATXP9MTZ6","corruption","M","H","corrupt","politics",TRUE,FALSE
+"7","A2ETSATXP9MTZ6","guns","H","M","shooting","pistols",FALSE,TRUE
+"8","A2ETSATXP9MTZ6","germany","H","M","hitler","german",FALSE,TRUE

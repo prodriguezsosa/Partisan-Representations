@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2HHGI5CNSS5PD","guns","M","H","pistols","rifle",FALSE,TRUE
+"2","A2HHGI5CNSS5PD","welfare","H","M","check","reform",TRUE,FALSE
+"3","A2HHGI5CNSS5PD","animals","H","M","dogs","humans",TRUE,FALSE
+"4","A2HHGI5CNSS5PD","vote","H","M","ballot","voting",TRUE,FALSE
+"5","A2HHGI5CNSS5PD","germany","M","H","german","country",TRUE,FALSE
+"6","A2HHGI5CNSS5PD","happiness","H","M","love","prosperity",FALSE,TRUE
+"7","A2HHGI5CNSS5PD","corruption","H","M","bribery","scandals",FALSE,TRUE
+"8","A2HHGI5CNSS5PD","freedom","H","M","democracy","freedoms",TRUE,FALSE

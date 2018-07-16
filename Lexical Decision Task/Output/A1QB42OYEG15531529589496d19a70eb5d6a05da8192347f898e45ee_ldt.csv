@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A1QB42OYEG1553","vote","H","M","politics","voted",TRUE,FALSE
+"2","A1QB42OYEG1553","germany","H","M","nazi","german",FALSE,TRUE
+"3","A1QB42OYEG1553","freedom","H","M","democracy","liberty",FALSE,TRUE
+"4","A1QB42OYEG1553","happiness","H","M","love","contentment",FALSE,TRUE
+"5","A1QB42OYEG1553","animals","M","H","mammals","cat",TRUE,FALSE
+"6","A1QB42OYEG1553","guns","M","H","ammunition","bullets",FALSE,TRUE
+"7","A1QB42OYEG1553","corruption","H","M","bribery","corrupt",FALSE,TRUE
+"8","A1QB42OYEG1553","welfare","H","M","help","reform",TRUE,FALSE

@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A175ZTL2OZO9YU","germany","M","H","munich","beer",TRUE,FALSE
+"2","A175ZTL2OZO9YU","welfare","M","H","medicaid","assistance",FALSE,TRUE
+"3","A175ZTL2OZO9YU","animals","H","M","dog","mammals",TRUE,FALSE
+"4","A175ZTL2OZO9YU","vote","M","H","voted","president",FALSE,TRUE
+"5","A175ZTL2OZO9YU","freedom","M","H","rights","america",TRUE,FALSE
+"6","A175ZTL2OZO9YU","corruption","H","M","politics","graft",TRUE,FALSE
+"7","A175ZTL2OZO9YU","happiness","H","M","smile","prosperity",FALSE,TRUE
+"8","A175ZTL2OZO9YU","guns","H","M","bullets","gun",TRUE,FALSE

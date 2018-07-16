@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A17ZMF7GGP6HKO","germany","H","M","hitler","austria",FALSE,TRUE
+"2","A17ZMF7GGP6HKO","corruption","H","M","bribery","graft",TRUE,FALSE
+"3","A17ZMF7GGP6HKO","welfare","M","H","health","help",TRUE,FALSE
+"4","A17ZMF7GGP6HKO","animals","M","H","mammals","zoo",FALSE,TRUE
+"5","A17ZMF7GGP6HKO","freedom","H","M","rights","liberties",FALSE,TRUE
+"6","A17ZMF7GGP6HKO","happiness","M","H","prosperity","love",TRUE,FALSE
+"7","A17ZMF7GGP6HKO","guns","M","H","ammunition","shooting",TRUE,FALSE
+"8","A17ZMF7GGP6HKO","vote","M","H","votes","election",TRUE,FALSE

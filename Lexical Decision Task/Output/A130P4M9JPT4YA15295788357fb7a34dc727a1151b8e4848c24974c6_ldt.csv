@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A130P4M9JPT4YA","freedom","M","H","liberty","speech",TRUE,FALSE
+"2","A130P4M9JPT4YA","welfare","H","M","poor","social",TRUE,FALSE
+"3","A130P4M9JPT4YA","guns","H","M","violence","ammunition",FALSE,TRUE
+"4","A130P4M9JPT4YA","happiness","H","M","joy","satisfaction",TRUE,FALSE
+"5","A130P4M9JPT4YA","animals","H","M","pets","birds",TRUE,FALSE
+"6","A130P4M9JPT4YA","corruption","H","M","politics","scandals",FALSE,TRUE
+"7","A130P4M9JPT4YA","germany","M","H","europe","hitler",TRUE,FALSE
+"8","A130P4M9JPT4YA","vote","H","M","ballot","votes",TRUE,FALSE

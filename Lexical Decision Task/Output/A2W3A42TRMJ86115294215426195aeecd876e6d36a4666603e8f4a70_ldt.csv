@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2W3A42TRMJ861","germany","M","H","berlin","europe",TRUE,FALSE
+"2","A2W3A42TRMJ861","guns","M","H","gun","shoot",FALSE,TRUE
+"3","A2W3A42TRMJ861","freedom","H","M","america","liberty",FALSE,TRUE
+"4","A2W3A42TRMJ861","happiness","M","H","enjoyment","joy",FALSE,TRUE
+"5","A2W3A42TRMJ861","vote","H","M","president","votes",TRUE,FALSE
+"6","A2W3A42TRMJ861","animals","H","M","cat","cows",TRUE,FALSE
+"7","A2W3A42TRMJ861","corruption","M","H","bribery","money",FALSE,TRUE
+"8","A2W3A42TRMJ861","welfare","H","M","help","social",TRUE,FALSE

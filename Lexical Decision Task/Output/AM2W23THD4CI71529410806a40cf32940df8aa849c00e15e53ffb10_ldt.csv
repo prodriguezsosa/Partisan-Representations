@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","AM2W23THD4CI7","welfare","H","M","rights","freedoms",TRUE,FALSE
+"2","AM2W23THD4CI7","germany","M","H","rifles","violence",FALSE,TRUE
+"3","AM2W23THD4CI7","vote","H","M","politics","allegations",TRUE,FALSE
+"4","AM2W23THD4CI7","guns","H","M","president","election",FALSE,TRUE
+"5","AM2W23THD4CI7","animals","M","H","birds","zoo",FALSE,TRUE
+"6","AM2W23THD4CI7","corruption","M","H","bribery","bribery",TRUE,FALSE
+"7","AM2W23THD4CI7","freedom","M","H","berlin","beer",FALSE,TRUE
+"8","AM2W23THD4CI7","happiness","M","H","enjoyment","fun",TRUE,FALSE

@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A1USDMJVT10CE4","corruption","H","M","crime","graft",TRUE,FALSE
+"2","A1USDMJVT10CE4","vote","H","M","candidate","elections",FALSE,TRUE
+"3","A1USDMJVT10CE4","happiness","M","H","enjoyment","laughter",TRUE,FALSE
+"4","A1USDMJVT10CE4","animals","M","H","birds","cat",TRUE,FALSE
+"5","A1USDMJVT10CE4","germany","M","H","munich","beer",TRUE,FALSE
+"6","A1USDMJVT10CE4","welfare","M","H","health","money",TRUE,FALSE
+"7","A1USDMJVT10CE4","guns","H","M","bullets","rifles",FALSE,TRUE
+"8","A1USDMJVT10CE4","freedom","H","M","rights","freedoms",TRUE,FALSE

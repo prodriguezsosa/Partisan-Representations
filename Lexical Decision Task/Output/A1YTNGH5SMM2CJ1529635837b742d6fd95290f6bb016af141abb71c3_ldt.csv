@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A1YTNGH5SMM2CJ","vote","M","H","voting","president",FALSE,TRUE
+"2","A1YTNGH5SMM2CJ","freedom","M","H","liberty","speech",TRUE,FALSE
+"3","A1YTNGH5SMM2CJ","happiness","M","H","joy","love",TRUE,FALSE
+"4","A1YTNGH5SMM2CJ","welfare","M","H","reform","check",FALSE,TRUE
+"5","A1YTNGH5SMM2CJ","animals","H","M","dogs","animal",TRUE,FALSE
+"6","A1YTNGH5SMM2CJ","corruption","M","H","scandals","bribery",TRUE,FALSE
+"7","A1YTNGH5SMM2CJ","germany","H","M","country","austria",TRUE,FALSE
+"8","A1YTNGH5SMM2CJ","guns","H","M","shoot","ammunition",TRUE,FALSE

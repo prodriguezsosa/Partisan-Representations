@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A1LOD3LNX7FUPJ","corruption","H","M","money","graft",TRUE,FALSE
+"2","A1LOD3LNX7FUPJ","happiness","H","M","smile","satisfaction",TRUE,FALSE
+"3","A1LOD3LNX7FUPJ","vote","H","M","president","voted",FALSE,TRUE
+"4","A1LOD3LNX7FUPJ","freedom","M","H","democracy","america",TRUE,FALSE
+"5","A1LOD3LNX7FUPJ","guns","H","M","bullets","gun",FALSE,TRUE
+"6","A1LOD3LNX7FUPJ","welfare","H","M","money","medicaid",FALSE,TRUE
+"7","A1LOD3LNX7FUPJ","germany","H","M","country","europe",TRUE,FALSE
+"8","A1LOD3LNX7FUPJ","animals","M","H","humans","pets",FALSE,TRUE

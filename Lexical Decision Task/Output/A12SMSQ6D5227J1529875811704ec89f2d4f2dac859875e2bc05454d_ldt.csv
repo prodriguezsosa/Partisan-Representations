@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A12SMSQ6D5227J","welfare","H","M","money","education",TRUE,FALSE
+"2","A12SMSQ6D5227J","happiness","M","H","satisfaction","joy",FALSE,TRUE
+"3","A12SMSQ6D5227J","vote","H","M","election","elections",TRUE,FALSE
+"4","A12SMSQ6D5227J","germany","H","M","europe","german",FALSE,TRUE
+"5","A12SMSQ6D5227J","freedom","H","M","liberty","freedoms",FALSE,TRUE
+"6","A12SMSQ6D5227J","animals","H","M","zoo","mammals",TRUE,FALSE
+"7","A12SMSQ6D5227J","guns","M","H","ammunition","violence",FALSE,TRUE
+"8","A12SMSQ6D5227J","corruption","M","H","graft","money",FALSE,TRUE

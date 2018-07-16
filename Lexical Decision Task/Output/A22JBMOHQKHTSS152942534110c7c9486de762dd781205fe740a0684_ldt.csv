@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A22JBMOHQKHTSS","corruption","M","H","scandals","bribery",TRUE,FALSE
+"2","A22JBMOHQKHTSS","animals","M","H","humans","pets",FALSE,TRUE
+"3","A22JBMOHQKHTSS","happiness","H","M","laughter","contentment",TRUE,FALSE
+"4","A22JBMOHQKHTSS","freedom","M","H","freedoms","america",TRUE,FALSE
+"5","A22JBMOHQKHTSS","guns","M","H","pistols","violence",TRUE,FALSE
+"6","A22JBMOHQKHTSS","welfare","H","M","check","health",FALSE,TRUE
+"7","A22JBMOHQKHTSS","germany","H","M","beer","german",FALSE,TRUE
+"8","A22JBMOHQKHTSS","vote","H","M","ballot","election",TRUE,FALSE

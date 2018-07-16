@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A3B7TNVOISSZ2O","animals","H","M","dogs","animal",TRUE,FALSE
+"2","A3B7TNVOISSZ2O","welfare","M","H","medicaid","help",TRUE,FALSE
+"3","A3B7TNVOISSZ2O","happiness","M","H","satisfaction","love",TRUE,FALSE
+"4","A3B7TNVOISSZ2O","vote","H","M","president","election",FALSE,TRUE
+"5","A3B7TNVOISSZ2O","freedom","M","H","democracy","rights",FALSE,TRUE
+"6","A3B7TNVOISSZ2O","corruption","M","H","scandals","bribery",TRUE,FALSE
+"7","A3B7TNVOISSZ2O","germany","H","M","country","berlin",FALSE,TRUE
+"8","A3B7TNVOISSZ2O","guns","H","M","shooting","gun",TRUE,FALSE

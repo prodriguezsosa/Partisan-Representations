@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A667L63P4M8NO","happiness","M","H","joy","laughter",TRUE,FALSE
+"2","A667L63P4M8NO","germany","M","H","munich","europe",TRUE,FALSE
+"3","A667L63P4M8NO","animals","H","M","pets","mammals",TRUE,FALSE
+"4","A667L63P4M8NO","vote","M","H","voted","election",FALSE,TRUE
+"5","A667L63P4M8NO","freedom","H","M","speech","rights",TRUE,FALSE
+"6","A667L63P4M8NO","welfare","H","M","poor","reform",TRUE,FALSE
+"7","A667L63P4M8NO","guns","H","M","rifle","pistols",FALSE,TRUE
+"8","A667L63P4M8NO","corruption","M","H","bribery","crime",TRUE,FALSE

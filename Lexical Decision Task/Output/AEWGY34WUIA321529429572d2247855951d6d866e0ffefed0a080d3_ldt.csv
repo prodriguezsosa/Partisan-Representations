@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","AEWGY34WUIA32","vote","H","M","candidate","votes",TRUE,FALSE
+"2","AEWGY34WUIA32","germany","H","M","beer","berlin",FALSE,TRUE
+"3","AEWGY34WUIA32","corruption","M","H","corrupt","money",FALSE,TRUE
+"4","AEWGY34WUIA32","guns","H","M","shooting","pistols",TRUE,FALSE
+"5","AEWGY34WUIA32","happiness","H","M","fun","joy",FALSE,TRUE
+"6","AEWGY34WUIA32","animals","H","M","dog","mammals",FALSE,TRUE
+"7","AEWGY34WUIA32","welfare","H","M","money","medicaid",TRUE,FALSE
+"8","AEWGY34WUIA32","freedom","H","M","liberty","freedoms",TRUE,FALSE

@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","AR95C0P53AFWJ","germany","H","M","nazi","europe",FALSE,TRUE
+"2","AR95C0P53AFWJ","welfare","H","M","poor","social",TRUE,FALSE
+"3","AR95C0P53AFWJ","freedom","H","M","liberty","liberties",TRUE,FALSE
+"4","AR95C0P53AFWJ","guns","M","H","handguns","bullets",TRUE,FALSE
+"5","AR95C0P53AFWJ","corruption","H","M","bribery","allegations",TRUE,FALSE
+"6","AR95C0P53AFWJ","happiness","M","H","joy","fun",TRUE,FALSE
+"7","AR95C0P53AFWJ","vote","H","M","candidate","voting",FALSE,TRUE
+"8","AR95C0P53AFWJ","animals","M","H","birds","pets",TRUE,FALSE

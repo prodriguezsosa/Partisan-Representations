@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A3G79KHMDV51Q8","happiness","M","H","satisfaction","fun",TRUE,FALSE
+"2","A3G79KHMDV51Q8","welfare","H","M","money","health",FALSE,TRUE
+"3","A3G79KHMDV51Q8","freedom","H","M","liberty","freedoms",FALSE,TRUE
+"4","A3G79KHMDV51Q8","animals","M","H","animal","dogs",FALSE,TRUE
+"5","A3G79KHMDV51Q8","corruption","M","H","corrupt","government",TRUE,FALSE
+"6","A3G79KHMDV51Q8","vote","M","H","voted","election",FALSE,TRUE
+"7","A3G79KHMDV51Q8","germany","M","H","munich","beer",TRUE,FALSE
+"8","A3G79KHMDV51Q8","guns","H","M","rifle","ammunition",TRUE,FALSE

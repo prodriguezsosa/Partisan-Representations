@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A1GPZ5REMDQZ0L","happiness","H","M","smile","enjoyment",TRUE,FALSE
+"2","A1GPZ5REMDQZ0L","guns","H","M","rifle","ammunition",FALSE,TRUE
+"3","A1GPZ5REMDQZ0L","corruption","H","M","bribery","allegations",FALSE,TRUE
+"4","A1GPZ5REMDQZ0L","welfare","M","H","medicaid","money",FALSE,TRUE
+"5","A1GPZ5REMDQZ0L","freedom","H","M","speech","liberty",TRUE,FALSE
+"6","A1GPZ5REMDQZ0L","vote","H","M","election","voting",TRUE,FALSE
+"7","A1GPZ5REMDQZ0L","animals","H","M","dog","mammals",TRUE,FALSE
+"8","A1GPZ5REMDQZ0L","germany","M","H","german","europe",FALSE,TRUE

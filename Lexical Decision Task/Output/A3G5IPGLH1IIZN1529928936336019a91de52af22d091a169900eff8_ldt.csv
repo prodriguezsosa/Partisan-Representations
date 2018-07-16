@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A3G5IPGLH1IIZN","animals","M","H","cows","dog",TRUE,FALSE
+"2","A3G5IPGLH1IIZN","freedom","H","M","liberty","freedoms",TRUE,FALSE
+"3","A3G5IPGLH1IIZN","happiness","H","M","joy","enjoyment",TRUE,FALSE
+"4","A3G5IPGLH1IIZN","corruption","H","M","money","corrupt",TRUE,FALSE
+"5","A3G5IPGLH1IIZN","guns","M","H","rifles","bullets",FALSE,TRUE
+"6","A3G5IPGLH1IIZN","welfare","M","H","education","help",FALSE,TRUE
+"7","A3G5IPGLH1IIZN","germany","M","H","german","europe",FALSE,TRUE
+"8","A3G5IPGLH1IIZN","vote","M","H","election","politics",TRUE,FALSE

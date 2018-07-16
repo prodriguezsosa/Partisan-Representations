@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A1OHPYH0S1HVKU","corruption","H","M","government","corrupt",TRUE,FALSE
+"2","A1OHPYH0S1HVKU","guns","M","H","ammunition","bullets",TRUE,FALSE
+"3","A1OHPYH0S1HVKU","animals","M","H","birds","cat",TRUE,FALSE
+"4","A1OHPYH0S1HVKU","vote","M","H","elections","candidate",FALSE,TRUE
+"5","A1OHPYH0S1HVKU","happiness","H","M","love","contentment",TRUE,FALSE
+"6","A1OHPYH0S1HVKU","welfare","M","H","medicaid","check",FALSE,TRUE
+"7","A1OHPYH0S1HVKU","germany","H","M","nazi","munich",TRUE,FALSE
+"8","A1OHPYH0S1HVKU","freedom","M","H","rights","democracy",FALSE,TRUE

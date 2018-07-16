@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A5TI9UQEPLNWI","vote","H","M","president","voted",TRUE,FALSE
+"2","A5TI9UQEPLNWI","freedom","H","M","america","liberty",FALSE,TRUE
+"3","A5TI9UQEPLNWI","guns","H","M","violence","ammunition",FALSE,TRUE
+"4","A5TI9UQEPLNWI","happiness","H","M","smile","prosperity",TRUE,FALSE
+"5","A5TI9UQEPLNWI","welfare","M","H","medicaid","money",TRUE,FALSE
+"6","A5TI9UQEPLNWI","corruption","H","M","money","graft",FALSE,TRUE
+"7","A5TI9UQEPLNWI","germany","M","H","german","hitler",FALSE,TRUE
+"8","A5TI9UQEPLNWI","animals","M","H","humans","dogs",FALSE,TRUE

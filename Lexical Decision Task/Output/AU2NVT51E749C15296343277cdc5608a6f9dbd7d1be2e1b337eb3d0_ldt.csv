@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","AU2NVT51E749C","happiness","M","H","prosperity","fun",FALSE,TRUE
+"2","AU2NVT51E749C","germany","H","M","europe","munich",TRUE,FALSE
+"3","AU2NVT51E749C","corruption","M","H","graft","government",FALSE,TRUE
+"4","AU2NVT51E749C","animals","H","M","pets","animal",FALSE,TRUE
+"5","AU2NVT51E749C","vote","H","M","candidate","elections",FALSE,TRUE
+"6","AU2NVT51E749C","guns","H","M","bullets","gun",FALSE,TRUE
+"7","AU2NVT51E749C","welfare","M","H","health","money",FALSE,TRUE
+"8","AU2NVT51E749C","freedom","M","H","rights","speech",TRUE,FALSE

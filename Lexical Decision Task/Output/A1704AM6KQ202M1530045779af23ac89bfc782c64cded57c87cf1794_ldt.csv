@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A1704AM6KQ202M","germany","H","M","beer","europe",FALSE,TRUE
+"2","A1704AM6KQ202M","animals","H","M","zoo","cows",TRUE,FALSE
+"3","A1704AM6KQ202M","welfare","H","M","speech","democracy",FALSE,TRUE
+"4","A1704AM6KQ202M","corruption","M","H","graft","crime",FALSE,TRUE
+"5","A1704AM6KQ202M","vote","H","M","candidate","voted",TRUE,FALSE
+"6","A1704AM6KQ202M","freedom","M","H","rights","rights",FALSE,TRUE
+"7","A1704AM6KQ202M","happiness","H","M","fun","satisfaction",FALSE,TRUE
+"8","A1704AM6KQ202M","guns","H","M","rifle","pistols",FALSE,TRUE

@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A1EUBMQ86K32XE","guns","M","H","gun","bullets",TRUE,FALSE
+"2","A1EUBMQ86K32XE","welfare","H","M","poor","reform",TRUE,FALSE
+"3","A1EUBMQ86K32XE","freedom","H","M","speech","liberty",FALSE,TRUE
+"4","A1EUBMQ86K32XE","germany","H","M","hitler","austria",TRUE,FALSE
+"5","A1EUBMQ86K32XE","corruption","H","M","crime","bribery",TRUE,FALSE
+"6","A1EUBMQ86K32XE","vote","M","H","votes","politics",FALSE,TRUE
+"7","A1EUBMQ86K32XE","happiness","M","H","enjoyment","fun",TRUE,FALSE
+"8","A1EUBMQ86K32XE","animals","H","M","pets","humans",TRUE,FALSE

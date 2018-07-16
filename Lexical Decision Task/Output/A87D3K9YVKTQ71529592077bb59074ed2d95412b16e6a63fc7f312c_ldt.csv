@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A87D3K9YVKTQ7","freedom","H","M","democracy","freedoms",TRUE,FALSE
+"2","A87D3K9YVKTQ7","corruption","M","H","allegations","money",TRUE,FALSE
+"3","A87D3K9YVKTQ7","happiness","M","H","joy","fun",FALSE,TRUE
+"4","A87D3K9YVKTQ7","vote","M","H","elections","candidate",TRUE,FALSE
+"5","A87D3K9YVKTQ7","animals","H","M","dogs","mammals",FALSE,TRUE
+"6","A87D3K9YVKTQ7","germany","H","M","country","german",TRUE,FALSE
+"7","A87D3K9YVKTQ7","welfare","M","H","medicaid","poor",FALSE,TRUE
+"8","A87D3K9YVKTQ7","guns","H","M","rifle","ammunition",TRUE,FALSE

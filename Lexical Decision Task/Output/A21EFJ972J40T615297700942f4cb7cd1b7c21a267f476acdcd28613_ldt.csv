@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A21EFJ972J40T6","freedom","M","H","liberties","rights",TRUE,FALSE
+"2","A21EFJ972J40T6","germany","M","H","berlin","nazi",TRUE,FALSE
+"3","A21EFJ972J40T6","animals","M","H","mammals","dogs",FALSE,TRUE
+"4","A21EFJ972J40T6","happiness","H","M","love","prosperity",TRUE,FALSE
+"5","A21EFJ972J40T6","vote","H","M","candidate","voting",FALSE,TRUE
+"6","A21EFJ972J40T6","corruption","H","M","government","scandals",TRUE,FALSE
+"7","A21EFJ972J40T6","guns","H","M","shoot","handguns",FALSE,TRUE
+"8","A21EFJ972J40T6","welfare","M","H","medicaid","assistance",TRUE,FALSE

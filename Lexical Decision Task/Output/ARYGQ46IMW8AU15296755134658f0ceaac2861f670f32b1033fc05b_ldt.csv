@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","ARYGQ46IMW8AU","vote","H","M","candidate","voting",TRUE,FALSE
+"2","ARYGQ46IMW8AU","animals","M","H","humans","dogs",FALSE,TRUE
+"3","ARYGQ46IMW8AU","germany","H","M","hitler","austria",TRUE,FALSE
+"4","ARYGQ46IMW8AU","corruption","H","M","crime","graft",TRUE,FALSE
+"5","ARYGQ46IMW8AU","freedom","M","H","democracy","rights",FALSE,TRUE
+"6","ARYGQ46IMW8AU","welfare","M","H","medicaid","help",FALSE,TRUE
+"7","ARYGQ46IMW8AU","guns","M","H","handguns","bullets",FALSE,TRUE
+"8","ARYGQ46IMW8AU","happiness","H","M","joy","satisfaction",TRUE,FALSE

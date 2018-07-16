@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A142ZRU284W9O","germany","H","M","country","austria",TRUE,FALSE
+"2","A142ZRU284W9O","happiness","H","M","laughter","contentment",FALSE,TRUE
+"3","A142ZRU284W9O","freedom","H","M","liberty","liberties",TRUE,FALSE
+"4","A142ZRU284W9O","welfare","H","M","money","social",FALSE,TRUE
+"5","A142ZRU284W9O","guns","M","H","gun","bullets",TRUE,FALSE
+"6","A142ZRU284W9O","corruption","M","H","allegations","politics",FALSE,TRUE
+"7","A142ZRU284W9O","animals","M","H","humans","cat",FALSE,TRUE
+"8","A142ZRU284W9O","vote","M","H","voted","politics",FALSE,TRUE

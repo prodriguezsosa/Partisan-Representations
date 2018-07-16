@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A12VU5YSHGQH2V","welfare","M","H","medicaid","poor",FALSE,TRUE
+"2","A12VU5YSHGQH2V","freedom","M","H","democracy","speech",TRUE,FALSE
+"3","A12VU5YSHGQH2V","vote","M","H","votes","ballot",TRUE,FALSE
+"4","A12VU5YSHGQH2V","corruption","H","M","bribery","allegations",TRUE,FALSE
+"5","A12VU5YSHGQH2V","animals","M","H","humans","pets",FALSE,TRUE
+"6","A12VU5YSHGQH2V","guns","H","M","rifle","handguns",TRUE,FALSE
+"7","A12VU5YSHGQH2V","germany","H","M","beer","europe",FALSE,TRUE
+"8","A12VU5YSHGQH2V","happiness","H","M","smile","joy",TRUE,FALSE

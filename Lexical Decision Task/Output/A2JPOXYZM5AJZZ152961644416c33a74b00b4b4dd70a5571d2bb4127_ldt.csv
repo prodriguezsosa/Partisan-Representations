@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2JPOXYZM5AJZZ","animals","M","H","birds","zoo",FALSE,TRUE
+"2","A2JPOXYZM5AJZZ","welfare","M","H","health","money",FALSE,TRUE
+"3","A2JPOXYZM5AJZZ","germany","H","M","beer","german",FALSE,TRUE
+"4","A2JPOXYZM5AJZZ","guns","H","M","violence","pistols",TRUE,FALSE
+"5","A2JPOXYZM5AJZZ","vote","H","M","election","voted",TRUE,FALSE
+"6","A2JPOXYZM5AJZZ","freedom","M","H","liberty","rights",TRUE,FALSE
+"7","A2JPOXYZM5AJZZ","corruption","H","M","crime","allegations",TRUE,FALSE
+"8","A2JPOXYZM5AJZZ","happiness","M","H","contentment","love",TRUE,FALSE

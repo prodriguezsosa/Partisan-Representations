@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","AGNJKSH5LFKXZ","corruption","H","M","politics","allegations",TRUE,FALSE
+"2","AGNJKSH5LFKXZ","germany","H","M","hitler","munich",FALSE,TRUE
+"3","AGNJKSH5LFKXZ","guns","M","H","handguns","rifle",TRUE,FALSE
+"4","AGNJKSH5LFKXZ","animals","H","M","pets","animal",FALSE,TRUE
+"5","AGNJKSH5LFKXZ","happiness","M","H","satisfaction","love",TRUE,FALSE
+"6","AGNJKSH5LFKXZ","welfare","H","M","democracy","freedoms",FALSE,TRUE
+"7","AGNJKSH5LFKXZ","vote","M","H","votes","politics",TRUE,FALSE
+"8","AGNJKSH5LFKXZ","freedom","H","M","liberty","liberty",TRUE,FALSE

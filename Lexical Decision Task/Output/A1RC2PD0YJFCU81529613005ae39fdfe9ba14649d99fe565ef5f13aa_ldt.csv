@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A1RC2PD0YJFCU8","guns","H","M","shoot","handguns",TRUE,FALSE
+"2","A1RC2PD0YJFCU8","happiness","M","H","joy","fun",TRUE,FALSE
+"3","A1RC2PD0YJFCU8","welfare","H","M","money","health",TRUE,FALSE
+"4","A1RC2PD0YJFCU8","animals","M","H","humans","pets",FALSE,TRUE
+"5","A1RC2PD0YJFCU8","vote","H","M","candidate","election",FALSE,TRUE
+"6","A1RC2PD0YJFCU8","freedom","M","H","freedoms","democracy",TRUE,FALSE
+"7","A1RC2PD0YJFCU8","corruption","H","M","crime","graft",TRUE,FALSE
+"8","A1RC2PD0YJFCU8","germany","M","H","german","hitler",TRUE,FALSE

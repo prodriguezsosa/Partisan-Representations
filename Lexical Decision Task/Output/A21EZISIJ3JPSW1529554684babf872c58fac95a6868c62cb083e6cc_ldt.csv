@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A21EZISIJ3JPSW","germany","M","H","gun","violence",TRUE,FALSE
+"2","A21EZISIJ3JPSW","corruption","H","M","politics","scandals",TRUE,FALSE
+"3","A21EZISIJ3JPSW","guns","H","M","election","votes",TRUE,FALSE
+"4","A21EZISIJ3JPSW","happiness","M","H","satisfaction","fun",FALSE,TRUE
+"5","A21EZISIJ3JPSW","welfare","H","M","liberty","rights",TRUE,FALSE
+"6","A21EZISIJ3JPSW","vote","M","H","election","election",TRUE,FALSE
+"7","A21EZISIJ3JPSW","freedom","H","M","nazi","berlin",FALSE,TRUE
+"8","A21EZISIJ3JPSW","animals","H","M","cat","animal",TRUE,FALSE

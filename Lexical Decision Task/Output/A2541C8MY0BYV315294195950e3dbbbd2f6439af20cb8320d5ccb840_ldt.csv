@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2541C8MY0BYV3","animals","H","M","cat","cows",TRUE,FALSE
+"2","A2541C8MY0BYV3","germany","M","H","austria","nazi",FALSE,TRUE
+"3","A2541C8MY0BYV3","guns","M","H","handguns","violence",TRUE,FALSE
+"4","A2541C8MY0BYV3","corruption","M","H","bribery","government",FALSE,TRUE
+"5","A2541C8MY0BYV3","vote","H","M","ballot","voted",TRUE,FALSE
+"6","A2541C8MY0BYV3","happiness","M","H","joy","love",TRUE,FALSE
+"7","A2541C8MY0BYV3","welfare","H","M","assistance","education",TRUE,FALSE
+"8","A2541C8MY0BYV3","freedom","M","H","liberties","rights",FALSE,TRUE

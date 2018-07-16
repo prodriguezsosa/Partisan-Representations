@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","AM155T4U3RE1A","happiness","H","M","smile","joy",TRUE,FALSE
+"2","AM155T4U3RE1A","guns","H","M","shoot","pistols",TRUE,FALSE
+"3","AM155T4U3RE1A","animals","H","M","cat","animal",TRUE,FALSE
+"4","AM155T4U3RE1A","vote","H","M","president","votes",TRUE,FALSE
+"5","AM155T4U3RE1A","freedom","M","H","austria","europe",FALSE,TRUE
+"6","AM155T4U3RE1A","germany","M","H","europe","europe",TRUE,FALSE
+"7","AM155T4U3RE1A","corruption","M","H","graft","politics",FALSE,TRUE
+"8","AM155T4U3RE1A","welfare","H","M","speech","liberty",FALSE,TRUE

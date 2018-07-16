@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A2TDGWWPX6IMIZ","germany","M","H","munich","country",TRUE,FALSE
+"2","A2TDGWWPX6IMIZ","guns","M","H","handguns","rifle",FALSE,TRUE
+"3","A2TDGWWPX6IMIZ","corruption","M","H","graft","money",TRUE,FALSE
+"4","A2TDGWWPX6IMIZ","freedom","M","H","rights","speech",TRUE,FALSE
+"5","A2TDGWWPX6IMIZ","animals","M","H","humans","cat",FALSE,TRUE
+"6","A2TDGWWPX6IMIZ","happiness","M","H","enjoyment","love",TRUE,FALSE
+"7","A2TDGWWPX6IMIZ","welfare","M","H","education","assistance",FALSE,TRUE
+"8","A2TDGWWPX6IMIZ","vote","M","H","elections","politics",TRUE,FALSE

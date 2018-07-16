@@ -1,0 +1,9 @@
+"","workerid","cue","left.source","right.source","left.word","right.word","left.choice","right.choice"
+"1","A1ESCPVSM3GQ95","happiness","M","H","prosperity","love",FALSE,TRUE
+"2","A1ESCPVSM3GQ95","animals","H","M","cat","mammals",TRUE,FALSE
+"3","A1ESCPVSM3GQ95","corruption","M","H","scandals","government",TRUE,FALSE
+"4","A1ESCPVSM3GQ95","vote","M","H","voted","president",FALSE,TRUE
+"5","A1ESCPVSM3GQ95","welfare","H","M","help","medicaid",TRUE,FALSE
+"6","A1ESCPVSM3GQ95","guns","H","M","rifle","pistols",FALSE,TRUE
+"7","A1ESCPVSM3GQ95","germany","H","M","beer","austria",TRUE,FALSE
+"8","A1ESCPVSM3GQ95","freedom","M","H","freedoms","democracy",FALSE,TRUE
