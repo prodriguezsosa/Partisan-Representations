@@ -164,7 +164,7 @@ names(OverlapFM) <- c('F', 'M')
 # explore results
 # ================================
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
-seed <- "immigrants"
+seed <- "economy"
 # setdiff tokens
 lapply(list("R", "D"), function(x) setdiffRD[[x]][[seed]])
 lapply(list("F", "M"), function(x) setdiffFM[[x]][[seed]])
