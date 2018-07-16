@@ -227,11 +227,12 @@ TopicOverlapList <- lapply(topics, function(x) TopicOverlap(x, dist_matrix1 = di
 TopipOverlapStatList <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], threshold1 = dist_thresholds[["R"]], threshold2 = dist_thresholds[["D"]])) %>% unlist
 
 # female vs. males
+TopicDiffsListFM <- lapply(topics, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10, label1 = "F", label2 = "M"))
 TopicDiffsListFM <- lapply(topics, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], threshold1 = dist_thresholds[["F"]], threshold2 = dist_thresholds[["M"]], label1 = "F", label2 = "M"))
 
 # bar chart
-#RDIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10)) %>% unlist
-#FMIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10)) %>% unlist
+#RDIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 5)) %>% unlist
+#FMIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 5)) %>% unlist
 RDIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], threshold1 = dist_thresholds[["R"]], threshold2 = dist_thresholds[["D"]])) %>% unlist
 FMIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], threshold1 = dist_thresholds[["F"]], threshold2 = dist_thresholds[["M"]])) %>% unlist
 plot.data <- data.table(group = c(rep("R-D", length(RDIoU)), rep("F-M", length(RDIoU))), topic = names(topics), iou = unlist(lapply(list(RDIoU, FMIoU), unlist)))

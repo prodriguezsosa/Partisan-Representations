@@ -112,7 +112,7 @@ source2_candidate <- source2_candidate[,cues]
 ldt_data <- data.table()
 for(j in 1:length(cues)){
   for(i in 1:N){
-    source_order <- sample(c("H","M"), 2, replace = FALSE)
+    source_order <- sample(c("R","D"), 2, replace = FALSE)
     if(N>1){
     candidates <- if(source_order[1] == "H"){c(unname(source1_candidate[i,j]), unname(source2_candidate[i,j]))}else{c(unname(source2_candidate[i,j]),unname(source1_candidate[i,j]))}
     }else{candidates <- if(source_order[1] == "H"){unname(unlist(c(source1_candidate[j], source2_candidate[j])))}else{unname(unlist(c(source2_candidate[j],unname(source1_candidate[j]))))}}
@@ -140,7 +140,7 @@ ldt_data <- ldt_data[sample(seq(1,nrow(ldt_data),1), nrow(ldt_data), replace = F
 # create page names
 ldt_data$variable <- c(paste0(rep("lexical", nrow(ldt_data)), seq(1,nrow(ldt_data),1)))
 # add nextInputID (defines next page)
-ldt_data$nextInputID <- c(ldt_data$variable[2:nrow(ldt_data)], "savedata")
+ldt_data$nextInputID <- c(ldt_data$variable[2:nrow(ldt_data)], "survey")
 num_ldt <- nrow(ldt_data)
 # --------------------------
 # SECTION A6: trial words      -----
@@ -379,6 +379,92 @@ server <- function(input, output, session) {
       )}
     
     # --------------------------------
+    # (8) SURVEY        ---
+    # --------------------------------
+    
+    if (CurrentValues$page == "survey") {
+      
+      # Throw an error if not all question have been answered.
+      if (CurrentValues$errors == "answerQuestions") {
+        answerQuestions <- p(style = "color:Red", "Please answer all required questions!")
+      } else {
+        answerQuestions <- ""
+      }
+      
+      return(list(
+        
+        span(h2(strong("Survey (1 of 1)")), style="color:#2780e3"),
+        
+        br(),
+        
+        p("To conclude please fill out this short survey."),
+        
+        br(),
+        
+        radioButtons(inputId = "party", 
+                     label = "Generally speaking, do you usually think of yourself as a Democrat, a Republican, an Independent, or what?",
+                     choices = c("Strong Democrat" =  1,
+                                 "Weak Democrat" = 2,
+                                 "Independent Democrat" = 3,
+                                 "Independent Independent" = 4,
+                                 "Independent Republican" = 5,
+                                 "Weak Republican" = 6,
+                                 "Strong Republican" = 7,
+                                 "Other party" = 8
+                                 #"No preference" = 9
+                     ), selected = 99, width = "100%"),
+        
+        br(),
+        
+        radioButtons(inputId = "ideology", 
+                     label = "We hear a lot of talk these days about liberals and conservatives. 
+                     Here is a seven-point scale on which the political views that people might hold are arranged from extremely liberal to extremely conservative. 
+                     Where would you place yourself on this scale?",
+                     choices = c("Extremely liberal" =  1,
+                                 "Liberal" = 2,
+                                 "Slightly liberal" = 3,
+                                 "Moderate; middle of the road" = 4,
+                                 "Slightly conservative" = 5,
+                                 "Conservative" = 6,
+                                 "Extremely conservative" = 7
+                                 #"Haven't thought much about this" = 8
+                     ), selected = 99, width = "100%"),
+        
+        br(),
+        
+        radioButtons(inputId = "sex",
+                     label = "What is your sex?",
+                     choices = list("Male" = 1, "Female" = 2, "Other" = 3),
+                     selected = 99, width = "100%"),
+        
+        #HTML("<br>"),
+        
+        #radioButtons("interesting", 
+        #             label = "How engaging did you find the HIT?",
+        #             choices = c("1 - Not at all engaging" =  1,
+        #                         "2" = 2,
+        #                         "3" = 3,
+        #                         "4" = 4,
+        #                         "5 - Very engaging" = 5
+        #             ), selected = 99, width = "100%"),
+        
+        #textAreaInput("comments",
+        #              label = "If you have any additional comments, please enter them below",
+        #              resize = "both"),
+        
+        HTML("<br>"),
+        
+        p(answerQuestions),
+        
+        actionButton(inputId = "goto.savedata",
+                     label = "Next", 
+                     class = "btn btn-primary"),
+        
+        HTML("<br><br><br>"))
+      )
+    }
+    
+    # --------------------------------
     # (4) SAVE DATA    ---
     # --------------------------------
     
@@ -515,6 +601,14 @@ server <- function(input, output, session) {
     }
   })
   
+  # survey
+  observeEvent(input$goto.savedata, {
+    # check wether all questions have been answered:
+    if(any(input[["sex"]] == 99, input[["party"]] == 99, input[["ideology"]] == 99)){
+      CurrentValues$errors <- "answerQuestions"}else{
+      CurrentValues$page <- "savedata"
+    }})
+  
   # other
   observeEvent(input$goto.instructions2, CurrentValues$page <- "instructions2")
   observeEvent(input$goto.trial1, CurrentValues$page <- "trial1")
@@ -541,13 +635,29 @@ server <- function(input, output, session) {
                    
                    incProgress(.5)
                    
+                   # Write survey data to a datatable
+                   SurveyData.i <- data.table("workerid" = input$workerid,
+                                              "sex" = input$sex,
+                                              "party" = input$party,
+                                              "ideology" = input$ideology
+                                              #"interesting" = input$interesting
+                   )
+                   
+                   
+                   incProgress(.5)
+                   
                    LexicalDatafileName <- paste0(input$workerid, as.integer(Sys.time()), digest::digest(LexicalData.i), "_ldt.csv")
+                   SurveyDatafileName <- paste0(input$workerid, as.integer(Sys.time()), digest::digest(SurveyData.i), "_survey.csv")
        
                    # Create The Filepath and save the data depending on the method chosen:
                    
                    LexicalDatafilePath <- file.path(tempdir(), LexicalDatafileName)
                    write.csv(LexicalData.i, LexicalDatafilePath, row.names = TRUE, quote = TRUE)
                    rdrop2::drop_upload(LexicalDatafilePath, path = outputDir, dtoken = droptoken)
+                   
+                   SurveyDatafilePath <- file.path(tempdir(), SurveyDatafileName)
+                   write.csv(SurveyData.i, SurveyDatafilePath, row.names = FALSE, quote = TRUE)
+                   rdrop2::drop_upload(SurveyDatafilePath, path = outputDir, dtoken = droptoken)
                    
                    # report progress (of data saving) to the user
                    incProgress(.40)
