@@ -216,13 +216,21 @@ topics <- list("healthcare" = "healthcare",
                "taxes" = c("tax", "taxation", "taxes"),
                "immigration" = c("immigrant", "immigration", "immigrants"))
 
+# top N
 TopicDiffsList <- lapply(topics, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10, label1 = "R", label2 = "D"))
 TopicOverlapList <- lapply(topics, function(x) TopicOverlap(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10))
 TopipOverlapStatList <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10)) %>% unlist
 
+# with threshold
+TopicDiffsList <- lapply(topics, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], threshold1 = dist_thresholds[["R"]], threshold2 = dist_thresholds[["D"]], label1 = "R", label2 = "D"))
+TopicOverlapList <- lapply(topics, function(x) TopicOverlap(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], threshold1 = dist_thresholds[["R"]], threshold2 = dist_thresholds[["D"]]))
+TopipOverlapStatList <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], threshold1 = dist_thresholds[["R"]], threshold2 = dist_thresholds[["D"]])) %>% unlist
+
 # bat chart
 RDIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10)) %>% unlist
 FMIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10)) %>% unlist
+#RDIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], threshold1 = dist_thresholds[["R"]], threshold2 = dist_thresholds[["D"]])) %>% unlist
+#FMIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], threshold1 = dist_thresholds[["F"]], threshold2 = dist_thresholds[["M"]])) %>% unlist
 plot.data <- data.table(group = c(rep("R-D", length(RDIoU)), rep("F-M", length(RDIoU))), topic = names(topics), iou = unlist(lapply(list(RDIoU, FMIoU), unlist)))
 
 
@@ -237,6 +245,7 @@ ggplot(plot.data, aes(x = topic, y = iou, fill = group)) +
         plot.title = element_text(margin = margin(t = 10, r = 0, b = 20, l = 0), hjust = 0.5),
         text = element_text(size=15), legend.position = "bottom", legend.text = element_text(size=20)) +
   ggtitle("Intersect over Union")
+
 
 
 
