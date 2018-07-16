@@ -17,56 +17,36 @@ library(pbapply)
 # ================================
 #
 # STEP - 1
-# IDENTIFY BEST MODELS
+# COMPUTE MEAN MODEL
 #
 # ================================
 
 # ================================
 # define paths
 # ================================
-in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Post-Estimation/Loss/"
-
-# ================================
-# load data
-# ================================
-files <- list.files(in_path)
-loss_list <- lapply(files, function(i) readRDS(paste0(in_path, i)))
-
-# ================================
-# choose best model for each group
-# ================================
-best_models_labels <- list()  # empty list
-best_models_loss <- list()  # empty list
-# for each MODEL-TEST select model with lowest mean loss
-for(i in 1:length(loss_list)){
-  loss_folds <- loss_list[[i]]
-  mean_loss_folds <- unlist(lapply(loss_folds, mean))
-  best_model_name <- names(which(mean_loss_folds == min(mean_loss_folds)))
-  best_models_labels[i] <- best_model_name
-  model_label <- gsub('[0-9]+', '', best_model_name)
-  best_models_loss[model_label] <- do.call(c, loss_list)[best_model_name]
-  
-}
-
-# keep only within models
-best_models_loss <- lapply(list("RR", "DD", "MM", "FF"), function(i) best_models_loss[i]) %>% do.call(c,.)
-
-# spring cleaning 
-rm(loss_folds, loss_list, best_model_name, files, i, in_path, mean_loss_folds, model_label)
-
-# ================================
-# set paths
-# ================================
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Outputs/"
 
 # ================================
-# load embeddings of best models
+# define parameters
 # ================================
-embeddings_list <- list()
-embeddings_list[["R"]] <- readRDS(paste0(in_path, "R", gsub("[[:alpha:]]", "", best_models_labels[grepl("RR", best_models_labels)][[1]]), "_E2_embedding_matrix.rds"))
-embeddings_list[["D"]] <- readRDS(paste0(in_path, "D", gsub("[[:alpha:]]", "", best_models_labels[grepl("DD", best_models_labels)][[1]]), "_E2_embedding_matrix.rds"))
-embeddings_list[["F"]] <- readRDS(paste0(in_path, "F", gsub("[[:alpha:]]", "", best_models_labels[grepl("FF", best_models_labels)][[1]]), "_E3_embedding_matrix.rds"))
-embeddings_list[["M"]] <- readRDS(paste0(in_path, "M", gsub("[[:alpha:]]", "", best_models_labels[grepl("MM", best_models_labels)][[1]]), "_E3_embedding_matrix.rds"))
+FOLDS <- 10
+
+# ================================
+# load data & average over embeddings
+# ================================
+embedding_matrix_R <- readRDS(paste0(in_path, "R", 1, "_E2_embedding_matrix.rds"))
+embedding_matrix_D <- readRDS(paste0(in_path, "D", 1, "_E2_embedding_matrix.rds"))
+embedding_matrix_F <- readRDS(paste0(in_path, "F", 1, "_E3_embedding_matrix.rds"))
+embedding_matrix_M <- readRDS(paste0(in_path, "M", 1, "_E3_embedding_matrix.rds"))
+
+for(i in 1:FOLDS){
+  embedding_matrix_R <- embedding_matrix_R + readRDS(paste0(in_path, "R", i, "_E2_embedding_matrix.rds"))
+  embedding_matrix_D <- embedding_matrix_D + readRDS(paste0(in_path, "D", i, "_E2_embedding_matrix.rds"))
+  embedding_matrix_F <- embedding_matrix_F + readRDS(paste0(in_path, "F", i, "_E3_embedding_matrix.rds"))
+  embedding_matrix_M <- embedding_matrix_M + readRDS(paste0(in_path, "M", i, "_E3_embedding_matrix.rds"))
+}
+
+embeddings_list <- list("R" = embedding_matrix_R, "D" = embedding_matrix_D, "F" = embedding_matrix_F, "M" = embedding_matrix_M)
 
 # ================================
 #
@@ -93,6 +73,7 @@ names(dist_thresholds) <- c("R", "D", "F", "M")
 #
 # STEP - 3
 # COMPUTE OVERLAP & SETDIFF
+# INDIVIDUAL SEEDS
 #
 # ================================
 
@@ -154,10 +135,10 @@ OverlapRD <- ContextOverlap(seeds = vocab, dist_matrix1 = distance_matrices[["R"
 OverlapFM <- ContextOverlap(seeds = vocab, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10)
 
 # ================================
-# explore results
+# explore differences
 # ================================
 #seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
-seed <- "welfare"
+seed <- "taxes"
 # setdiff tokens
 lapply(list("R", "D"), function(x) setdiffRD[[x]][[seed]])
 lapply(list("F", "M"), function(x) setdiffFM[[x]][[seed]])
@@ -170,9 +151,51 @@ OverlapFM[[seed]]
 OverlapStatRD[token == seed, overlap]
 OverlapStatFM[token == seed, overlap]
 
-# explore differences
-#overlap <- cbind(overlapRD, overlapFM[,2]) %>% set_colnames(c("token", "RD", "FM"))
-#overlap <- overlap[, covariate_diff := RD - FM]
+# ================================
+#
+# STEP - 4
+# COMPUTE OVERLAP & SETDIFF
+# TOPICS
+#
+# ================================
+
+# topic differences
+TopicDiff <- function(topic, dist_matrix1, dist_matrix2, N = NULL, threshold1 = NULL, threshold2 = NULL, label1 = NULL, label2 = NULL){
+  context1 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix1, num_neighbors = N, threshold = threshold1))) %>% unlist()
+  context2 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix2, num_neighbors = N, threshold = threshold2))) %>% unlist()
+  setdiff1 <- setdiff(context1, context2)
+  setdiff2 <- setdiff(context2, context1)
+  setdiff_list <- list(setdiff1, setdiff2) 
+  names(setdiff_list) <- c(label1, label2)
+  return(setdiff_list)
+}
+
+# topic overlap
+TopicOverlap <- function(topic, dist_matrix1, dist_matrix2, N = NULL, threshold1 = NULL, threshold2 = NULL){
+  context1 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix1, num_neighbors = N, threshold = threshold1))) %>% unlist()
+  context2 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix2, num_neighbors = N, threshold = threshold2))) %>% unlist()
+  overlap <- intersect(context1, context2)
+  return(overlap)
+}
+
+# topic overlap stat
+TopicOverlapStat <- function(topic, dist_matrix1, dist_matrix2, N = NULL, threshold1 = NULL, threshold2 = NULL){
+  context1 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix1, num_neighbors = N, threshold = threshold1))) %>% unlist()
+  context2 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix2, num_neighbors = N, threshold = threshold2))) %>% unlist()
+  overlap <- length(intersect(context1, context2))/(10*length(topic))
+  return(overlap)
+}
+
+topic <- list("immigration", "immigrants", "immigrant")
+# Republicans - Democrats
+TopicDiff(topic, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10, label1 = "R", label2 = "D")
+TopicOverlap(topic, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10)
+TopicOverlapStat(topic, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10) 
+# Female - Male
+TopicDiff(topic, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10, label1 = "F", label2 = "M")
+TopicOverlap(topic, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10)
+TopicOverlapStat(topic, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10) 
+
 
 
 

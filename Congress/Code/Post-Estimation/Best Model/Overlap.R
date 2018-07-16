@@ -170,10 +170,50 @@ OverlapFM[[seed]]
 OverlapStatRD[token == seed, overlap]
 OverlapStatFM[token == seed, overlap]
 
-# explore differences
-#overlap <- cbind(overlapRD, overlapFM[,2]) %>% set_colnames(c("token", "RD", "FM"))
-#overlap <- overlap[, covariate_diff := RD - FM]
+# ================================
+#
+# STEP - 4
+# COMPUTE OVERLAP & SETDIFF
+# TOPICS
+#
+# ================================
 
+# topic differences
+TopicDiff <- function(topic, dist_matrix1, dist_matrix2, N = NULL, threshold1 = NULL, threshold2 = NULL, label1 = NULL, label2 = NULL){
+  context1 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix1, num_neighbors = N, threshold = threshold1))) %>% unlist()
+  context2 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix2, num_neighbors = N, threshold = threshold2))) %>% unlist()
+  setdiff1 <- setdiff(context1, context2)
+  setdiff2 <- setdiff(context2, context1)
+  setdiff_list <- list(setdiff1, setdiff2) 
+  names(setdiff_list) <- c(label1, label2)
+  return(setdiff_list)
+}
+
+# topic overlap
+TopicOverlap <- function(topic, dist_matrix1, dist_matrix2, N = NULL, threshold1 = NULL, threshold2 = NULL){
+  context1 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix1, num_neighbors = N, threshold = threshold1))) %>% unlist()
+  context2 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix2, num_neighbors = N, threshold = threshold2))) %>% unlist()
+  overlap <- intersect(context1, context2)
+  return(overlap)
+}
+
+# topic overlap stat
+TopicOverlapStat <- function(topic, dist_matrix1, dist_matrix2, N = NULL, threshold1 = NULL, threshold2 = NULL){
+  context1 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix1, num_neighbors = N, threshold = threshold1))) %>% unlist()
+  context2 <- pblapply(topic, function(w) names(closest_neighbors(w, dist_matrix2, num_neighbors = N, threshold = threshold2))) %>% unlist()
+  overlap <- length(intersect(context1, context2))/(10*length(topic))
+  return(overlap)
+}
+
+topic <- list("immigration", "immigrants", "immigrant")
+# Republicans - Democrats
+TopicDiff(topic, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10, label1 = "R", label2 = "D")
+TopicOverlap(topic, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10)
+TopicOverlapStat(topic, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10) 
+# Female - Male
+TopicDiff(topic, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10, label1 = "F", label2 = "M")
+TopicOverlap(topic, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10)
+TopicOverlapStat(topic, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10) 
 
 
 
