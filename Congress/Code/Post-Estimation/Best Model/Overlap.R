@@ -156,8 +156,6 @@ OverlapFM <- ContextOverlap(seeds = vocab, dist_matrix1 = distance_matrices[["F"
 # ================================
 # explore results
 # ================================
-token_counts <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Post-Estimation/TopTokens/token_counts.rds")
-#seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
 seed <- "freedom"
 # setdiff tokens
 lapply(list("R", "D"), function(x) setdiffRD[[x]][[seed]])
@@ -218,5 +216,30 @@ TopicDiff(topic, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distanc
 TopicOverlap(topic, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10)
 TopicOverlapStat(topic, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10) 
 
+# ================================
+#
+# STEP - 5
+# HEATMAP
+# TOPICS
+#
+# ================================
+token_counts <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Post-Estimation/TopTokens/token_counts.rds")
+seeds <- token_counts$token[token_counts$token %in% vocab][1:10]
+seeds[seeds == "right"] <- "justice"
+
+seeds <- list("healthcare" = "healthcare",
+              "liberal" = c("liberal", "liberals"),
+              "freedom" = c("freedom", "freedoms"),
+              "justice" = "justice",
+              "conservative" = c("conservative", "conservatives"),
+              "welfare" = "welfare",
+              "equality" = "equality",
+              "abortion" = c("abortion", "abortions"),
+              "taxes" = c("tax", "taxation", "taxes"),
+              "immigration" = c("immigrant", "immigration", "immigrants"))
+
+TopicDiffsList <- lapply(seeds, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10, label1 = "R", label2 = "D"))
+
+              
 
 

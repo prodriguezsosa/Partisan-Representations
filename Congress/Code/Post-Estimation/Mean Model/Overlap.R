@@ -137,8 +137,6 @@ OverlapFM <- ContextOverlap(seeds = vocab, dist_matrix1 = distance_matrices[["F"
 # ================================
 # explore differences
 # ================================
-token_counts <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Post-Estimation/TopTokens/token_counts.rds")
-#seeds <- list("abortion", "welfare", "healthcare", "conservative", "liberal", "freedom", "taxes", "immigrants", "equality")
 seed <- "taxes"
 # setdiff tokens
 lapply(list("R", "D"), function(x) setdiffRD[[x]][[seed]])
@@ -151,6 +149,11 @@ OverlapFM[[seed]]
 # overlap statistic
 OverlapStatRD[token == seed, overlap]
 OverlapStatFM[token == seed, overlap]
+
+# heatmap
+token_counts <- readRDS("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Congress/Post-Estimation/TopTokens/token_counts.rds")
+seeds <- token_counts$token[1:20][token_counts$token[1:20] %in% vocab]
+
 
 # ================================
 #
