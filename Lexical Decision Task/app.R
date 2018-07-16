@@ -74,7 +74,7 @@ Shiny.onInputChange("lastkeypresscode", [e.which, Math.random()]);
 # SECTION A6: ldt data.table      -----
 # --------------------------
 
-N <- 1  # number of candidates to sample for each cue
+N <- 4  # number of candidates to sample for each cue
 #source1_candidate <- apply(source1_topN, 2, function(x) sample(x, N, replace = TRUE))  # sample from human embeddings (leaner BUT does not avoid matches between both sources)
 #source2_candidate <- apply(source2_topN, 2, function(x) sample(x, N, replace = TRUE))  # sample from machine embeddings (leaner BUT does not avoid matches between both sources)
 
@@ -106,8 +106,13 @@ colnames(source1_candidate) <- colnames(source1_topN)
 colnames(source2_candidate) <- colnames(source1_topN)
 # randomize cue order
 cues <- sample(colnames(source1_topN), replace = FALSE)
-source1_candidate <- source1_candidate[,cues]
-source2_candidate <- source2_candidate[,cues]
+if(length(cues) > 1){
+  source1_candidate <- source1_candidate[,cues]
+  source2_candidate <- source2_candidate[,cues]
+}else{
+  source1_candidate <- source1_candidate[cues]
+  source2_candidate <- source2_candidate[cues] 
+}
 # sample 10 comparisons for each cue, randomizing left/right order
 ldt_data <- data.table()
 for(j in 1:length(cues)){
@@ -403,15 +408,15 @@ server <- function(input, output, session) {
         
         radioButtons(inputId = "party", 
                      label = "Generally speaking, do you usually think of yourself as a Democrat, a Republican, an Independent, or what?",
-                     choices = c("Strong Democrat" =  1,
+                     choices = list("Strong Democrat" =  1,
                                  "Weak Democrat" = 2,
                                  "Independent Democrat" = 3,
                                  "Independent Independent" = 4,
                                  "Independent Republican" = 5,
                                  "Weak Republican" = 6,
                                  "Strong Republican" = 7,
-                                 "Other party" = 8
-                                 #"No preference" = 9
+                                 "Other party" = 8,
+                                 "No preference" = 9
                      ), selected = 99, width = "100%"),
         
         br(),
@@ -420,14 +425,14 @@ server <- function(input, output, session) {
                      label = "We hear a lot of talk these days about liberals and conservatives. 
                      Here is a seven-point scale on which the political views that people might hold are arranged from extremely liberal to extremely conservative. 
                      Where would you place yourself on this scale?",
-                     choices = c("Extremely liberal" =  1,
+                     choices = list("Extremely liberal" =  1,
                                  "Liberal" = 2,
                                  "Slightly liberal" = 3,
                                  "Moderate; middle of the road" = 4,
                                  "Slightly conservative" = 5,
                                  "Conservative" = 6,
-                                 "Extremely conservative" = 7
-                                 #"Haven't thought much about this" = 8
+                                 "Extremely conservative" = 7,
+                                 "Haven't thought much about this" = 8
                      ), selected = 99, width = "100%"),
         
         br(),
@@ -604,8 +609,9 @@ server <- function(input, output, session) {
   # survey
   observeEvent(input$goto.savedata, {
     # check wether all questions have been answered:
-    if(any(input[["sex"]] == 99, input[["party"]] == 99, input[["ideology"]] == 99)){
-      CurrentValues$errors <- "answerQuestions"}else{
+    if(any(is.null(input[["sex"]]), is.null(input[["party"]]), is.null(input[["ideology"]]) )){
+      CurrentValues$errors <- "answerQuestions"
+      }else{
       CurrentValues$page <- "savedata"
     }})
   
@@ -636,6 +642,7 @@ server <- function(input, output, session) {
                    incProgress(.5)
                    
                    # Write survey data to a datatable
+                   
                    SurveyData.i <- data.table("workerid" = input$workerid,
                                               "sex" = input$sex,
                                               "party" = input$party,
