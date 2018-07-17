@@ -4,51 +4,81 @@ library(magrittr)
 library(dplyr)
 rm(list=ls())
 
-# upload mturk hits
+# ================================
+# set paths
+# ================================
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Lexical Decision Task/Output/Congress/"
 #out_path <- "PATH HERE"
 
-mturk_hits <- as.list(list.files(in_path))
-ldt_data <- mturk_hits[grepl("_ldt.csv", mturk_hits)]
-survey_data <- mturk_hits[grepl("_survey.csv", mturk_hits)]
-
-# function to clean HITs
+# ================================
+# functions
+# ================================
+# function to clean LDTs data
 cleanLDT <- function(hit_file){
   hit <- read.table(paste0(in_path, hit_file), sep = ",", header = TRUE)  # load hit
-  hit <- hit[,2:ncol(hit)]
   hit <- data.frame(lapply(hit, as.character), stringsAsFactors=FALSE) 
   hit$winner <- ifelse(hit$left.choice == "TRUE", hit$left.source, hit$right.source)
   return(hit)
 }
 
+# function to clean survey data
+cleanSurvey <- function(hit_file){
+  hit <- read.table(paste0(in_path, hit_file), sep = ",", header = TRUE)  # load hit
+  return(hit)
+}
 
+# ================================
+# load data
+# ================================
+mturk_hits <- as.list(list.files(in_path))
+ldt_data <- mturk_hits[grepl("_ldt.csv", mturk_hits)]
+survey_data <- mturk_hits[grepl("_survey.csv", mturk_hits)]
 
+# apply function and bind results LDT data
+ldts <- lapply(ldt_data, function(x) cleanLDT(x))
+ldts <- data.table(do.call(rbind, ldts))
 
+# apply function and bind results survey data
+surveys <- lapply(survey_data, function(x) cleanSurvey(x))
+surveys <- data.table(do.call(rbind, surveys))
 
+# merge by workerid
+hits <- merge(ldts, surveys, by = "workerid")
 
-# apply function and bind results
-hits <- lapply(mturk_hits, function(x) cleanHIT(x))
-hits <- data.table(do.call(rbind, hits))
+# ================================
+# clean data
+# ================================
+# check for duplicates
 tasks_by_worker <- hits[, .N, by = "workerid"]
-hits <- hits[!(workerid %in% tasks_by_worker[N >8, workerid]),] # somehow some workers where able to perform the HIT twice (6 in total)
+hits <- hits[!(workerid %in% tasks_by_worker[N > 4, workerid]),] # somehow some workers where able to perform the HIT twice (6 in total)
 hits <- hits[left.word != right.word,] # despite check, right - left words ended up being the same (<4% of cases)
-saveRDS(hits, "/Users/pedrorodriguez/Drobox/GitHub/EmbeddingsProject/R/Comparison/hits.rds")
+#saveRDS(hits, "")
 
-# tibble
-hits[,.N, by = winner]
-preference_tibble <- hits[,.(count = .N), by = c("cue", "winner")]
-preference_tibble <- rbind(preference_tibble[winner == "H",][order(-count)], preference_tibble[winner == "M",][order(count)])
-#preference_tibble <- rbind(preference_tibble, data.table("cue" = "animals", "winner" = "H", "count" = 0))
-cues <- preference_tibble$cue[1:8]
-preference_tibble$cue <- factor(preference_tibble$cue, levels = cues)
+# ================================
+# count preference by workerid
+# ================================
+mean_tibble <- hits
+mean_tibble$winner <- dplyr::recode(mean_tibble$winner, "R" = 0, "D" = 1)
+mean_preference <- mean_tibble[, sum(winner), by = workerid] %>% set_colnames(c("workerid", "votes_D"))
+mean_preference$votes_R <- 4 - mean_preference$votes_D
+mean_preference <- merge(mean_preference, surveys, by = "workerid")
+
+# recode
+mean_preference$party[mean_preference$party == 8 | mean_preference$party == 9] <- NA
+mean_preference$ideology[mean_preference$ideology == 8] <- NA
+mean_preference$party[mean_preference$party %in% c(1,2,3)] <- "D"
+mean_preference$party[mean_preference$party == 4] <- "I"
+mean_preference$party[mean_preference$party %in% c(5,6,7)] <- "R"
+
+# ================================
+# count preference by party
+# ================================
+mean_preference <- mean_preference[,lapply(.SD,sum), by = party, .SDcols=c("votes_D", "votes_R")]
+mean_preference <- melt(mean_preference, measure.vars = c("votes_D", "votes_R"))
 
 # plot
-ggplot(preference_tibble, aes(x = cue, y = count, fill = factor(winner)))+
+ggplot(mean_preference, aes(x = party, y = value, fill = factor(variable)))+
   geom_bar(stat = "identity", position = "dodge") +
   scale_fill_discrete(name = "Source", labels=c("Human", "Machine")) +
   xlab("Cue") + ylab("Vote Count") + ggtitle("Machine vs. Human Embeddings Vote Count (by cue)") + theme(legend.position="right", legend.title = element_blank(), panel.background = element_blank())
 
-# mean result
-mean_tibble <- hits
-mean_tibble$winner <- dplyr::recode(mean_tibble$winner, "H" = 0, "M" = 1)
-mean_preference <- mean_tibble[, mean(winner), by = workerid] %>% set_colnames(c("workerid", "mean"))

@@ -625,6 +625,7 @@ server <- function(input, output, session) {
                    LexicalData.i <- cbind(ldt_data, LexicalData.i)
                    LexicalData.i <- LexicalData.i[screener == FALSE,] # keep only the non-screeners
                    LexicalData.i <- LexicalData.i[, c("workerid", "cue", "left.source", "right.source", "left.word", "right.word", "left.choice", "right.choice")]
+                   rownames(LexicalData.i) <- NULL
                    
                    incProgress(.5)
                    
