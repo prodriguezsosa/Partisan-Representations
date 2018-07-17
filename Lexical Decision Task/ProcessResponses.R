@@ -9,16 +9,22 @@ in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Lexica
 #out_path <- "PATH HERE"
 
 mturk_hits <- as.list(list.files(in_path))
-
+ldt_data <- mturk_hits[grepl("_ldt.csv", mturk_hits)]
+survey_data <- mturk_hits[grepl("_survey.csv", mturk_hits)]
 
 # function to clean HITs
-cleanHIT <- function(hit_file){
+cleanLDT <- function(hit_file){
   hit <- read.table(paste0(in_path, hit_file), sep = ",", header = TRUE)  # load hit
   hit <- hit[,2:ncol(hit)]
   hit <- data.frame(lapply(hit, as.character), stringsAsFactors=FALSE) 
   hit$winner <- ifelse(hit$left.choice == "TRUE", hit$left.source, hit$right.source)
   return(hit)
 }
+
+
+
+
+
 
 # apply function and bind results
 hits <- lapply(mturk_hits, function(x) cleanHIT(x))

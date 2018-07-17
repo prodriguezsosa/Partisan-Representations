@@ -106,8 +106,8 @@ for(j in 1:length(cues)){
   for(i in 1:N){
     source_order <- sample(c("R","D"), 2, replace = FALSE)
     if(N>1){
-    candidates <- if(source_order[1] == "H"){c(unname(source1_candidate[i,j]), unname(source2_candidate[i,j]))}else{c(unname(source2_candidate[i,j]),unname(source1_candidate[i,j]))}
-    }else{candidates <- if(source_order[1] == "H"){unname(unlist(c(source1_candidate[j], source2_candidate[j])))}else{unname(unlist(c(source2_candidate[j],unname(source1_candidate[j]))))}}
+    candidates <- if(source_order[1] == "R"){c(unname(source1_candidate[i,j]), unname(source2_candidate[i,j]))}else{c(unname(source2_candidate[i,j]),unname(source1_candidate[i,j]))}
+    }else{candidates <- if(source_order[1] == "R"){unname(unlist(c(source1_candidate[j], source2_candidate[j])))}else{unname(unlist(c(source2_candidate[j],unname(source1_candidate[j]))))}}
     ldt_data <- rbind(ldt_data, data.table("workerid" = as.character(NA), cue = cues[j], "left.source" = source_order[1], "right.source" = source_order[2], "left.word" = candidates[1], "right.word" = candidates[2],
                                            "screener" = FALSE, "left.correct" = as.character(NA), "right.correct" = as.character(NA)))
   }
