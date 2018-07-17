@@ -5,10 +5,11 @@ library(dplyr)
 rm(list=ls())
 
 # upload mturk hits
-in_path <- "/Users/pedrorodriguez/Drobox/GitHub/EmbeddingsProject/RShiny/Lexical Decision Task/Output/"
-out_path <- "/Users/pedrorodriguez/Drobox/GitHub/EmbeddingsProject/R/Comparison"
+in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Lexical Decision Task/Output/Congress/"
+#out_path <- "PATH HERE"
 
 mturk_hits <- as.list(list.files(in_path))
+
 
 # function to clean HITs
 cleanHIT <- function(hit_file){
