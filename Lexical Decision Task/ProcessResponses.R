@@ -79,6 +79,13 @@ mean_preference <- melt(mean_preference, measure.vars = c("votes_D", "votes_R"))
 # plot
 ggplot(mean_preference, aes(x = party, y = value, fill = factor(variable)))+
   geom_bar(stat = "identity", position = "dodge") +
-  scale_fill_discrete(name = "Source", labels=c("Human", "Machine")) +
-  xlab("Cue") + ylab("Vote Count") + ggtitle("Machine vs. Human Embeddings Vote Count (by cue)") + theme(legend.position="right", legend.title = element_blank(), panel.background = element_blank())
+  scale_fill_discrete(name = "Source", labels=c("D-Embeddings", "R-Embeddings")) +
+  xlab("Party") + ylab("Vote Count") + ggtitle("D-Embeddings vs. R-Embeddings \n Vote Count by Party") + 
+  theme(legend.title=element_blank(), axis.ticks.y=element_blank(), axis.text.x = element_text(size=15),
+        axis.title.x = element_text(margin = margin(t = 20, r = 0, b = 0, l = 0)),
+        plot.title = element_text(margin = margin(t = 10, r = 0, b = 20, l = 0), hjust = 0.5),
+        text = element_text(size=15), legend.position = "bottom", legend.text = element_text(size=20))
+
+
+
 
