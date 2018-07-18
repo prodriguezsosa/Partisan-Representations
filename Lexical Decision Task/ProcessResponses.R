@@ -70,6 +70,11 @@ count_preference$party[count_preference$party %in% c(1,2,3)] <- "D"
 count_preference$party[count_preference$party == 4] <- "I"
 count_preference$party[count_preference$party %in% c(5,6,7)] <- "R"
 
+# balance out sample
+set.seed(11121984)
+dems <- sample(which(count_preference$party == "D"), 15, replace = FALSE)
+count_preference <- rbind(count_preference[dems], count_preference[party %in% c("R", "I")])
+
 # ================================
 # count preference by party
 # ================================
@@ -96,7 +101,7 @@ ggplot(plot.dt, aes(x = party, y = mean, fill = factor(variable))) +
   geom_bar(stat = "identity", position = "dodge") +
   scale_fill_discrete(name = "Source", labels=c("D-Embeddings", "R-Embeddings")) +
   geom_errorbar(aes(ymin=ci.lower, ymax=ci.upper), size=.3, width=.2, position=position_dodge(.9)) +
-  xlab("Party") + ylab("Average Vote Count \n (out of 4 votes)") + ggtitle("D-Embeddings vs. R-Embeddings \n Vote Count by Party") + 
+  xlab("Party") + ylab("Avg. Vote Count \n (out of 4 votes)") + ggtitle("D-Embeddings vs. R-Embeddings \n Avg. Vote Count by Party (N = 44)") + 
   theme(legend.title=element_blank(), axis.ticks.y=element_blank(), axis.text.x = element_text(size=15),
         axis.title.x = element_text(margin = margin(t = 20, r = 0, b = 0, l = 0)),
         plot.title = element_text(margin = margin(t = 10, r = 0, b = 20, l = 0), hjust = 0.5),
