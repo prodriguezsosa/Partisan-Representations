@@ -236,19 +236,26 @@ topics <- list("healthcare" = "healthcare",
                "taxes" = c("tax", "taxation", "taxes"),
                "immigration" = c("immigrant", "immigration", "immigrants"))
 
-# top N
+# top N R-D
 TopicDiffsList <- lapply(topics, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 6, label1 = "R", label2 = "D"))
 TopicOverlapList <- lapply(topics, function(x) TopicOverlap(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10))
 TopipOverlapStatList <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 10)) %>% unlist
 
-# with threshold
+# with threshold R-D
 TopicDiffsList <- lapply(topics, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], threshold1 = dist_thresholds[["R"]], threshold2 = dist_thresholds[["D"]], label1 = "R", label2 = "D"))
 TopicOverlapList <- lapply(topics, function(x) TopicOverlap(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], threshold1 = dist_thresholds[["R"]], threshold2 = dist_thresholds[["D"]]))
 TopipOverlapStatList <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], threshold1 = dist_thresholds[["R"]], threshold2 = dist_thresholds[["D"]])) %>% unlist
 
-# female vs. males
+# top N F-M
 TopicDiffsListFM <- lapply(topics, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10, label1 = "F", label2 = "M"))
+TopicOverlapListFM <- lapply(topics, function(x) TopicOverlap(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10))
+TopipOverlapStatListFM <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], N = 10)) %>% unlist
+
+# with threshold F-M
 TopicDiffsListFM <- lapply(topics, function(x) TopicDiff(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], threshold1 = dist_thresholds[["F"]], threshold2 = dist_thresholds[["M"]], label1 = "F", label2 = "M"))
+TopicOverlapListFM <- lapply(topics, function(x) TopicOverlap(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], threshold1 = dist_thresholds[["F"]], threshold2 = dist_thresholds[["M"]]))
+TopipOverlapStatListFM <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["F"]], dist_matrix2 = distance_matrices[["M"]], threshold1 = dist_thresholds[["F"]], threshold2 = dist_thresholds[["M"]])) %>% unlist
+
 
 # bar chart
 #RDIoU <- lapply(topics, function(x) TopicOverlapStat(x, dist_matrix1 = distance_matrices[["R"]], dist_matrix2 = distance_matrices[["D"]], N = 5)) %>% unlist

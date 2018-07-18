@@ -3,7 +3,7 @@
 out_file <- "/Users/pedrorodriguez/Drobox/GitHub/Partisan-Representations/Lexical Decision Task/data/"
 
 # top-5
-N <- 4
+N <- 5
 token <- "healthcare"
 republicans <- data.frame("republican" = c(token, TopicDiffsList[[token]][["R"]][1:N]), stringsAsFactors = FALSE)
 democrats <- data.frame("democrat" = c(token, TopicDiffsList[[token]][["D"]][1:N]), stringsAsFactors = FALSE)

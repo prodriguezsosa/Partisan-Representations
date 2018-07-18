@@ -26,8 +26,8 @@ trial_data <- readRDS("data/trial_data.rds")
 source("LexicalDecisionTask.R")
 
 # data in easier format
-source1 <- "republican"
-source2 <- "democrat"
+source1 <- "female"
+source2 <- "male"
 source1_topN <- data.frame(topN[source1][2:nrow(topN),], stringsAsFactors = FALSE)
 source2_topN <- data.frame(topN[source2][2:nrow(topN),], stringsAsFactors = FALSE)
 colnames(source1_topN) <- colnames(source2_topN) <- tolower(topN[source1][1,])
@@ -61,7 +61,7 @@ Shiny.onInputChange("lastkeypresscode", [e.which, Math.random()]);
 # SECTION A6: ldt data.table      -----
 # --------------------------
 
-N <- 4  # number of candidates to sample for each cue
+N <- 5  # number of candidates to sample for each cue
 #source1_candidate <- apply(source1_topN, 2, function(x) sample(x, N, replace = TRUE))  # sample from human embeddings (leaner BUT does not avoid matches between both sources)
 #source2_candidate <- apply(source2_topN, 2, function(x) sample(x, N, replace = TRUE))  # sample from machine embeddings (leaner BUT does not avoid matches between both sources)
 
@@ -104,10 +104,10 @@ if(length(cues) > 1){
 ldt_data <- data.table()
 for(j in 1:length(cues)){
   for(i in 1:N){
-    source_order <- sample(c("R","D"), 2, replace = FALSE)
+    source_order <- sample(c("F","M"), 2, replace = FALSE)
     if(N>1){
-    candidates <- if(source_order[1] == "R"){c(unname(source1_candidate[i,j]), unname(source2_candidate[i,j]))}else{c(unname(source2_candidate[i,j]),unname(source1_candidate[i,j]))}
-    }else{candidates <- if(source_order[1] == "R"){unname(unlist(c(source1_candidate[j], source2_candidate[j])))}else{unname(unlist(c(source2_candidate[j],unname(source1_candidate[j]))))}}
+    candidates <- if(source_order[1] == "F"){c(unname(source1_candidate[i,j]), unname(source2_candidate[i,j]))}else{c(unname(source2_candidate[i,j]),unname(source1_candidate[i,j]))}
+    }else{candidates <- if(source_order[1] == "F"){unname(unlist(c(source1_candidate[j], source2_candidate[j])))}else{unname(unlist(c(source2_candidate[j],unname(source1_candidate[j]))))}}
     ldt_data <- rbind(ldt_data, data.table("workerid" = as.character(NA), cue = cues[j], "left.source" = source_order[1], "right.source" = source_order[2], "left.word" = candidates[1], "right.word" = candidates[2],
                                            "screener" = FALSE, "left.correct" = as.character(NA), "right.correct" = as.character(NA)))
   }
@@ -625,7 +625,6 @@ server <- function(input, output, session) {
                    LexicalData.i <- cbind(ldt_data, LexicalData.i)
                    LexicalData.i <- LexicalData.i[screener == FALSE,] # keep only the non-screeners
                    LexicalData.i <- LexicalData.i[, c("workerid", "cue", "left.source", "right.source", "left.word", "right.word", "left.choice", "right.choice")]
-                   rownames(LexicalData.i) <- NULL
                    
                    incProgress(.5)
                    
@@ -647,7 +646,7 @@ server <- function(input, output, session) {
                    # Create The Filepath and save the data depending on the method chosen:
                    
                    LexicalDatafilePath <- file.path(tempdir(), LexicalDatafileName)
-                   write.csv(LexicalData.i, LexicalDatafilePath, row.names = TRUE, quote = TRUE)
+                   write.csv(LexicalData.i, LexicalDatafilePath, row.names = FALSE, quote = TRUE)
                    rdrop2::drop_upload(LexicalDatafilePath, path = outputDir, dtoken = droptoken)
                    
                    SurveyDatafilePath <- file.path(tempdir(), SurveyDatafileName)
