@@ -8,7 +8,7 @@ rm(list=ls())
 # set paths
 # ================================
 in_path <- "/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/Lexical Decision Task/Output/Congress/Party/"
-#out_path <- "PATH HERE"
+out_path <- "PATH HERE"
 
 # ================================
 # functions
