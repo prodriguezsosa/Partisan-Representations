@@ -6,7 +6,7 @@ library(progress)
 
 SOURCE <- "FOX"
 in_path <- paste0("/Users/pedrorodriguez/Dropbox/Research/Concept Polarization/Targeted/Inputs/TEXTS/", SOURCE, "/")
-out_path_csv <- paste0("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/News/Inputs/CSV/", SOURCE, "/")
+#out_path_csv <- paste0("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/News/Inputs/CSV/", SOURCE, "/")
 #out_path_rds <- paste0("/Users/pedrorodriguez/Dropbox/GitHub/Partisan-Representations/News/Inputs/RDS/", SOURCE, "/")
 texts <- as.list(list.files(in_path))
 texts <- texts[grepl("2016", texts) | grepl("2017", texts)]
@@ -22,7 +22,7 @@ for(i in 1:length(texts)){
   text <- gsub("[^[:alnum:] ]", "", text) # remove all non-alpha-numeric characters
   text <- str_replace_all(text, "^ +| +$|( ) +", "\\1")  # remove excess white space
   text <- tolower(text)  # lowercase
-  write(text, paste0(out_path_csv, SOURCE, i, ".csv"))
+  #write(text, paste0(out_path_csv, SOURCE, i, ".csv"))
   #saveRDS(text, paste0(out_path_rds, SOURCE, i, ".Rds"))
   rm(text)
   pb$tick()
